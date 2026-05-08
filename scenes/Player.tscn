@@ -42,6 +42,7 @@ animations = [{
 }]
 
 [node name="Player" type="CharacterBody2D" unique_id=461263173]
+scale = Vector2(3, 3)
 script = ExtResource("1_p0vlq")
 character_name = "An0man"
 
@@ -53,4 +54,4 @@ shape = SubResource("CapsuleShape2D_v6fml")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1584958948]
 sprite_frames = SubResource("SpriteFrames_3li8b")
 autoplay = "default"
-frame_progress = 0.95948434
+frame_progress = 0.7673423
