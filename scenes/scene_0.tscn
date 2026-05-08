@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://bja0hidi44pi1"]
+
+[node name="Scene0" type="Node3D"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Label" type="Label" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 1
+text = "kalo menang kenny botak"
