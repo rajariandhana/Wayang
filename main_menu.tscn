@@ -1,0 +1,78 @@
+[gd_scene format=3 uid="uid://bdkba1qeucpx8"]
+
+[ext_resource type="Script" uid="uid://l8sbpdsvr1rp" path="res://main_menu.gd" id="1_7vrkn"]
+[ext_resource type="Texture2D" uid="uid://crnsiqddx3qik" path="res://cloth_texture.jpg" id="2_fu7sn"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jix8l"]
+bg_color = Color(0.7254902, 0.6117647, 0.3137255, 1)
+
+[node name="MainMenu" type="Control" unique_id=1067288366]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_7vrkn")
+
+[node name="Background" type="TextureRect" parent="." unique_id=1365704228]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_fu7sn")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="DatStick" type="Control" parent="." unique_id=2206063]
+anchors_preset = 0
+offset_left = 410.0
+offset_top = 350.0
+offset_right = 450.00006
+offset_bottom = 390.0
+pivot_offset_ratio = Vector2(0, 15)
+
+[node name="WoodBox" type="ColorRect" parent="DatStick" unique_id=1516765122]
+layout_mode = 0
+offset_right = 20.0
+offset_bottom = 600.0
+color = Color(0, 0, 0, 1)
+
+[node name="Button" type="Button" parent="DatStick" unique_id=1629638476]
+layout_mode = 0
+offset_left = -110.0
+offset_top = -38.0
+offset_right = 131.0
+offset_bottom = 30.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_jix8l")
+text = "Start Game"
+
+[node name="DatStick2" type="Control" parent="." unique_id=825327566]
+anchors_preset = 0
+offset_left = 710.0
+offset_top = 350.0
+offset_right = 750.0
+offset_bottom = 390.0
+pivot_offset_ratio = Vector2(0, 15)
+
+[node name="WoodBox" type="ColorRect" parent="DatStick2" unique_id=617792763]
+layout_mode = 0
+offset_right = 20.0
+offset_bottom = 600.0
+color = Color(0, 0, 0, 1)
+
+[node name="Button" type="Button" parent="DatStick2" unique_id=1143223717]
+layout_mode = 0
+offset_left = -110.0
+offset_top = -38.0
+offset_right = 131.0
+offset_bottom = 30.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_jix8l")
+text = "Quit"
+
+[connection signal="pressed" from="DatStick/Button" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="DatStick2/Button" to="." method="_on_quit_pressed"]

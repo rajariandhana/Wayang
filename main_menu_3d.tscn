@@ -1,0 +1,61 @@
+[gd_scene format=3 uid="uid://cncgx5tnmxpvj"]
+
+[ext_resource type="Script" uid="uid://cjoq1477phhd7" path="res://main_menu_3d.gd" id="1_qyrbl"]
+[ext_resource type="Script" uid="uid://c1tsdllibt16e" path="res://omni_light_3d.gd" id="2_axt0k"]
+[ext_resource type="Texture2D" uid="uid://crnsiqddx3qik" path="res://cloth_texture.jpg" id="2_m4dq2"]
+[ext_resource type="Texture2D" uid="uid://dt3swce7gjjv3" path="res://title_logo.png" id="3_axt0k"]
+[ext_resource type="Texture2D" uid="uid://dkisat3qex4uc" path="res://Start Game.png" id="4_ohct5"]
+[ext_resource type="Texture2D" uid="uid://f71tiw1ga5f6" path="res://Quit.png" id="5_jdx38"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_up8d4"]
+size = Vector2(10, 10)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uchu1"]
+albedo_texture = ExtResource("2_m4dq2")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ydasx"]
+size = Vector3(2.5, 1, 1)
+
+[node name="MainMenu3d" type="Node3D" unique_id=2121848050]
+script = ExtResource("1_qyrbl")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=905771996]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.0480173)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=1372264807]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9281226, 1.3919939)
+light_color = Color(0.9313727, 0.6572922, 0.2066547, 1)
+shadow_enabled = true
+script = ExtResource("2_axt0k")
+
+[node name="BackgroundScreen" type="MeshInstance3D" parent="." unique_id=1206966193]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+mesh = SubResource("QuadMesh_up8d4")
+surface_material_override/0 = SubResource("StandardMaterial3D_uchu1")
+
+[node name="MenuContainer" type="Node3D" parent="." unique_id=1607693574]
+
+[node name="Title" type="Sprite3D" parent="MenuContainer" unique_id=2116484857]
+transform = Transform3D(0.17, 0, 0, 0, 0.17, 0, 0, 0, 0.17, 0, 0.24, 0)
+alpha_cut = 1
+texture = ExtResource("3_axt0k")
+
+[node name="Start" type="Sprite3D" parent="MenuContainer" unique_id=1744895827]
+transform = Transform3D(0.17, 0, 0, 0, 0.17, 0, 0, 0, 0.17, 0, -0.27148074, 0)
+alpha_cut = 1
+texture = ExtResource("4_ohct5")
+
+[node name="Area3D" type="Area3D" parent="MenuContainer/Start" unique_id=983110946]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MenuContainer/Start/Area3D" unique_id=26467428]
+shape = SubResource("BoxShape3D_ydasx")
+
+[node name="Quit" type="Sprite3D" parent="MenuContainer" unique_id=1648227138]
+transform = Transform3D(0.17, 0, 0, 0, 0.17, 0, 0, 0, 0.17, 0, -0.56296754, 0)
+alpha_cut = 1
+texture = ExtResource("5_jdx38")
+
+[node name="Area3D" type="Area3D" parent="MenuContainer/Quit" unique_id=927383645]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MenuContainer/Quit/Area3D" unique_id=37009022]
+shape = SubResource("BoxShape3D_ydasx")
