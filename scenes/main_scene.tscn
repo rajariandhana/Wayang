@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://p2mn3weeb542"]
 
-[ext_resource type="PackedScene" uid="uid://dvkxbycii4b0e" path="res://scenes/Player.tscn" id="1_w2twt"]
+[ext_resource type="PackedScene" uid="uid://cogdfj8cl38nq" path="res://scenes/Enemy.tscn" id="2_7ykc4"]
+[ext_resource type="PackedScene" uid="uid://bp7cvqcsw2xuw" path="res://scenes/PlayerV2.tscn" id="2_pw63i"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_w2twt"]
 
@@ -8,13 +9,18 @@
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=255680595]
 
-[node name="Player" parent="." unique_id=461263173 instance=ExtResource("1_w2twt")]
-position = Vector2(0, -50)
-
 [node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=977879160]
+position = Vector2(0, 563)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=641613231]
 position = Vector2(0, 25)
 shape = SubResource("WorldBoundaryShape2D_w2twt")
 
 [node name="Sprite2D" type="Sprite2D" parent="StaticBody2D" unique_id=362880117]
+
+[node name="PlayerV2" parent="." unique_id=222677225 instance=ExtResource("2_pw63i")]
+position = Vector2(-655, 199)
+scale = Vector2(-1, 1)
+
+[node name="Enemy1" parent="." unique_id=693759662 instance=ExtResource("2_7ykc4")]
+position = Vector2(584, 205)

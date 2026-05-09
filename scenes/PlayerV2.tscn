@@ -1,0 +1,128 @@
+[gd_scene format=3 uid="uid://bp7cvqcsw2xuw"]
+
+[ext_resource type="PackedScene" uid="uid://0f0nrgwjptal" path="res://scenes/Wayang.tscn" id="1_qmmko"]
+[ext_resource type="Script" uid="uid://wmn82kpqg85a" path="res://script/player_v_2.gd" id="2_0gmo0"]
+[ext_resource type="Texture2D" uid="uid://cll63wxl62s3t" path="res://asset/WayangPlayer/body.png" id="2_5hfeb"]
+[ext_resource type="Texture2D" uid="uid://cb5xm00lkeolu" path="res://asset/WayangPlayer/forearm.png" id="3_0gmo0"]
+[ext_resource type="Texture2D" uid="uid://ceoi7774hgsj2" path="res://asset/WayangPlayer/arm.png" id="4_3d0ec"]
+
+[sub_resource type="Animation" id="Animation_0gmo0"]
+resource_name = "BASE_ATTACK"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Skeleton2D/Hip/LForearm:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.09001601, 0.5839832, 1.0599964]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Skeleton2D/Hip/LForearm/LArm:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.6638907, 0.9298422, 1.3387408]
+}
+
+[sub_resource type="Animation" id="Animation_3d0ec"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Skeleton2D/Hip/LForearm:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.09001601]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Skeleton2D/Hip/LForearm/LArm:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.6638907]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3aryt"]
+_data = {
+&"BASE_ATTACK": SubResource("Animation_0gmo0"),
+&"RESET": SubResource("Animation_3d0ec")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5hfeb"]
+size = Vector2(304, 568)
+
+[node name="PlayerV2" unique_id=222677225 instance=ExtResource("1_qmmko")]
+position = Vector2(0, 1)
+script = ExtResource("2_0gmo0")
+
+[node name="Hip" parent="Skeleton2D" parent_id_path=PackedInt32Array(1458005949) index="0" unique_id=333317538]
+position = Vector2(2, 0)
+
+[node name="LForearm" parent="Skeleton2D/Hip" index="0" unique_id=2137390749]
+position = Vector2(-141, -224)
+rotation = 0.09001601
+scale = Vector2(0.99999994, 0.99999994)
+
+[node name="LArm" parent="Skeleton2D/Hip/LForearm" index="0" unique_id=2065523697]
+position = Vector2(-13.926041, 222.56702)
+rotation = 0.6638907
+scale = Vector2(0.9999993, 0.9999993)
+
+[node name="LHand" parent="Skeleton2D/Hip/LForearm/LArm" index="0" unique_id=2008609642]
+position = Vector2(-7.425583, 173.06047)
+
+[node name="RemoteTransform2D" parent="Skeleton2D/Hip/LForearm/LArm" index="1" unique_id=1392207029]
+remote_path = NodePath("../../../../../Sprites/LArm")
+
+[node name="RemoteTransform2D" parent="Skeleton2D/Hip/LForearm" index="1" unique_id=578461860]
+remote_path = NodePath("../../../../Sprites/LForearm")
+
+[node name="RemoteTransform2D" parent="Skeleton2D/Hip" index="2" unique_id=631729292]
+remote_path = NodePath("../../../Sprites/Body")
+
+[node name="Body" parent="Sprites" parent_id_path=PackedInt32Array(1314545203) index="0" unique_id=189229996]
+position = Vector2(2, 0)
+texture = ExtResource("2_5hfeb")
+flip_h = true
+
+[node name="LForearm" parent="Sprites" parent_id_path=PackedInt32Array(1314545203) index="3" unique_id=1112488534]
+position = Vector2(-139, -224)
+rotation = 1.0599964
+scale = Vector2(0.99999994, 0.99999994)
+texture = ExtResource("3_0gmo0")
+offset = Vector2(252.057, 178.08287)
+flip_h = true
+
+[node name="LArm" parent="Sprites" parent_id_path=PackedInt32Array(1314545203) index="4" unique_id=1031928253]
+position = Vector2(-339.96524, -127.340935)
+rotation = 2.3987372
+scale = Vector2(0.9999993, 0.9999993)
+texture = ExtResource("4_3d0ec")
+offset = Vector2(212.42729, -39.678833)
+flip_h = true
+
+[node name="AnimationPlayer" parent="." index="2" unique_id=806136492]
+libraries/ = SubResource("AnimationLibrary_3aryt")
+
+[node name="CollisionShape2D" parent="Area2D" parent_id_path=PackedInt32Array(553513446) index="0" unique_id=504424180]
+position = Vector2(6, 54)
+shape = SubResource("RectangleShape2D_5hfeb")

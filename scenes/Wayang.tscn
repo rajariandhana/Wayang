@@ -1,0 +1,107 @@
+[gd_scene format=3 uid="uid://0f0nrgwjptal"]
+
+[ext_resource type="Script" uid="uid://d3554h7r3e45o" path="res://script/wayang.gd" id="1_wb600"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_n2lo1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n2lo1"]
+size = Vector2(20, 217)
+
+[node name="Wayang" type="CharacterBody2D" unique_id=222677225]
+position = Vector2(-1, 0)
+script = ExtResource("1_wb600")
+
+[node name="Skeleton2D" type="Skeleton2D" parent="." unique_id=1458005949]
+
+[node name="Hip" type="Bone2D" parent="Skeleton2D" unique_id=333317538]
+rest = Transform2D(1, 0, 0, 1, 0, 0)
+
+[node name="LForearm" type="Bone2D" parent="Skeleton2D/Hip" unique_id=2137390749]
+position = Vector2(-102.00001, -185.00002)
+rotation = 1.2925181
+rest = Transform2D(1, 0, 0, 1, -187, -168)
+
+[node name="LArm" type="Bone2D" parent="Skeleton2D/Hip/LForearm" unique_id=2065523697]
+position = Vector2(153.70941, 135.43422)
+rotation = 0.6577248
+scale = Vector2(0.99999905, 0.99999905)
+rest = Transform2D(1, 0, 0, 1, -13, 204)
+
+[node name="LHand" type="Bone2D" parent="Skeleton2D/Hip/LForearm/LArm" unique_id=2008609642]
+position = Vector2(119.82432, -47.78247)
+rest = Transform2D(1, 0, 0, 1, -10, 157)
+
+[node name="HandHitbox" type="Area2D" parent="Skeleton2D/Hip/LForearm/LArm/LHand" unique_id=511634548]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Skeleton2D/Hip/LForearm/LArm/LHand/HandHitbox" unique_id=1711032159]
+scale = Vector2(3.14, 3.14)
+shape = SubResource("CircleShape2D_n2lo1")
+debug_color = Color(0.433078, 0.5949897, 0.24834844, 0.41960785)
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Skeleton2D/Hip/LForearm/LArm" unique_id=1392207029]
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Skeleton2D/Hip/LForearm" unique_id=578461860]
+
+[node name="RForearm" type="Bone2D" parent="Skeleton2D/Hip" unique_id=800654494]
+position = Vector2(102, -185)
+rotation = 1.2925181
+rest = Transform2D(1, 0, 0, 1, -187, -168)
+
+[node name="RArm" type="Bone2D" parent="Skeleton2D/Hip/RForearm" unique_id=959535570]
+position = Vector2(205.90248, -47.256424)
+rotation = 0.6577248
+scale = Vector2(0.99999905, 0.99999905)
+rest = Transform2D(1, 0, 0, 1, -13, 204)
+
+[node name="RHand" type="Bone2D" parent="Skeleton2D/Hip/RForearm/RArm" unique_id=744633856]
+position = Vector2(125.215164, -53.16195)
+rest = Transform2D(1, 0, 0, 1, -10, 157)
+
+[node name="HandHitbox" type="Area2D" parent="Skeleton2D/Hip/RForearm/RArm/RHand" unique_id=750246592]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Skeleton2D/Hip/RForearm/RArm/RHand/HandHitbox" unique_id=1036516398]
+scale = Vector2(3.14, 3.14)
+shape = SubResource("CircleShape2D_n2lo1")
+debug_color = Color(0.433078, 0.5949897, 0.24834844, 0.41960785)
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Skeleton2D/Hip/RForearm/RArm" unique_id=1875616817]
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Skeleton2D/Hip/RForearm" unique_id=1506656450]
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Skeleton2D/Hip" unique_id=631729292]
+
+[node name="Sprites" type="Node2D" parent="." unique_id=1314545203]
+
+[node name="Body" type="Sprite2D" parent="Sprites" unique_id=189229996]
+offset = Vector2(24, -44.666668)
+
+[node name="RForearm" type="Sprite2D" parent="Sprites" unique_id=1532845350]
+offset = Vector2(12.001366, 90.666306)
+
+[node name="RArm" type="Sprite2D" parent="Sprites" unique_id=1067402680]
+position = Vector2(-190, 1.5258789e-05)
+rotation = 1.9502429
+scale = Vector2(0.99999905, 0.99999905)
+offset = Vector2(-34.772285, 134.39835)
+
+[node name="LForearm" type="Sprite2D" parent="Sprites" unique_id=1112488534]
+
+[node name="LArm" type="Sprite2D" parent="Sprites" unique_id=1031928253]
+offset = Vector2(-34.098694, 133.61227)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=806136492]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=802097923]
+position = Vector2(0, 98.5)
+shape = SubResource("RectangleShape2D_n2lo1")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=553513446]
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=504424180]
+debug_color = Color(0.96091276, 6.738305e-07, 0.5160797, 0.41960785)
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

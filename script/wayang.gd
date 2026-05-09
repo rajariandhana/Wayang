@@ -5,6 +5,7 @@ extends CharacterBody2D
 @export var max_health: int = 100;
 var current_health: int
 @export var move_speed: float = 1500.0
+@onready var animation_player = $AnimationPlayer
 
 func _ready():
 	current_health = max_health
@@ -27,4 +28,11 @@ func die():
 
 func get_display_name() -> String:
 	return character_name
-	
+		
+
+func _on_area_2d_area_entered(area: Area2D) -> void:
+	print(area, " entered")
+
+
+func _on_area_2d_body_entered(body: Node2D) -> void:
+	print(body)
