@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://bp7cvqcsw2xuw"]
+[gd_scene format=3 uid="uid://dhup84rpn046p"]
 
 [ext_resource type="PackedScene" uid="uid://0f0nrgwjptal" path="res://scenes/Wayang.tscn" id="1_qmmko"]
 [ext_resource type="Script" uid="uid://wmn82kpqg85a" path="res://script/player_v_2.gd" id="2_0gmo0"]
@@ -85,7 +85,7 @@ scale = Vector2(0.99999994, 0.99999994)
 [node name="LArm" parent="Skeleton2D/Hip/LForearm" index="0" unique_id=2065523697]
 position = Vector2(-13.926041, 222.56702)
 rotation = 0.6638907
-scale = Vector2(0.9999993, 0.9999993)
+scale = Vector2(0.99999934, 0.99999934)
 
 [node name="LHand" parent="Skeleton2D/Hip/LForearm/LArm" index="0" unique_id=2008609642]
 position = Vector2(-7.425583, 173.06047)
@@ -106,16 +106,16 @@ flip_h = true
 
 [node name="LForearm" parent="Sprites" parent_id_path=PackedInt32Array(1314545203) index="3" unique_id=1112488534]
 position = Vector2(-139, -224)
-rotation = 1.0599964
+rotation = 0.09001599
 scale = Vector2(0.99999994, 0.99999994)
 texture = ExtResource("3_0gmo0")
 offset = Vector2(252.057, 178.08287)
 flip_h = true
 
 [node name="LArm" parent="Sprites" parent_id_path=PackedInt32Array(1314545203) index="4" unique_id=1031928253]
-position = Vector2(-339.96524, -127.340935)
-rotation = 2.3987372
-scale = Vector2(0.9999993, 0.9999993)
+position = Vector2(-172.8772, -3.5859833)
+rotation = 0.75390667
+scale = Vector2(0.9999992, 0.9999992)
 texture = ExtResource("4_3d0ec")
 offset = Vector2(212.42729, -39.678833)
 flip_h = true

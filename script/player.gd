@@ -6,11 +6,12 @@ const GRAVITY = 0.0
 const JUMP_FORCE = -2000.0
 var is_flipping = false
 var facing_right = true
-
-
+@export var health_bar: CanvasLayer
+@onready var animation_player: AnimationPlayer = $VisualRoot_Right/AnimationPlayer
 
 func on_ready():
 	character_name = "Anoman"
+	health_bar.set_health(current_health, max_health)
 
 func _physics_process(delta):
 	# gravity
@@ -57,3 +58,7 @@ func attack():
 
 func die():
 	print("Player died!")
+	
+func take_damage(amount: int):
+	super(amount)  # runs Wayan 
+	health_bar.set_health(current_health, max_health)

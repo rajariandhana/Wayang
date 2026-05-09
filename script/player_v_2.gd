@@ -4,6 +4,11 @@ const GRAVITY = 8000.0
 const JUMP_FORCE = -2000.0
 const DECELERATION = 4000.0
 
+
+func on_ready():
+	character_name = "Anoman"
+	health_bar.set_health(current_health, max_health)
+
 func _physics_process(delta):
 	if Input.is_action_just_pressed("base_attack"):
 		#print("pressed base_attack")
@@ -43,3 +48,8 @@ func attack():
 
 func die():
 	print("Player died!")
+
+func take_damage(amount: int):
+	super(amount)  # runs Wayan 
+	health_bar.set_health(current_health, max_health)
+	
