@@ -1,21 +1,23 @@
 [gd_scene format=3 uid="uid://0x452fdnsaav"]
 
-[ext_resource type="Script" path="res://omni_light_3d.gd" id="1_27ga2"]
+[ext_resource type="Script" uid="uid://c1tsdllibt16e" path="res://omni_light_3d.gd" id="1_27ga2"]
 [ext_resource type="Texture2D" uid="uid://crnsiqddx3qik" path="res://cloth_texture.jpg" id="2_h0wof"]
 [ext_resource type="Texture2D" uid="uid://dpw5l3ayhalns" path="res://asset/dalang_frame.png" id="3_fu4bq"]
 [ext_resource type="Texture2D" uid="uid://8anwl2bwwg1j" path="res://asset/dr angka.png" id="3_h0wof"]
 [ext_resource type="Texture2D" uid="uid://bjl6gc24obxn7" path="res://asset/edge.png" id="3_sbb53"]
 [ext_resource type="Texture2D" uid="uid://dej3llqljplyf" path="res://asset/castle_texture.png" id="5_sbb53"]
-[ext_resource type="Script" path="res://dr_angka.gd" id="5_yokb4"]
+[ext_resource type="Script" uid="uid://bid587oa22bn6" path="res://dr_angka.gd" id="5_yokb4"]
 [ext_resource type="Texture2D" uid="uid://cdxcagioe4h63" path="res://scenes/mega_1.png" id="7_35c7g"]
-[ext_resource type="Script" path="res://castle.gd" id="7_nb1nt"]
+[ext_resource type="Script" uid="uid://cg5pnkr6o01bj" path="res://castle.gd" id="7_nb1nt"]
 [ext_resource type="Texture2D" uid="uid://6aejj6emwqac" path="res://scenes/mega_2.png" id="8_g8a64"]
-[ext_resource type="Script" path="res://awan_1.gd" id="9_u834y"]
+[ext_resource type="Script" uid="uid://be7dcoxqbfbmw" path="res://awan_1.gd" id="9_u834y"]
 [ext_resource type="Texture2D" uid="uid://df0t4h6bbv8ew" path="res://scenes/mega_3.png" id="9_uvldv"]
 [ext_resource type="Texture2D" uid="uid://c36ffm0pf2x1f" path="res://scenes/mega_4.png" id="10_nb1nt"]
-[ext_resource type="Script" path="res://castle_2.gd" id="12_u834y"]
+[ext_resource type="Script" uid="uid://cvq6fgkvcpt4j" path="res://castle_2.gd" id="12_u834y"]
 [ext_resource type="PackedScene" uid="uid://dd050n4s04ihr" path="res://arena_2d.tscn" id="15_1s3fb"]
-[ext_resource type="Script" path="res://player_3d.gd" id="16_1s3fb"]
+[ext_resource type="Script" uid="uid://dlibi3b4aga7n" path="res://player_3d.gd" id="16_1s3fb"]
+[ext_resource type="Texture2D" uid="uid://dxbsksk36llhe" path="res://asset/fire/FireFrames.png" id="17_ffcej"]
+[ext_resource type="Script" uid="uid://brngc1aiqcjev" path="res://animated_sprite_3d.gd" id="20_6p4q2"]
 
 [sub_resource type="Environment" id="Environment_u834y"]
 fog_enabled = true
@@ -43,49 +45,52 @@ transparency = 4
 cull_mode = 2
 albedo_texture = SubResource("ViewportTexture_1pekq")
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_6p4q2"]
-atlas = ExtResource("19_3vubs")
+[sub_resource type="AtlasTexture" id="AtlasTexture_3vubs"]
+atlas = ExtResource("17_ffcej")
 region = Rect2(0, 0, 1920, 1080)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_1vpcs"]
-atlas = ExtResource("19_3vubs")
+[sub_resource type="AtlasTexture" id="AtlasTexture_6p4q2"]
+atlas = ExtResource("17_ffcej")
 region = Rect2(1920, 0, 1920, 1080)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_mqgew"]
-atlas = ExtResource("19_3vubs")
+[sub_resource type="AtlasTexture" id="AtlasTexture_1vpcs"]
+atlas = ExtResource("17_ffcej")
 region = Rect2(0, 1080, 1920, 1080)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_r4b1s"]
-atlas = ExtResource("19_3vubs")
+[sub_resource type="AtlasTexture" id="AtlasTexture_mqgew"]
+atlas = ExtResource("17_ffcej")
 region = Rect2(1920, 1080, 1920, 1080)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_6y7ov"]
-atlas = ExtResource("19_3vubs")
+[sub_resource type="AtlasTexture" id="AtlasTexture_r4b1s"]
+atlas = ExtResource("17_ffcej")
 region = Rect2(0, 2160, 1920, 1080)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_lue8h"]
-atlas = ExtResource("19_3vubs")
+[sub_resource type="AtlasTexture" id="AtlasTexture_6y7ov"]
+atlas = ExtResource("17_ffcej")
 region = Rect2(1920, 2160, 1920, 1080)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_bcirq"]
-atlas = ExtResource("19_3vubs")
+[sub_resource type="AtlasTexture" id="AtlasTexture_lue8h"]
+atlas = ExtResource("17_ffcej")
 region = Rect2(0, 3240, 1920, 1080)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_hvhbd"]
-atlas = ExtResource("19_3vubs")
+[sub_resource type="AtlasTexture" id="AtlasTexture_bcirq"]
+atlas = ExtResource("17_ffcej")
 region = Rect2(1920, 3240, 1920, 1080)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_k6stb"]
-atlas = ExtResource("19_3vubs")
+[sub_resource type="AtlasTexture" id="AtlasTexture_hvhbd"]
+atlas = ExtResource("17_ffcej")
 region = Rect2(0, 4320, 1920, 1080)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_jlld2"]
-atlas = ExtResource("19_3vubs")
+[sub_resource type="AtlasTexture" id="AtlasTexture_k6stb"]
+atlas = ExtResource("17_ffcej")
 region = Rect2(1920, 4320, 1920, 1080)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_1pekq"]
 animations = [{
 "frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3vubs")
+}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_6p4q2")
 }, {
@@ -112,9 +117,6 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_k6stb")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_jlld2")
 }],
 "loop": true,
 "name": &"default",

@@ -6,7 +6,6 @@
 [ext_resource type="Texture2D" uid="uid://dt3swce7gjjv3" path="res://title_logo.png" id="3_axt0k"]
 [ext_resource type="Texture2D" uid="uid://dkisat3qex4uc" path="res://Start Game.png" id="4_ohct5"]
 [ext_resource type="Texture2D" uid="uid://f71tiw1ga5f6" path="res://Quit.png" id="5_jdx38"]
-[ext_resource type="PackedScene" uid="uid://clnlcqmd07oy6" path="res://scenes/Player_3D.tscn" id="7_axt0k"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_up8d4"]
 size = Vector2(10, 10)
@@ -16,21 +15,6 @@ albedo_texture = ExtResource("2_m4dq2")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ydasx"]
 size = Vector3(2.5, 1, 1)
-
-[sub_resource type="QuadMesh" id="QuadMesh_ohct5"]
-size = Vector2(3, 2)
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_jdx38"]
-viewport_path = NodePath("SubViewport2")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ydasx"]
-resource_local_to_scene = true
-transparency = 4
-cull_mode = 2
-albedo_texture = SubResource("ViewportTexture_jdx38")
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_axt0k"]
-viewport_path = NodePath("SubViewport")
 
 [node name="MainMenu3d" type="Node3D" unique_id=2121848050]
 script = ExtResource("1_qyrbl")
@@ -75,40 +59,3 @@ texture = ExtResource("5_jdx38")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MenuContainer/Quit/Area3D" unique_id=37009022]
 shape = SubResource("BoxShape3D_ydasx")
-
-[node name="SubViewport" type="SubViewport" parent="." unique_id=726836369]
-transparent_bg = true
-size = Vector2i(1500, 1000)
-render_target_update_mode = 4
-
-[node name="Player3" parent="SubViewport" unique_id=461263173 instance=ExtResource("7_axt0k")]
-position = Vector2(800, 600)
-
-[node name="Camera2D" type="Camera2D" parent="SubViewport" unique_id=1160214758]
-anchor_mode = 0
-
-[node name="SubViewport2" type="SubViewport" parent="." unique_id=804217756]
-transparent_bg = true
-size = Vector2i(1500, 1000)
-render_target_update_mode = 4
-
-[node name="Player2" parent="SubViewport2" unique_id=622742715 instance=ExtResource("7_axt0k")]
-position = Vector2(300, 600)
-
-[node name="Camera2D" type="Camera2D" parent="SubViewport2" unique_id=412955785]
-anchor_mode = 0
-
-[node name="Player3D" type="MeshInstance3D" parent="." unique_id=908779239]
-transform = Transform3D(0.9970715, 0, 0.07647538, 0, 1, 0, -0.07647538, 0, 0.9970715, 0.62380993, -0.23598966, 0.42844784)
-mesh = SubResource("QuadMesh_ohct5")
-surface_material_override/0 = SubResource("StandardMaterial3D_ydasx")
-
-[node name="Player3D2" type="MeshInstance3D" parent="." unique_id=393366200]
-transform = Transform3D(0.9970715, 0, 0.07647538, 0, 1, 0, -0.07647538, 0, 0.9970715, -0.8860625, -0.23598966, 0.42844784)
-mesh = SubResource("QuadMesh_ohct5")
-surface_material_override/0 = SubResource("StandardMaterial3D_ydasx")
-
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1188557317]
-
-[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer" unique_id=517759208]
-texture = SubResource("ViewportTexture_axt0k")
