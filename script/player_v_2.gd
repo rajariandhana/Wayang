@@ -32,6 +32,7 @@ func _physics_process(delta):
 	move_and_slide()
 
 func _input(event):
+	super(event)
 	pass
 	#if Input.is_action_just_pressed("base_attack"):
 		#print("pressed base_attack")

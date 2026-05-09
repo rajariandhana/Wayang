@@ -1,0 +1,155 @@
+[gd_scene format=3 uid="uid://bh6sn8po7xro"]
+
+[ext_resource type="Script" uid="uid://ddgx1djb2bau" path="res://script/fighter.gd" id="1_1q4ya"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1q4ya"]
+size = Vector2(276, 561)
+
+[sub_resource type="Animation" id="Animation_38ety"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Node2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Node2D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_rsphg"]
+resource_name = "backward"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Node2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-100, -50), Vector2(-400, -50)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Node2D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, -0.17453292, -0.2617994]
+}
+
+[sub_resource type="Animation" id="Animation_1q4ya"]
+resource_name = "new_animation"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Node2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(100, -50), Vector2(400, -50)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Node2D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 0.08726646, 0.2617994]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_38ety"]
+_data = {
+&"RESET": SubResource("Animation_38ety"),
+&"left": SubResource("Animation_rsphg"),
+&"right": SubResource("Animation_1q4ya")
+}
+
+[node name="Fighter" type="Node2D" unique_id=969771174]
+script = ExtResource("1_1q4ya")
+
+[node name="Node2D" type="Node2D" parent="." unique_id=1857375845]
+
+[node name="Sprites" type="Node2D" parent="Node2D" unique_id=1747101555]
+
+[node name="Body" type="Sprite2D" parent="Node2D/Sprites" unique_id=321438573]
+offset = Vector2(-47, 12)
+
+[node name="LForearm" type="Sprite2D" parent="Node2D/Sprites" unique_id=811048158]
+
+[node name="LArm" type="Sprite2D" parent="Node2D/Sprites" unique_id=1172647800]
+
+[node name="RForearm" type="Sprite2D" parent="Node2D/Sprites" unique_id=1940700127]
+
+[node name="RArm" type="Sprite2D" parent="Node2D/Sprites" unique_id=1686462921]
+
+[node name="Skeleton2D" type="Skeleton2D" parent="Node2D" unique_id=1944065169]
+
+[node name="Hip" type="Bone2D" parent="Node2D/Skeleton2D" unique_id=1675436751]
+
+[node name="LForearm" type="Bone2D" parent="Node2D/Skeleton2D/Hip" unique_id=278228581]
+
+[node name="LArm" type="Bone2D" parent="Node2D/Skeleton2D/Hip/LForearm" unique_id=2064872569]
+
+[node name="LHand" type="Bone2D" parent="Node2D/Skeleton2D/Hip/LForearm/LArm" unique_id=909013083]
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Node2D/Skeleton2D/Hip/LForearm/LArm" unique_id=1900735168]
+remote_path = NodePath("../../../../../Sprites/LArm")
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Node2D/Skeleton2D/Hip/LForearm" unique_id=400611720]
+remote_path = NodePath("../../../../Sprites/LForearm")
+
+[node name="RForearm" type="Bone2D" parent="Node2D/Skeleton2D/Hip" unique_id=670517905]
+
+[node name="RArm" type="Bone2D" parent="Node2D/Skeleton2D/Hip/RForearm" unique_id=1086879264]
+
+[node name="RHand" type="Bone2D" parent="Node2D/Skeleton2D/Hip/RForearm/RArm" unique_id=2002948701]
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Node2D/Skeleton2D/Hip/RForearm/RArm" unique_id=177240432]
+remote_path = NodePath("../../../../../Sprites/RArm")
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Node2D/Skeleton2D/Hip/RForearm" unique_id=1354458622]
+remote_path = NodePath("../../../../Sprites/RForearm")
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Node2D/Skeleton2D/Hip" unique_id=448490148]
+remote_path = NodePath("../../../Sprites/Body")
+
+[node name="Hitbox" type="Area2D" parent="Node2D" unique_id=1934797665]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/Hitbox" unique_id=692450720]
+position = Vector2(-30, 103.5)
+shape = SubResource("RectangleShape2D_1q4ya")
+debug_color = Color(0.9721311, 0, 0.44646728, 0.41960785)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=2017779902]
+libraries/ = SubResource("AnimationLibrary_38ety")

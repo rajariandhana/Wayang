@@ -30,7 +30,13 @@ func _physics_process(delta):
 	if not is_on_floor():
 		# print(character_name + "falling")
 		velocity.y += GRAVITY * delta
-	
+
+func _input(event):
+	if Input.is_action_just_pressed("left"):
+		print("left")
+	elif Input.is_action_just_pressed("right"):
+		print("right")
+
 func take_damage(amount: int):
 	current_health -= amount
 	if current_health <= 0:
