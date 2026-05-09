@@ -43,7 +43,83 @@ transparency = 4
 cull_mode = 2
 albedo_texture = SubResource("ViewportTexture_1pekq")
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_6p4q2"]
+atlas = ExtResource("19_3vubs")
+region = Rect2(0, 0, 1920, 1080)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1vpcs"]
+atlas = ExtResource("19_3vubs")
+region = Rect2(1920, 0, 1920, 1080)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mqgew"]
+atlas = ExtResource("19_3vubs")
+region = Rect2(0, 1080, 1920, 1080)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r4b1s"]
+atlas = ExtResource("19_3vubs")
+region = Rect2(1920, 1080, 1920, 1080)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6y7ov"]
+atlas = ExtResource("19_3vubs")
+region = Rect2(0, 2160, 1920, 1080)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lue8h"]
+atlas = ExtResource("19_3vubs")
+region = Rect2(1920, 2160, 1920, 1080)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bcirq"]
+atlas = ExtResource("19_3vubs")
+region = Rect2(0, 3240, 1920, 1080)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hvhbd"]
+atlas = ExtResource("19_3vubs")
+region = Rect2(1920, 3240, 1920, 1080)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k6stb"]
+atlas = ExtResource("19_3vubs")
+region = Rect2(0, 4320, 1920, 1080)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jlld2"]
+atlas = ExtResource("19_3vubs")
+region = Rect2(1920, 4320, 1920, 1080)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_1pekq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6p4q2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1vpcs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mqgew")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r4b1s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6y7ov")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lue8h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bcirq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hvhbd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k6stb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jlld2")
+}],
+"loop": true,
+"name": &"default",
+"speed": 12.0
+}]
 
 [node name="Node3D" type="Node3D" unique_id=1179833421]
 
@@ -79,6 +155,7 @@ texture = ExtResource("3_sbb53")
 
 [node name="fire1" type="Sprite3D" parent="." unique_id=1713366874]
 transform = Transform3D(0.61, 0, 0, 0, 0.874, 0, 0, 0, 0.691, -3.4065301, 0.33411932, -2.333413)
+visible = false
 shaded = true
 alpha_cut = 1
 
@@ -90,7 +167,7 @@ texture = ExtResource("3_h0wof")
 script = ExtResource("5_yokb4")
 
 [node name="castle" type="Sprite3D" parent="." unique_id=297873733]
-transform = Transform3D(0.28, 0, 0, 0, 0.257, 0, 0, 0, 0.35, -1.065453, -0.43176502, -0.77892447)
+transform = Transform3D(0.28, 0, 0, 0, 0.257, 0, 0, 0, 0.35, -1.065453, -0.159, -0.77892447)
 shaded = true
 alpha_cut = 1
 texture = ExtResource("5_sbb53")
@@ -125,14 +202,14 @@ texture = ExtResource("10_nb1nt")
 script = ExtResource("9_u834y")
 
 [node name="castle2" type="Sprite3D" parent="." unique_id=186480505]
-transform = Transform3D(-0.28, 0, 5.284853e-08, 0, 0.257, 0, -4.2278824e-08, 0, -0.35, 2.4285724, -0.119099736, -0.6379478)
+transform = Transform3D(-0.28, 0, 5.284853e-08, 0, 0.257, 0, -4.2278824e-08, 0, -0.35, 2.429, 0.071, -0.638)
 shaded = true
 alpha_cut = 1
 texture = ExtResource("5_sbb53")
 script = ExtResource("12_u834y")
 
 [node name="ground" type="Sprite3D" parent="." unique_id=491983772]
-transform = Transform3D(-0.28, 0, 5.284853e-08, 0, 0.257, 0, -4.2278824e-08, 0, -0.35, 0.4879713, -0.6724007, -0.60323083)
+transform = Transform3D(-0.28, 0, 5.284853e-08, 0, 0.257, 0, -4.2278824e-08, 0, -0.35, 0.4879713, -0.8187636, -0.60323083)
 shaded = true
 alpha_cut = 1
 script = ExtResource("12_u834y")
@@ -156,4 +233,8 @@ surface_material_override/0 = SubResource("StandardMaterial3D_ffcej")
 script = ExtResource("16_1s3fb")
 
 [node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="." unique_id=1134275417]
+transform = Transform3D(0.38, 0, 0, 0, 0.38, 0, 0, 0, 0.38, -1.425, -0.26, -1.801)
 sprite_frames = SubResource("SpriteFrames_1pekq")
+frame_progress = 0.62156594
+speed_scale = 0.5
+script = ExtResource("20_6p4q2")
