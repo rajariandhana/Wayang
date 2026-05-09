@@ -71,6 +71,7 @@ func flip_character(to_right: bool):
 	tween.tween_property($Sprites/Larm, "scale:x", 0.0, 0.1)
 	tween.tween_property($Sprites/Larm, "scale:x", 1.0 if to_right else -1.0, 0.1)
 	tween.tween_callback(func(): is_flipping = false)
+	$VisualRoot_Right.scale.x = 1.0 if to_right else -1.0
 
 func _input(event):
 	if Input.is_action_just_pressed("base_attack"):
