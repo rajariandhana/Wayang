@@ -61,10 +61,27 @@ tracks/1/keys = {
 "values": [0.6638907]
 }
 
+[sub_resource type="Animation" id="Animation_3aryt"]
+resource_name = "test"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Skeleton2D/Hip/LForearm:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [2.298437, 1.0951611, 0.2832724]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_3aryt"]
 _data = {
 &"BASE_ATTACK": SubResource("Animation_0gmo0"),
-&"RESET": SubResource("Animation_3d0ec")
+&"RESET": SubResource("Animation_3d0ec"),
+&"test": SubResource("Animation_3aryt")
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5hfeb"]
@@ -80,7 +97,7 @@ position = Vector2(2, 0)
 [node name="LForearm" parent="Skeleton2D/Hip" index="0" unique_id=2137390749]
 position = Vector2(-141, -224)
 rotation = 0.09001601
-scale = Vector2(0.99999994, 0.99999994)
+scale = Vector2(0.9999999, 0.9999999)
 
 [node name="LArm" parent="Skeleton2D/Hip/LForearm" index="0" unique_id=2065523697]
 position = Vector2(-13.926041, 222.56702)
@@ -96,6 +113,23 @@ remote_path = NodePath("../../../../../Sprites/LArm")
 [node name="RemoteTransform2D" parent="Skeleton2D/Hip/LForearm" index="1" unique_id=578461860]
 remote_path = NodePath("../../../../Sprites/LForearm")
 
+[node name="RForearm" parent="Skeleton2D/Hip" index="1" unique_id=800654494]
+position = Vector2(158.99998, -224)
+rotation = -0.33775568
+
+[node name="RArm" parent="Skeleton2D/Hip/RForearm" index="0" unique_id=959535570]
+position = Vector2(14.977005, 220.60071)
+rotation = 0.38937122
+
+[node name="RHand" parent="Skeleton2D/Hip/RForearm/RArm" index="0" unique_id=744633856]
+position = Vector2(-9.259682, 161.15929)
+
+[node name="RemoteTransform2D" parent="Skeleton2D/Hip/RForearm/RArm" index="1" unique_id=1875616817]
+remote_path = NodePath("../../../../../Sprites/RArm")
+
+[node name="RemoteTransform2D" parent="Skeleton2D/Hip/RForearm" index="1" unique_id=1506656450]
+remote_path = NodePath("../../../../Sprites/RForearm")
+
 [node name="RemoteTransform2D" parent="Skeleton2D/Hip" index="2" unique_id=631729292]
 remote_path = NodePath("../../../Sprites/Body")
 
@@ -104,17 +138,31 @@ position = Vector2(2, 0)
 texture = ExtResource("2_5hfeb")
 flip_h = true
 
+[node name="RForearm" parent="Sprites" parent_id_path=PackedInt32Array(1314545203) index="1" unique_id=1532845350]
+position = Vector2(160.99998, -224)
+rotation = -0.33775568
+texture = ExtResource("3_0gmo0")
+offset = Vector2(-251.99863, 177.6663)
+
+[node name="RArm" parent="Sprites" parent_id_path=PackedInt32Array(1314545203) index="2" unique_id=1067402680]
+position = Vector2(248.23135, -20.826004)
+rotation = 0.05161555
+scale = Vector2(0.9999991, 0.9999991)
+texture = ExtResource("4_3d0ec")
+offset = Vector2(213.42148, -44.866226)
+flip_h = true
+
 [node name="LForearm" parent="Sprites" parent_id_path=PackedInt32Array(1314545203) index="3" unique_id=1112488534]
 position = Vector2(-139, -224)
-rotation = 0.09001599
-scale = Vector2(0.99999994, 0.99999994)
+rotation = 0.09001601
+scale = Vector2(0.9999999, 0.9999999)
 texture = ExtResource("3_0gmo0")
 offset = Vector2(252.057, 178.08287)
 flip_h = true
 
 [node name="LArm" parent="Sprites" parent_id_path=PackedInt32Array(1314545203) index="4" unique_id=1031928253]
-position = Vector2(-172.8772, -3.5859833)
-rotation = 0.75390667
+position = Vector2(-172.8772, -3.5859985)
+rotation = 0.7539067
 scale = Vector2(0.9999992, 0.9999992)
 texture = ExtResource("4_3d0ec")
 offset = Vector2(212.42729, -39.678833)

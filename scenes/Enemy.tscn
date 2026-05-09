@@ -3,8 +3,8 @@
 [ext_resource type="PackedScene" uid="uid://0f0nrgwjptal" path="res://scenes/Wayang.tscn" id="1_5wwv6"]
 [ext_resource type="Script" uid="uid://c8jigwigi1usa" path="res://scenes/enemy_1.gd" id="2_5wwv6"]
 [ext_resource type="Texture2D" uid="uid://c8vs8qsxpa1w6" path="res://asset/WayangDasamuka/body.png" id="3_1vja8"]
-[ext_resource type="Texture2D" uid="uid://cb5xm00lkeolu" path="res://asset/WayangPlayer/forearm.png" id="4_1i2q2"]
-[ext_resource type="Texture2D" uid="uid://ceoi7774hgsj2" path="res://asset/WayangPlayer/arm.png" id="5_ly5gv"]
+[ext_resource type="Texture2D" uid="uid://djsr7xpa8orcu" path="res://asset/WayangDasamuka/forearm.png" id="4_5wwv6"]
+[ext_resource type="Texture2D" uid="uid://d3ada7i3gkeqs" path="res://asset/WayangDasamuka/arm.png" id="5_1vja8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5hfeb"]
 size = Vector2(304, 568)
@@ -17,22 +17,44 @@ script = ExtResource("2_5wwv6")
 position = Vector2(2, 0)
 
 [node name="LForearm" parent="Skeleton2D/Hip" index="0" unique_id=2137390749]
-position = Vector2(-141, -224)
-rotation = 0.27750558
+position = Vector2(-173, -145)
+rotation = 0.14061661
 scale = Vector2(0.99999994, 0.99999994)
 
 [node name="LArm" parent="Skeleton2D/Hip/LForearm" index="0" unique_id=2065523697]
-position = Vector2(-13.926041, 222.56702)
-rotation = -0.29929993
-scale = Vector2(0.99999934, 0.99999934)
+position = Vector2(-3.1267967, 199.03824)
+rotation = -0.26528415
+scale = Vector2(0.9999992, 0.9999992)
 
 [node name="LHand" parent="Skeleton2D/Hip/LForearm/LArm" index="0" unique_id=2008609642]
-position = Vector2(-7.425583, 173.06047)
+position = Vector2(7.1578836, 206.91505)
+rotation = 1.5281438
+scale = Vector2(0.9999999, 0.9999999)
 
 [node name="RemoteTransform2D" parent="Skeleton2D/Hip/LForearm/LArm" index="1" unique_id=1392207029]
-remote_path = NodePath("../../../../../Sprites/LArm")
+remote_path = NodePath("../../../../../Sprites/RArm")
 
 [node name="RemoteTransform2D" parent="Skeleton2D/Hip/LForearm" index="1" unique_id=578461860]
+remote_path = NodePath("../../../../Sprites/RForearm")
+
+[node name="RForearm" parent="Skeleton2D/Hip" index="1" unique_id=800654494]
+position = Vector2(151, -185)
+rotation = -0.38643414
+scale = Vector2(0.99999994, 0.99999994)
+
+[node name="RArm" parent="Skeleton2D/Hip/RForearm" index="0" unique_id=959535570]
+position = Vector2(-3.2923431, 200.82124)
+rotation = 0.49871522
+
+[node name="RHand" parent="Skeleton2D/Hip/RForearm/RArm" index="0" unique_id=744633856]
+position = Vector2(4.4341965, 208.6661)
+rotation = 1.5141791
+scale = Vector2(0.99999994, 0.99999994)
+
+[node name="RemoteTransform2D" parent="Skeleton2D/Hip/RForearm/RArm" index="1" unique_id=1875616817]
+remote_path = NodePath("../../../../../Sprites/LArm")
+
+[node name="RemoteTransform2D" parent="Skeleton2D/Hip/RForearm" index="1" unique_id=1506656450]
 remote_path = NodePath("../../../../Sprites/LForearm")
 
 [node name="RemoteTransform2D" parent="Skeleton2D/Hip" index="2" unique_id=631729292]
@@ -43,22 +65,37 @@ position = Vector2(2, 0)
 texture = ExtResource("3_1vja8")
 flip_h = true
 
-[node name="LForearm" parent="Sprites" parent_id_path=PackedInt32Array(1314545203) index="3" unique_id=1112488534]
-position = Vector2(-139, -224)
-rotation = 0.27750558
+[node name="RForearm" parent="Sprites" parent_id_path=PackedInt32Array(1314545203) index="1" unique_id=1532845350]
+position = Vector2(-171, -145)
+rotation = 0.14061661
 scale = Vector2(0.99999994, 0.99999994)
-texture = ExtResource("4_1i2q2")
-offset = Vector2(252.057, 178.08287)
+texture = ExtResource("4_5wwv6")
+offset = Vector2(14.001366, 89.666306)
+
+[node name="RArm" parent="Sprites" parent_id_path=PackedInt32Array(1314545203) index="2" unique_id=1067402680]
+position = Vector2(-201.99187, 51.635437)
+rotation = -0.12466755
+scale = Vector2(0.9999992, 0.9999992)
+texture = ExtResource("5_1vja8")
+offset = Vector2(35.6734, 133.83502)
+flip_h = true
+
+[node name="LForearm" parent="Sprites" parent_id_path=PackedInt32Array(1314545203) index="3" unique_id=1112488534]
+position = Vector2(153, -185)
+rotation = -0.38643414
+scale = Vector2(0.99999994, 0.99999994)
+texture = ExtResource("4_5wwv6")
+offset = Vector2(-13.559784, 92.41727)
 flip_h = true
 
 [node name="LArm" parent="Sprites" parent_id_path=PackedInt32Array(1314545203) index="4" unique_id=1031928253]
-position = Vector2(-213.36716, -13.763153)
-rotation = -0.02179436
-scale = Vector2(0.9999993, 0.9999993)
-texture = ExtResource("5_ly5gv")
-offset = Vector2(212.42729, -39.678833)
+position = Vector2(225.63754, 2.253296)
+rotation = 0.11228108
+scale = Vector2(0.99999905, 0.99999905)
+texture = ExtResource("5_1vja8")
+offset = Vector2(33.298782, 135.14066)
 flip_h = true
 
-[node name="CollisionShape2D" parent="Area2D" parent_id_path=PackedInt32Array(553513446) index="0" unique_id=802097923]
+[node name="CollisionShape2D" parent="Area2D" parent_id_path=PackedInt32Array(553513446) index="0" unique_id=504424180]
 position = Vector2(6, 54)
 shape = SubResource("RectangleShape2D_5hfeb")
