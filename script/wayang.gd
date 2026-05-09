@@ -4,7 +4,7 @@ extends CharacterBody2D
 @export var character_name: String = "Unknown"
 @export var max_health: int = 100;
 var current_health: int
-@export var move_speed: float = 150.0
+@export var move_speed: float = 1500.0
 
 func _ready():
 	current_health = max_health

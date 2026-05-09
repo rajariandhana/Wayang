@@ -1,9 +1,8 @@
 [gd_scene format=3 uid="uid://p2mn3weeb542"]
 
-[ext_resource type="PackedScene" uid="uid://mdmo1jgxfhs7" path="res://scenes/Player.tscn" id="1_w2twt"]
+[ext_resource type="PackedScene" uid="uid://dvkxbycii4b0e" path="res://scenes/Player.tscn" id="1_w2twt"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_w2twt"]
-size = Vector2(1152, 32)
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_w2twt"]
 
 [node name="MainScene" type="Node2D" unique_id=45695165]
 
@@ -16,6 +15,6 @@ position = Vector2(0, -50)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=641613231]
 position = Vector2(0, 25)
-shape = SubResource("RectangleShape2D_w2twt")
+shape = SubResource("WorldBoundaryShape2D_w2twt")
 
 [node name="Sprite2D" type="Sprite2D" parent="StaticBody2D" unique_id=362880117]

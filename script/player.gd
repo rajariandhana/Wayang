@@ -2,10 +2,12 @@
 class_name Player
 extends Wayang
 
-const GRAVITY = 800.0
-const JUMP_FORCE = -400.0
+const GRAVITY = 8000.0
+const JUMP_FORCE = -2000.0
 var is_flipping = false
 var facing_right = true
+
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 func on_ready():
 	character_name = "Anoman"
@@ -49,10 +51,31 @@ func flip_character(to_right: bool):
 	tween.set_trans(Tween.TRANS_SINE)
 	tween.tween_property($AnimatedSprite2D, "scale:x", 0.0, 0.1)
 	tween.tween_property($AnimatedSprite2D, "scale:x", 1.0 if to_right else -1.0, 0.1)
+
+	# eh knp ga satu player aja yg di flip
+	# $Sprites.scale.x = -1 if facing_right else 1
+
+	# tween.tween_property($Sprites, "scale:x", 0.0, 0.1)
+	# tween.tween_property($Sprites, "scale:x", 1.0 if to_right else -1.0, 0.1)
+	# tween.tween_property($Sprites/Body, "scale:x", 0.0, 0.1)
+	# tween.tween_property($Sprites/Body, "scale:x", 1.0 if to_right else -1.0, 0.1)
+	# tween.tween_property($Sprites/RForearm, "scale:x", 0.0, 0.1)
+	# tween.tween_property($Sprites/RForearm, "scale:x", 1.0 if to_right else -1.0, 0.1)
+	# tween.tween_property($Sprites/RArm, "scale:x", 0.0, 0.1)
+	# tween.tween_property($Sprites/RArm, "scale:x", 1.0 if to_right else -1.0, 0.1)
+	# tween.tween_property($Sprites/LForearm, "scale:x", 0.0, 0.1)
+	# tween.tween_property($Sprites/LForearm, "scale:x", 1.0 if to_right else -1.0, 0.1)
+	# tween.tween_property($Sprites/Larm, "scale:x", 0.0, 0.1)
+	# tween.tween_property($Sprites/Larm, "scale:x", 1.0 if to_right else -1.0, 0.1)
 	tween.tween_callback(func(): is_flipping = false)
 
+func _input(event):
+	if event is InputEventMouseButton:
+		if event.pressed:
+			attack();
+
 func attack():
-	print("attacks!")
+	animation_player.play("BASE_ATTACK")
 
 func die():
 	print("Player died!")
