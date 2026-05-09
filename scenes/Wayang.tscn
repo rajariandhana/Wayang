@@ -77,18 +77,17 @@ debug_color = Color(0.433078, 0.5949897, 0.24834844, 0.41960785)
 [node name="Body" type="Sprite2D" parent="Sprites" unique_id=189229996]
 offset = Vector2(24, -44.666668)
 
-[node name="RForearm" type="Sprite2D" parent="Sprites" unique_id=1532845350]
+[node name="LForearm" type="Sprite2D" parent="Sprites" unique_id=1532845350]
 offset = Vector2(12.001366, 90.666306)
 
-[node name="RArm" type="Sprite2D" parent="Sprites" unique_id=1067402680]
-position = Vector2(-190, 1.5258789e-05)
+[node name="LArm" type="Sprite2D" parent="Sprites" unique_id=1067402680]
 rotation = 1.9502429
 scale = Vector2(0.99999905, 0.99999905)
 offset = Vector2(-34.772285, 134.39835)
 
-[node name="LForearm" type="Sprite2D" parent="Sprites" unique_id=1112488534]
+[node name="RForearm" type="Sprite2D" parent="Sprites" unique_id=1112488534]
 
-[node name="LArm" type="Sprite2D" parent="Sprites" unique_id=1031928253]
+[node name="RArm" type="Sprite2D" parent="Sprites" unique_id=1031928253]
 offset = Vector2(-34.098694, 133.61227)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=806136492]

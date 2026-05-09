@@ -15,83 +15,87 @@ script = ExtResource("2_5wwv6")
 
 [node name="Hip" parent="Skeleton2D" parent_id_path=PackedInt32Array(1458005949) index="0" unique_id=333317538]
 position = Vector2(2, 0)
+rotation = -3.1415925
+scale = Vector2(1, -1)
 
 [node name="LForearm" parent="Skeleton2D/Hip" index="0" unique_id=2137390749]
 position = Vector2(-173, -145)
-rotation = 0.14061661
+rotation = 0.28675216
 scale = Vector2(0.99999994, 0.99999994)
 
 [node name="LArm" parent="Skeleton2D/Hip/LForearm" index="0" unique_id=2065523697]
-position = Vector2(-3.1267967, 199.03824)
-rotation = -0.26528415
-scale = Vector2(0.9999992, 0.9999992)
+position = Vector2(-0.26257324, 205.06082)
+rotation = -0.41452527
+scale = Vector2(0.99999917, 0.99999917)
 
 [node name="LHand" parent="Skeleton2D/Hip/LForearm/LArm" index="0" unique_id=2008609642]
-position = Vector2(7.1578836, 206.91505)
+position = Vector2(-4.9200172, 216.70119)
 rotation = 1.5281438
-scale = Vector2(0.9999999, 0.9999999)
+scale = Vector2(0.99999964, 0.99999964)
 
 [node name="RemoteTransform2D" parent="Skeleton2D/Hip/LForearm/LArm" index="1" unique_id=1392207029]
-remote_path = NodePath("../../../../../Sprites/RArm")
+remote_path = NodePath("../../../../../Sprites/LArm")
 
 [node name="RemoteTransform2D" parent="Skeleton2D/Hip/LForearm" index="1" unique_id=578461860]
-remote_path = NodePath("../../../../Sprites/RForearm")
+remote_path = NodePath("../../../../Sprites/LForearm")
 
 [node name="RForearm" parent="Skeleton2D/Hip" index="1" unique_id=800654494]
 position = Vector2(151, -185)
-rotation = -0.38643414
-scale = Vector2(0.99999994, 0.99999994)
+rotation = -0.41633424
+scale = Vector2(0.9999999, 0.9999999)
 
 [node name="RArm" parent="Skeleton2D/Hip/RForearm" index="0" unique_id=959535570]
 position = Vector2(-3.2923431, 200.82124)
-rotation = 0.49871522
+rotation = 0.39138272
 
 [node name="RHand" parent="Skeleton2D/Hip/RForearm/RArm" index="0" unique_id=744633856]
-position = Vector2(4.4341965, 208.6661)
+position = Vector2(6.071926, 222.09828)
 rotation = 1.5141791
-scale = Vector2(0.99999994, 0.99999994)
+scale = Vector2(0.99999976, 0.99999976)
 
 [node name="RemoteTransform2D" parent="Skeleton2D/Hip/RForearm/RArm" index="1" unique_id=1875616817]
-remote_path = NodePath("../../../../../Sprites/LArm")
+remote_path = NodePath("../../../../../Sprites/RArm")
 
 [node name="RemoteTransform2D" parent="Skeleton2D/Hip/RForearm" index="1" unique_id=1506656450]
-remote_path = NodePath("../../../../Sprites/LForearm")
+remote_path = NodePath("../../../../Sprites/RForearm")
 
 [node name="RemoteTransform2D" parent="Skeleton2D/Hip" index="2" unique_id=631729292]
 remote_path = NodePath("../../../Sprites/Body")
 
 [node name="Body" parent="Sprites" parent_id_path=PackedInt32Array(1314545203) index="0" unique_id=189229996]
 position = Vector2(2, 0)
+rotation = 3.1415925
+scale = Vector2(1, -1)
 texture = ExtResource("3_1vja8")
 flip_h = true
 
-[node name="RForearm" parent="Sprites" parent_id_path=PackedInt32Array(1314545203) index="1" unique_id=1532845350]
-position = Vector2(-171, -145)
-rotation = 0.14061661
-scale = Vector2(0.99999994, 0.99999994)
-texture = ExtResource("4_5wwv6")
-offset = Vector2(14.001366, 89.666306)
-
-[node name="RArm" parent="Sprites" parent_id_path=PackedInt32Array(1314545203) index="2" unique_id=1067402680]
-position = Vector2(-201.99187, 51.635437)
-rotation = -0.12466755
-scale = Vector2(0.9999992, 0.9999992)
-texture = ExtResource("5_1vja8")
-offset = Vector2(35.6734, 133.83502)
-flip_h = true
-
-[node name="LForearm" parent="Sprites" parent_id_path=PackedInt32Array(1314545203) index="3" unique_id=1112488534]
-position = Vector2(153, -185)
-rotation = -0.38643414
-scale = Vector2(0.99999994, 0.99999994)
+[node name="LForearm" parent="Sprites" parent_id_path=PackedInt32Array(1314545203) index="1" unique_id=1532845350]
+position = Vector2(175, -145)
+rotation = 2.8548405
+scale = Vector2(0.99999994, -0.99999994)
 texture = ExtResource("4_5wwv6")
 offset = Vector2(-13.559784, 92.41727)
 flip_h = true
 
-[node name="LArm" parent="Sprites" parent_id_path=PackedInt32Array(1314545203) index="4" unique_id=1031928253]
-position = Vector2(225.63754, 2.253296)
-rotation = 0.11228108
-scale = Vector2(0.99999905, 0.99999905)
+[node name="LArm" parent="Sprites" parent_id_path=PackedInt32Array(1314545203) index="2" unique_id=1067402680]
+position = Vector2(233.25095, 51.613403)
+rotation = -3.0138197
+scale = Vector2(0.9999991, -0.9999991)
+texture = ExtResource("5_1vja8")
+offset = Vector2(33.34838, 134.36836)
+flip_h = true
+
+[node name="RForearm" parent="Sprites" parent_id_path=PackedInt32Array(1314545203) index="3" unique_id=1112488534]
+position = Vector2(-149, -185)
+rotation = -2.7252584
+scale = Vector2(0.9999999, -0.9999999)
+texture = ExtResource("4_5wwv6")
+offset = Vector2(14.334473, 92.0957)
+
+[node name="RArm" parent="Sprites" parent_id_path=PackedInt32Array(1314545203) index="4" unique_id=1031928253]
+position = Vector2(-227.20313, -0.0019683838)
+rotation = -3.116641
+scale = Vector2(0.9999989, -0.9999989)
 texture = ExtResource("5_1vja8")
 offset = Vector2(33.298782, 135.14066)
 flip_h = true

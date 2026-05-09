@@ -1,24 +1,18 @@
 extends Wayang
 
-const GRAVITY = 8000.0
-const JUMP_FORCE = -2000.0
-const DECELERATION = 4000.0
-
-
 func on_ready():
 	character_name = "Anoman"
 	health_bar.set_health(current_health, max_health)
 
 func _physics_process(delta):
+	super(delta)
 	if Input.is_action_just_pressed("base_attack"):
 		#print("pressed base_attack")
 		attack()
-	# Gravity
-	if not is_on_floor():
-		velocity.y += GRAVITY * delta
-
+	
 	# Jump
 	if Input.is_action_just_pressed("ui_up") and is_on_floor():
+		print("jump")
 		velocity.y = JUMP_FORCE
 
 	# Movement
@@ -30,11 +24,11 @@ func _physics_process(delta):
 		velocity.x = move_toward(velocity.x, 0, move_speed)
 	
 	if Input.is_action_just_pressed("ui_left"):
-		print("left")
-		$Skeleton2D/Hip.scale.x = -1
+		# print("left")
+		turn(false)
 	elif Input.is_action_just_pressed("ui_right"):
-		print("right")
-		$Skeleton2D/Hip.scale.x = 1
+		# print("right")
+		turn(true)
 	move_and_slide()
 
 func _input(event):

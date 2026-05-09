@@ -10,14 +10,16 @@
 position = Vector2(1317, 1592)
 
 [node name="PlayerV2" parent="." unique_id=222677225 node_paths=PackedStringArray("health_bar") instance=ExtResource("1_nqblx")]
-position = Vector2(380, -392)
+position = Vector2(-601, -392)
 health_bar = NodePath("../Health")
 
 [node name="Enemy1" parent="." unique_id=847371369 node_paths=PackedStringArray("health_bar") instance=ExtResource("2_4pi78")]
-position = Vector2(-504, -400)
+position = Vector2(714, -151)
+scale = Vector2(1.5, 1.5)
 health_bar = NodePath("../Health2")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1356225281]
+position = Vector2(0, 201)
 shape = SubResource("WorldBoundaryShape2D_sjqlj")
 
 [node name="Health" parent="." unique_id=640281375 instance=ExtResource("3_4pi78")]
