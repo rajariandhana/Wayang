@@ -47,35 +47,7 @@ func _physics_process(delta):
 	move_and_slide()
 
 func flip_character(to_right: bool):
-<<<<<<< Updated upstream
-	if is_flipping:
-		return
-	is_flipping = true
-	var tween = create_tween()
-	tween.set_ease(Tween.EASE_IN_OUT)
-	tween.set_trans(Tween.TRANS_SINE)
-	tween.tween_property($AnimatedSprite2D, "scale:x", 0.0, 0.1)
-	tween.tween_property($AnimatedSprite2D, "scale:x", 1.0 if to_right else -1.0, 0.1)
-
-	# eh knp ga satu player aja yg di flip
-	# $Sprites.scale.x = -1 if facing_right else 1
-
-	# tween.tween_property($Sprites, "scale:x", 0.0, 0.1)
-	# tween.tween_property($Sprites, "scale:x", 1.0 if to_right else -1.0, 0.1)
-	tween.tween_property($Sprites/Body, "scale:x", 0.0, 0.1)
-	tween.tween_property($Sprites/Body, "scale:x", 1.0 if to_right else -1.0, 0.1)
-	tween.tween_property($Sprites/RForearm, "scale:x", 0.0, 0.1)
-	tween.tween_property($Sprites/RForearm, "scale:x", 1.0 if to_right else -1.0, 0.1)
-	tween.tween_property($Sprites/RArm, "scale:x", 0.0, 0.1)
-	tween.tween_property($Sprites/RArm, "scale:x", 1.0 if to_right else -1.0, 0.1)
-	tween.tween_property($Sprites/LForearm, "scale:x", 0.0, 0.1)
-	tween.tween_property($Sprites/LForearm, "scale:x", 1.0 if to_right else -1.0, 0.1)
-	tween.tween_property($Sprites/Larm, "scale:x", 0.0, 0.1)
-	tween.tween_property($Sprites/Larm, "scale:x", 1.0 if to_right else -1.0, 0.1)
-	tween.tween_callback(func(): is_flipping = false)
-=======
 	$VisualRoot_Right.scale.x = 1.0 if to_right else -1.0
->>>>>>> Stashed changes
 
 func _input(event):
 	if Input.is_action_just_pressed("base_attack"):

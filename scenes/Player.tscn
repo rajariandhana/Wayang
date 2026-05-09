@@ -134,28 +134,29 @@ offset = Vector2(-52, 12.333333)
 
 [node name="RForearm" type="Sprite2D" parent="VisualRoot_Right/Sprites" unique_id=784028871]
 position = Vector2(-187, -168)
-rotation = 0.12025743
-scale = Vector2(0.99999315, 0.99999315)
+rotation = 0.12025745
+scale = Vector2(0.9999958, 0.9999958)
 texture = ExtResource("5_70d11")
 offset = Vector2(-252.86093, 176.82498)
 
 [node name="RArm" type="Sprite2D" parent="VisualRoot_Right/Sprites" unique_id=419255054]
-position = Vector2(-193.24985, 50.30095)
-rotation = 0.04311723
-scale = Vector2(0.99999183, 0.99999183)
+position = Vector2(-193.2498, 50.298477)
+rotation = 0.04311694
+scale = Vector2(0.99999624, 0.99999624)
 texture = ExtResource("6_cw2d6")
 offset = Vector2(-215.54729, -46.183834)
 
 [node name="LForearm" type="Sprite2D" parent="VisualRoot_Right/Sprites" unique_id=495238494]
 position = Vector2(119, -164)
-rotation = -1.2800328
-scale = Vector2(0.99999785, 0.99999785)
+rotation = 0.046015035
+scale = Vector2(0.9999994, 0.9999994)
 texture = ExtResource("5_70d11")
 offset = Vector2(-253.33403, 175.66649)
 
 [node name="LArm" type="Sprite2D" parent="VisualRoot_Right/Sprites" unique_id=1619991686]
-position = Vector2(334.16577, -112.13875)
-rotation = -1.8305583
+position = Vector2(120.82158, 57.318207)
+rotation = 0.035491977
+scale = Vector2(0.9999995, 0.9999995)
 texture = ExtResource("6_cw2d6")
 offset = Vector2(-214.66708, -44.999966)
 
@@ -167,11 +168,8 @@ rest = Transform2D(1, 0, 0, 1, 0, 0)
 
 [node name="RForearm" type="Bone2D" parent="VisualRoot_Right/Skeleton2D/Hip" unique_id=1580984706]
 position = Vector2(-187, -168)
-<<<<<<< Updated upstream
-rotation = 0.0027582645
-=======
-rotation = 0.1975539
->>>>>>> Stashed changes
+rotation = -0.118204765
+scale = Vector2(0.9999969, 0.9999969)
 rest = Transform2D(1, 0, 0, 1, -187, -168)
 metadata/_local_pose_override_enabled_ = true
 
@@ -220,45 +218,7 @@ remote_path = NodePath("../../../../Sprites/LForearm")
 [node name="RArmTarget" type="Node2D" parent="VisualRoot_Right/IK Targets" unique_id=827020539]
 position = Vector2(-201, 321)
 
-<<<<<<< Updated upstream
-[node name="RForearm" type="Sprite2D" parent="Sprites" unique_id=784028871]
-position = Vector2(-187, -168)
-rotation = 0.002743721
-texture = ExtResource("5_70d11")
-offset = Vector2(254.00137, 177.66632)
-flip_h = true
-
-[node name="RArm" type="Sprite2D" parent="Sprites" unique_id=419255054]
-position = Vector2(-200.5598, 35.96309)
-rotation = 0.0027763539
-scale = Vector2(0.9999999, 0.9999999)
-texture = ExtResource("6_cw2d6")
-offset = Vector2(214.027, -47.458164)
-flip_h = true
-
-[node name="LForearm" type="Sprite2D" parent="Sprites" unique_id=495238494]
-position = Vector2(119, -164)
-rotation = -0.1674294
-scale = Vector2(0.99999785, 0.99999785)
-texture = ExtResource("5_70d11")
-offset = Vector2(-253.33403, 175.66649)
-
-[node name="LArm" type="Sprite2D" parent="Sprites" unique_id=1619991686]
-position = Vector2(167.6615, 51.909912)
-rotation = -0.9056337
-scale = Vector2(0.9999982, 0.9999982)
-texture = ExtResource("6_cw2d6")
-offset = Vector2(-214.66708, -44.999966)
-
-[node name="IK Targets" type="Node2D" parent="." unique_id=731570115]
-
-[node name="RArmTarget" type="Node2D" parent="IK Targets" unique_id=827020539]
-position = Vector2(-211, 193)
-
-[node name="LArmTarget" type="Node2D" parent="IK Targets" unique_id=2037047600]
-=======
 [node name="LArmTarget" type="Node2D" parent="VisualRoot_Right/IK Targets" unique_id=2037047600]
->>>>>>> Stashed changes
 position = Vector2(123, 322)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="VisualRoot_Right" unique_id=1584958948]
