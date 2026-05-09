@@ -18,15 +18,18 @@ func _physics_process(delta):
 		velocity.y += GRAVITY * delta
 
 	# jump
-	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
+	if Input.is_action_just_pressed("ui_up") and is_on_floor():
 		velocity.y = JUMP_FORCE
 
 	# horizontal movement
-	var direction = 0.0
-	if Input.is_key_pressed(KEY_LEFT) or Input.is_key_pressed(KEY_A):
-		direction = -1.0
-	if Input.is_key_pressed(KEY_RIGHT) or Input.is_key_pressed(KEY_D):
-		direction = 1.0
+	# var direction = 0.0
+	# if Input.is_key_pressed(KEY_LEFT) or Input.is_key_pressed(KEY_A):
+	# 	direction = -1.0
+	# if Input.is_key_pressed(KEY_RIGHT) or Input.is_key_pressed(KEY_D):
+	# 	direction = 1.0
+
+	var direction = Input.get_axis("ui_left", "ui_right")
+	velocity.x = direction * move_speed if direction else move_toward(velocity.x, 0, move_speed)
 
 	if direction:
 		velocity.x = direction * move_speed
@@ -57,21 +60,20 @@ func flip_character(to_right: bool):
 
 	# tween.tween_property($Sprites, "scale:x", 0.0, 0.1)
 	# tween.tween_property($Sprites, "scale:x", 1.0 if to_right else -1.0, 0.1)
-	# tween.tween_property($Sprites/Body, "scale:x", 0.0, 0.1)
-	# tween.tween_property($Sprites/Body, "scale:x", 1.0 if to_right else -1.0, 0.1)
-	# tween.tween_property($Sprites/RForearm, "scale:x", 0.0, 0.1)
-	# tween.tween_property($Sprites/RForearm, "scale:x", 1.0 if to_right else -1.0, 0.1)
-	# tween.tween_property($Sprites/RArm, "scale:x", 0.0, 0.1)
-	# tween.tween_property($Sprites/RArm, "scale:x", 1.0 if to_right else -1.0, 0.1)
-	# tween.tween_property($Sprites/LForearm, "scale:x", 0.0, 0.1)
-	# tween.tween_property($Sprites/LForearm, "scale:x", 1.0 if to_right else -1.0, 0.1)
-	# tween.tween_property($Sprites/Larm, "scale:x", 0.0, 0.1)
-	# tween.tween_property($Sprites/Larm, "scale:x", 1.0 if to_right else -1.0, 0.1)
+	tween.tween_property($Sprites/Body, "scale:x", 0.0, 0.1)
+	tween.tween_property($Sprites/Body, "scale:x", 1.0 if to_right else -1.0, 0.1)
+	tween.tween_property($Sprites/RForearm, "scale:x", 0.0, 0.1)
+	tween.tween_property($Sprites/RForearm, "scale:x", 1.0 if to_right else -1.0, 0.1)
+	tween.tween_property($Sprites/RArm, "scale:x", 0.0, 0.1)
+	tween.tween_property($Sprites/RArm, "scale:x", 1.0 if to_right else -1.0, 0.1)
+	tween.tween_property($Sprites/LForearm, "scale:x", 0.0, 0.1)
+	tween.tween_property($Sprites/LForearm, "scale:x", 1.0 if to_right else -1.0, 0.1)
+	tween.tween_property($Sprites/Larm, "scale:x", 0.0, 0.1)
+	tween.tween_property($Sprites/Larm, "scale:x", 1.0 if to_right else -1.0, 0.1)
 	tween.tween_callback(func(): is_flipping = false)
 
 func _input(event):
-	if event is InputEventMouseButton:
-		if event.pressed:
+	if Input.is_action_just_pressed("base_attack"):
 			attack();
 
 func attack():

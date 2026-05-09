@@ -90,7 +90,7 @@ tracks/0/path = NodePath("IK Targets/LArmTarget:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.05142208, 0.0999, 0.1505396, 0.20007983),
+"times": PackedFloat32Array(0, 0.05142208, 0.0999, 0.1505396, 0.20047148),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 0,
 "values": [Vector2(123, 322), Vector2(300, 143), Vector2(416, -62), Vector2(487, -160), Vector2(425, -358)]
@@ -129,6 +129,7 @@ rest = Transform2D(1, 0, 0, 1, 0, 0)
 
 [node name="RForearm" type="Bone2D" parent="Skeleton2D/Hip" unique_id=1580984706]
 position = Vector2(-187, -168)
+rotation = 0.0027582645
 rest = Transform2D(1, 0, 0, 1, -187, -168)
 metadata/_local_pose_override_enabled_ = true
 
@@ -178,31 +179,30 @@ offset = Vector2(-52, 12.333333)
 
 [node name="RForearm" type="Sprite2D" parent="Sprites" unique_id=784028871]
 position = Vector2(-187, -168)
-rotation = 0.005119934
-scale = Vector2(0.9998405, 0.9998405)
+rotation = 0.002743721
 texture = ExtResource("5_70d11")
 offset = Vector2(254.00137, 177.66632)
 flip_h = true
 
 [node name="RArm" type="Sprite2D" parent="Sprites" unique_id=419255054]
-position = Vector2(-201.04927, 36.007217)
-rotation = -0.00030971845
-scale = Vector2(0.99991983, 0.99991983)
+position = Vector2(-200.5598, 35.96309)
+rotation = 0.0027763539
+scale = Vector2(0.9999999, 0.9999999)
 texture = ExtResource("6_cw2d6")
 offset = Vector2(214.027, -47.458164)
 flip_h = true
 
 [node name="LForearm" type="Sprite2D" parent="Sprites" unique_id=495238494]
 position = Vector2(119, -164)
-rotation = -0.16768144
-scale = Vector2(0.9998491, 0.9998491)
+rotation = -0.1674294
+scale = Vector2(0.99999785, 0.99999785)
 texture = ExtResource("5_70d11")
 offset = Vector2(-253.33403, 175.66649)
 
 [node name="LArm" type="Sprite2D" parent="Sprites" unique_id=1619991686]
-position = Vector2(167.7198, 51.909058)
-rotation = -0.9054173
-scale = Vector2(0.9997053, 0.9997053)
+position = Vector2(167.6615, 51.909912)
+rotation = -0.9056337
+scale = Vector2(0.9999982, 0.9999982)
 texture = ExtResource("6_cw2d6")
 offset = Vector2(-214.66708, -44.999966)
 
