@@ -7,7 +7,8 @@ const JUMP_FORCE = -2000.0
 var is_flipping = false
 var facing_right = true
 
-@onready var animation_player: AnimationPlayer = $AnimationPlayer
+
+@onready var animation_player: AnimationPlayer = $VisualRoot_Right/AnimationPlayer
 
 func on_ready():
 	character_name = "Anoman"
@@ -46,6 +47,7 @@ func _physics_process(delta):
 	move_and_slide()
 
 func flip_character(to_right: bool):
+<<<<<<< Updated upstream
 	if is_flipping:
 		return
 	is_flipping = true
@@ -71,7 +73,9 @@ func flip_character(to_right: bool):
 	tween.tween_property($Sprites/Larm, "scale:x", 0.0, 0.1)
 	tween.tween_property($Sprites/Larm, "scale:x", 1.0 if to_right else -1.0, 0.1)
 	tween.tween_callback(func(): is_flipping = false)
+=======
 	$VisualRoot_Right.scale.x = 1.0 if to_right else -1.0
+>>>>>>> Stashed changes
 
 func _input(event):
 	if Input.is_action_just_pressed("base_attack"):
