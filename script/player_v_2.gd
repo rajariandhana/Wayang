@@ -3,7 +3,7 @@ extends Wayang
 const GRAVITY = 8000.0
 const JUMP_FORCE = -2000.0
 const DECELERATION = 4000.0
-@export var health_bar: CanvasLayer
+
 
 func on_ready():
 	character_name = "Anoman"

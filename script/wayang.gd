@@ -6,6 +6,7 @@ extends CharacterBody2D
 var current_health: int
 @export var move_speed: float = 1500.0
 @onready var animation_player = $AnimationPlayer
+@export var health_bar: CanvasLayer
 
 func _ready():
 	current_health = max_health
