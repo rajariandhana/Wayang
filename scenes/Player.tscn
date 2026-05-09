@@ -120,6 +120,8 @@ _data = {
 [node name="Player" type="CharacterBody2D" unique_id=461263173]
 script = ExtResource("1_p0vlq")
 character_name = "An0man"
+max_health = null
+move_speed = null
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=583774019]
 shape = SubResource("CapsuleShape2D_v6fml")
@@ -134,15 +136,15 @@ offset = Vector2(-52, 12.333333)
 
 [node name="RForearm" type="Sprite2D" parent="VisualRoot_Right/Sprites" unique_id=784028871]
 position = Vector2(-187, -168)
-rotation = 0.12025745
+rotation = 0.12025739
 scale = Vector2(0.9999958, 0.9999958)
 texture = ExtResource("5_70d11")
 offset = Vector2(-252.86093, 176.82498)
 
 [node name="RArm" type="Sprite2D" parent="VisualRoot_Right/Sprites" unique_id=419255054]
-position = Vector2(-193.2498, 50.298477)
-rotation = 0.04311694
-scale = Vector2(0.99999624, 0.99999624)
+position = Vector2(-193.24985, 50.29863)
+rotation = 0.043116823
+scale = Vector2(0.9999962, 0.9999962)
 texture = ExtResource("6_cw2d6")
 offset = Vector2(-215.54729, -46.183834)
 

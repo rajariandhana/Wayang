@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://c85s0gsxax6q"]
+
+[ext_resource type="Script" uid="uid://ccjm1e53obuyi" path="res://scenes/health_bar.gd" id="1_ha6pp"]
+[ext_resource type="Texture2D" uid="uid://bbo35yd24ctwu" path="res://asset/WayangPlayer/HPBar (1).png" id="2_8p41q"]
+[ext_resource type="Texture2D" uid="uid://beajdt3msdkar" path="res://asset/WayangPlayer/Rectangle 3.png" id="3_6xj70"]
+
+[node name="Health" type="CanvasLayer" unique_id=640281375]
+script = ExtResource("1_ha6pp")
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="." unique_id=1432290962]
+offset_right = 663.0
+offset_bottom = 40.0
+value = 100.0
+texture_under = ExtResource("2_8p41q")
+texture_progress = ExtResource("3_6xj70")
