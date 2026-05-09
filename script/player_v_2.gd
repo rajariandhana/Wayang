@@ -5,6 +5,9 @@ const JUMP_FORCE = -2000.0
 const DECELERATION = 4000.0
 
 func _physics_process(delta):
+	if Input.is_action_just_pressed("base_attack"):
+		#print("pressed base_attack")
+		attack()
 	# Gravity
 	if not is_on_floor():
 		velocity.y += GRAVITY * delta
@@ -30,8 +33,10 @@ func _physics_process(delta):
 	move_and_slide()
 
 func _input(event):
-	if event.is_action_pressed("base_attack"):
-		attack()
+	pass
+	#if Input.is_action_just_pressed("base_attack"):
+		#print("pressed base_attack")
+		#attack()
 
 func attack():
 	animation_player.play("BASE_ATTACK")

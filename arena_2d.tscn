@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://nk47tgqollu4"]
+
+[ext_resource type="PackedScene" path="res://scenes/PlayerV2.tscn" id="1_nqblx"]
+[ext_resource type="PackedScene" path="res://scenes/Enemy.tscn" id="2_4pi78"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_sjqlj"]
+
+[node name="Arena2d" type="StaticBody2D" unique_id=613410957]
+position = Vector2(1317, 1592)
+
+[node name="PlayerV2" parent="." unique_id=222677225 instance=ExtResource("1_nqblx")]
+position = Vector2(-449, -509)
+
+[node name="Enemy1" parent="." unique_id=847371369 instance=ExtResource("2_4pi78")]
+position = Vector2(351, -409)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1356225281]
+shape = SubResource("WorldBoundaryShape2D_sjqlj")

@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://ppvmsvcba1e8"]
+
+[ext_resource type="Texture2D" uid="uid://crnsiqddx3qik" path="res://cloth_texture.jpg" id="2_owss3"]
+[ext_resource type="PackedScene" uid="uid://mdmo1jgxfhs7" path="res://scenes/Player.tscn" id="2_rv1xx"]
+
+[node name="MainMenu" type="Control" unique_id=1067288366]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="TextureRect" parent="." unique_id=1365704228]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_owss3")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="DatStick" type="Control" parent="." unique_id=2206063]
+anchors_preset = 0
+offset_left = 593.0
+offset_top = 1186.0
+offset_right = 633.00006
+offset_bottom = 1226.0
+pivot_offset_ratio = Vector2(0, 15)
+
+[node name="WoodBox" type="ColorRect" parent="DatStick" unique_id=1516765122]
+layout_mode = 0
+offset_right = 7.0
+offset_bottom = 886.0
+color = Color(0, 0, 0, 1)
+
+[node name="Player" parent="DatStick/WoodBox" unique_id=461263173 instance=ExtResource("2_rv1xx")]
+position = Vector2(9, 7)
+motion_mode = 1

@@ -2,13 +2,12 @@
 class_name Player
 extends Wayang
 
-const GRAVITY = 8000.0
+const GRAVITY = 0.0
 const JUMP_FORCE = -2000.0
 var is_flipping = false
 var facing_right = true
 
 
-@onready var animation_player: AnimationPlayer = $VisualRoot_Right/AnimationPlayer
 
 func on_ready():
 	character_name = "Anoman"

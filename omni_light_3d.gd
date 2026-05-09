@@ -29,5 +29,5 @@ func _process(delta):
 		timer = randf_range(0.05, 0.15)
 
 	# Smoothly glide towards those targets incredibly fast
-	light_energy = lerp(light_energy, target_energy, 15.0 * delta)
-	position = lerp(position, target_pos, 15.0 * delta)
+	light_energy = lerp(light_energy, target_energy, 6.0 * delta)
+	position = lerp(position, target_pos, 6.0 * delta)

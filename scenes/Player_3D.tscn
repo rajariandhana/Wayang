@@ -1,24 +1,22 @@
-[gd_scene format=3 uid="uid://mdmo1jgxfhs7"]
+[gd_scene format=3 uid="uid://clnlcqmd07oy6"]
 
-[ext_resource type="Script" uid="uid://bo1g1727tyk72" path="res://script/player.gd" id="1_p0vlq"]
-[ext_resource type="Texture2D" uid="uid://cp23psr41s0t2" path="res://asset/placeholder.png" id="2_v6fml"]
-[ext_resource type="Texture2D" uid="uid://cll63wxl62s3t" path="res://asset/WayangPlayer/body.png" id="4_qu4a1"]
-[ext_resource type="Texture2D" uid="uid://cb5xm00lkeolu" path="res://asset/WayangPlayer/forearm.png" id="5_70d11"]
-[ext_resource type="Texture2D" uid="uid://ceoi7774hgsj2" path="res://asset/WayangPlayer/arm.png" id="6_cw2d6"]
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_v6fml"]
+[ext_resource type="Script" uid="uid://bo1g1727tyk72" path="res://script/player.gd" id="1_0m0at"]
+[ext_resource type="Texture2D" uid="uid://cll63wxl62s3t" path="res://asset/WayangPlayer/body.png" id="2_55phg"]
+[ext_resource type="Texture2D" uid="uid://cb5xm00lkeolu" path="res://asset/WayangPlayer/forearm.png" id="3_bkbls"]
+[ext_resource type="Texture2D" uid="uid://ceoi7774hgsj2" path="res://asset/WayangPlayer/arm.png" id="4_cl2pp"]
+[ext_resource type="Texture2D" uid="uid://cp23psr41s0t2" path="res://asset/placeholder.png" id="5_kv5ip"]
 
 [sub_resource type="SkeletonModification2DCCDIK" id="SkeletonModification2DCCDIK_qu4a1"]
 target_nodepath = NodePath("../IK Targets/RArmTarget")
 tip_nodepath = NodePath("Hip/RForearm/RArm/RHand")
 ccdik_data_chain_length = 2
-joint_data/0/bone_index = 2
-joint_data/0/bone2d_node = NodePath("Hip/RForearm/RArm")
+joint_data/0/bone_index = 1
+joint_data/0/bone2d_node = NodePath("Hip/RForearm")
 joint_data/0/rotate_from_joint = false
 joint_data/0/enable_constraint = false
 joint_data/0/editor_draw_gizmo = true
-joint_data/1/bone_index = 1
-joint_data/1/bone2d_node = NodePath("Hip/RForearm")
+joint_data/1/bone_index = 2
+joint_data/1/bone2d_node = NodePath("Hip/RForearm/RArm")
 joint_data/1/rotate_from_joint = false
 joint_data/1/enable_constraint = false
 joint_data/1/editor_draw_gizmo = true
@@ -38,26 +36,28 @@ joint_data/1/rotate_from_joint = false
 joint_data/1/enable_constraint = false
 joint_data/1/editor_draw_gizmo = true
 
-[sub_resource type="SkeletonModificationStack2D" id="SkeletonModificationStack2D_cw2d6"]
+[sub_resource type="SkeletonModificationStack2D" id="SkeletonModificationStack2D_70d11"]
 enabled = true
 modification_count = 2
 modifications/0 = SubResource("SkeletonModification2DCCDIK_qu4a1")
 modifications/1 = SubResource("SkeletonModification2DCCDIK_70d11")
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_v6fml"]
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_3li8b"]
-atlas = ExtResource("2_v6fml")
+atlas = ExtResource("5_kv5ip")
 region = Rect2(0, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mdl7e"]
-atlas = ExtResource("2_v6fml")
+atlas = ExtResource("5_kv5ip")
 region = Rect2(32, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qu4a1"]
-atlas = ExtResource("2_v6fml")
+atlas = ExtResource("5_kv5ip")
 region = Rect2(64, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_70d11"]
-atlas = ExtResource("2_v6fml")
+atlas = ExtResource("5_kv5ip")
 region = Rect2(96, 0, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_3li8b"]
@@ -86,7 +86,7 @@ length = 0.2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("VisualRoot_Right/IK Targets/LArmTarget:position")
+tracks/0/path = NodePath("IK Targets/LArmTarget:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -101,7 +101,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("VisualRoot_Right/IK Targets/LArmTarget:position")
+tracks/0/path = NodePath("IK Targets/LArmTarget:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -118,112 +118,70 @@ _data = {
 }
 
 [node name="Player" type="CharacterBody2D" unique_id=461263173]
-script = ExtResource("1_p0vlq")
+script = ExtResource("1_0m0at")
 character_name = "An0man"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=583774019]
-shape = SubResource("CapsuleShape2D_v6fml")
+[node name="Skeleton2D" type="Skeleton2D" parent="." unique_id=998039422]
+modification_stack = SubResource("SkeletonModificationStack2D_70d11")
 
-[node name="VisualRoot_Right" type="Node2D" parent="." unique_id=525447298]
-
-[node name="Sprites" type="Node2D" parent="VisualRoot_Right" unique_id=1644053962]
-
-[node name="Body" type="Sprite2D" parent="VisualRoot_Right/Sprites" unique_id=803501861]
-texture = ExtResource("4_qu4a1")
-offset = Vector2(-52, 12.333333)
-
-[node name="RForearm" type="Sprite2D" parent="VisualRoot_Right/Sprites" unique_id=784028871]
-position = Vector2(-187, -168)
-rotation = 0.12025745
-scale = Vector2(0.9999958, 0.9999958)
-texture = ExtResource("5_70d11")
-offset = Vector2(-252.86093, 176.82498)
-
-[node name="RArm" type="Sprite2D" parent="VisualRoot_Right/Sprites" unique_id=419255054]
-position = Vector2(-193.2498, 50.298477)
-rotation = 0.04311694
-scale = Vector2(0.99999624, 0.99999624)
-texture = ExtResource("6_cw2d6")
-offset = Vector2(-215.54729, -46.183834)
-
-[node name="LForearm" type="Sprite2D" parent="VisualRoot_Right/Sprites" unique_id=495238494]
-position = Vector2(119, -164)
-rotation = 0.046015035
-scale = Vector2(0.9999994, 0.9999994)
-texture = ExtResource("5_70d11")
-offset = Vector2(-253.33403, 175.66649)
-
-[node name="LArm" type="Sprite2D" parent="VisualRoot_Right/Sprites" unique_id=1619991686]
-position = Vector2(120.82158, 57.318207)
-rotation = 0.035491977
-scale = Vector2(0.9999995, 0.9999995)
-texture = ExtResource("6_cw2d6")
-offset = Vector2(-214.66708, -44.999966)
-
-[node name="Skeleton2D" type="Skeleton2D" parent="VisualRoot_Right" unique_id=998039422]
-modification_stack = SubResource("SkeletonModificationStack2D_cw2d6")
-
-[node name="Hip" type="Bone2D" parent="VisualRoot_Right/Skeleton2D" unique_id=1370188521]
+[node name="Hip" type="Bone2D" parent="Skeleton2D" unique_id=1370188521]
 rest = Transform2D(1, 0, 0, 1, 0, 0)
 
-[node name="RForearm" type="Bone2D" parent="VisualRoot_Right/Skeleton2D/Hip" unique_id=1580984706]
+[node name="RForearm" type="Bone2D" parent="Skeleton2D/Hip" unique_id=1580984706]
 position = Vector2(-187, -168)
-rotation = -0.118204765
-scale = Vector2(0.9999969, 0.9999969)
+rotation = 0.0027582645
 rest = Transform2D(1, 0, 0, 1, -187, -168)
 metadata/_local_pose_override_enabled_ = true
 
-[node name="RArm" type="Bone2D" parent="VisualRoot_Right/Skeleton2D/Hip/RForearm" unique_id=416035840]
-position = Vector2(19.984318, 217.47203)
-rotation = 0.02149707
-scale = Vector2(1.0000006, 1.0000006)
+[node name="RArm" type="Bone2D" parent="Skeleton2D/Hip/RForearm" unique_id=416035840]
+position = Vector2(-13, 204)
 rest = Transform2D(1, 0, 0, 1, -13, 204)
 metadata/_local_pose_override_enabled_ = true
 
-[node name="RHand" type="Bone2D" parent="VisualRoot_Right/Skeleton2D/Hip/RForearm/RArm" unique_id=1463207093]
-position = Vector2(2.3868217, 164.65668)
+[node name="RHand" type="Bone2D" parent="Skeleton2D/Hip/RForearm/RArm" unique_id=1463207093]
+position = Vector2(-10, 157)
 rest = Transform2D(1, 0, 0, 1, -10, 157)
 
-[node name="RemoteTransform2D" type="RemoteTransform2D" parent="VisualRoot_Right/Skeleton2D/Hip/RForearm/RArm" unique_id=518375162]
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Skeleton2D/Hip/RForearm/RArm" unique_id=518375162]
 remote_path = NodePath("../../../../../Sprites/RArm")
 
-[node name="RemoteTransform2D" type="RemoteTransform2D" parent="VisualRoot_Right/Skeleton2D/Hip/RForearm" unique_id=891503340]
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Skeleton2D/Hip/RForearm" unique_id=891503340]
 remote_path = NodePath("../../../../Sprites/RForearm")
 
-[node name="RemoteTransform2D" type="RemoteTransform2D" parent="VisualRoot_Right/Skeleton2D/Hip" unique_id=2095515886]
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Skeleton2D/Hip" unique_id=2095515886]
 remote_path = NodePath("../../../Sprites/Body")
 
-[node name="LForearm" type="Bone2D" parent="VisualRoot_Right/Skeleton2D/Hip" unique_id=1648597757]
+[node name="LForearm" type="Bone2D" parent="Skeleton2D/Hip" unique_id=1648597757]
 position = Vector2(119, -164)
 rest = Transform2D(1, 0, 0, 1, 119, -164)
 metadata/_local_pose_override_enabled_ = true
 
-[node name="LArm" type="Bone2D" parent="VisualRoot_Right/Skeleton2D/Hip/LForearm" unique_id=352746673]
+[node name="LArm" type="Bone2D" parent="Skeleton2D/Hip/LForearm" unique_id=352746673]
 position = Vector2(12, 221)
 rest = Transform2D(1, 0, 0, 1, 12, 221)
 metadata/_local_pose_override_enabled_ = true
 
-[node name="LHand" type="Bone2D" parent="VisualRoot_Right/Skeleton2D/Hip/LForearm/LArm" unique_id=2125247960]
+[node name="LHand" type="Bone2D" parent="Skeleton2D/Hip/LForearm/LArm" unique_id=2125247960]
 position = Vector2(7, 160)
 rest = Transform2D(1, 0, 0, 1, 7, 160)
 
-[node name="RemoteTransform2D" type="RemoteTransform2D" parent="VisualRoot_Right/Skeleton2D/Hip/LForearm/LArm" unique_id=1204123329]
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Skeleton2D/Hip/LForearm/LArm" unique_id=1204123329]
 remote_path = NodePath("../../../../../Sprites/LArm")
 
-[node name="RemoteTransform2D" type="RemoteTransform2D" parent="VisualRoot_Right/Skeleton2D/Hip/LForearm" unique_id=1417206887]
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Skeleton2D/Hip/LForearm" unique_id=1417206887]
 remote_path = NodePath("../../../../Sprites/LForearm")
 
 [node name="Sprites" type="Node2D" parent="." unique_id=1644053962]
 
 [node name="Body" type="Sprite2D" parent="Sprites" unique_id=803501861]
-texture = ExtResource("4_qu4a1")
+texture = ExtResource("2_55phg")
 offset = Vector2(-52, 12.333333)
 
 [node name="RForearm" type="Sprite2D" parent="Sprites" unique_id=784028871]
 position = Vector2(-187, -168)
 rotation = -0.33373892
 scale = Vector2(0.99999994, 0.99999994)
-texture = ExtResource("5_70d11")
+texture = ExtResource("3_bkbls")
 offset = Vector2(254.00137, 177.66632)
 flip_h = true
 
@@ -231,7 +189,7 @@ flip_h = true
 position = Vector2(-132.45679, 29.002655)
 rotation = -2.1678941
 scale = Vector2(0.9999993, 0.9999993)
-texture = ExtResource("6_cw2d6")
+texture = ExtResource("4_cl2pp")
 offset = Vector2(214.027, -47.458164)
 flip_h = true
 
@@ -239,14 +197,14 @@ flip_h = true
 position = Vector2(119, -164)
 rotation = 0.046015035
 scale = Vector2(0.9999994, 0.9999994)
-texture = ExtResource("5_70d11")
+texture = ExtResource("3_bkbls")
 offset = Vector2(-253.33403, 175.66649)
 
 [node name="LArm" type="Sprite2D" parent="Sprites" unique_id=1619991686]
 position = Vector2(120.82158, 57.318207)
 rotation = 0.035491977
 scale = Vector2(0.9999995, 0.9999995)
-texture = ExtResource("6_cw2d6")
+texture = ExtResource("4_cl2pp")
 offset = Vector2(-214.66708, -44.999966)
 
 [node name="IK Targets" type="Node2D" parent="." unique_id=731570115]
@@ -254,16 +212,18 @@ offset = Vector2(-214.66708, -44.999966)
 [node name="RArmTarget" type="Node2D" parent="IK Targets" unique_id=827020539]
 position = Vector2(3, -51)
 
-[node name="LArmTarget" type="Node2D" parent="VisualRoot_Right/IK Targets" unique_id=2037047600]
+[node name="LArmTarget" type="Node2D" parent="IK Targets" unique_id=2037047600]
 position = Vector2(123, 322)
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="VisualRoot_Right" unique_id=1584958948]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1163493081]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=583774019]
+shape = SubResource("CapsuleShape2D_v6fml")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1584958948]
 sprite_frames = SubResource("SpriteFrames_3li8b")
 autoplay = "default"
 frame_progress = 0.7673423
 
-[node name="Sprite2D" type="Sprite2D" parent="VisualRoot_Right" unique_id=1163493081]
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="VisualRoot_Right" unique_id=992747761]
-root_node = NodePath("../..")
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=992747761]
 libraries/ = SubResource("AnimationLibrary_70d11")
