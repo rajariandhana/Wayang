@@ -6,6 +6,9 @@
 [ext_resource type="Texture2D" uid="uid://ceoi7774hgsj2" path="res://asset/WayangPlayer/arm.png" id="4_im8wx"]
 [ext_resource type="PackedScene" uid="uid://kwofpgkgfhn5" path="res://scenes/hand_damager.tscn" id="5_c4eld"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c4eld"]
+size = Vector2(165, 548)
+
 [sub_resource type="Animation" id="Animation_c4eld"]
 length = 0.001
 tracks/0/type = "value"
@@ -76,15 +79,15 @@ texture = ExtResource("2_31u0u")
 
 [node name="LForearm" parent="Node2D/Sprites" parent_id_path=PackedInt32Array(1747101555) index="1" unique_id=811048158]
 position = Vector2(116, -164)
-rotation = -1.1453481
+rotation = -2.7864394
 scale = Vector2(0.9999999, 0.9999999)
 texture = ExtResource("3_c4eld")
 offset = Vector2(-250, 177)
 
 [node name="LArm" parent="Node2D/Sprites" parent_id_path=PackedInt32Array(1747101555) index="2" unique_id=1172647800]
-position = Vector2(318.5226, -87.60248)
-rotation = -0.8945165
-scale = Vector2(0.9999997, 0.9999997)
+position = Vector2(177.98424, -371.38837)
+rotation = 2.8776064
+scale = Vector2(0.99999976, 0.99999976)
 texture = ExtResource("4_im8wx")
 offset = Vector2(-212, -42)
 
@@ -125,6 +128,10 @@ rotation = -0.713456
 
 [node name="RHand" parent="Node2D/Skeleton2D/Hip/RForearm/RArm" index="0" unique_id=2002948701]
 position = Vector2(14, 166)
+
+[node name="CollisionShape2D" parent="Node2D/Hitbox" parent_id_path=PackedInt32Array(1934797665) index="0" unique_id=692450720]
+position = Vector2(23.5, 95)
+shape = SubResource("RectangleShape2D_c4eld")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Node2D" parent_id_path=PackedInt32Array(1857375845) index="3" unique_id=646190441]
 libraries/ = SubResource("AnimationLibrary_xgiqx")

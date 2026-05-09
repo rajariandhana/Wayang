@@ -1,7 +1,5 @@
 [gd_scene format=3 uid="uid://dd050n4s04ihr"]
 
-[ext_resource type="PackedScene" uid="uid://dhup84rpn046p" path="res://scenes/PlayerV2.tscn" id="1_nqblx"]
-[ext_resource type="PackedScene" uid="uid://cogdfj8cl38nq" path="res://scenes/Enemy.tscn" id="2_4pi78"]
 [ext_resource type="PackedScene" uid="uid://c85s0gsxax6q" path="res://scenes/HealthBar.tscn" id="3_4pi78"]
 [ext_resource type="PackedScene" uid="uid://ckucsmrppc0rw" path="res://scenes/fighter_1.tscn" id="5_dyqqe"]
 [ext_resource type="PackedScene" uid="uid://drhj44refvy4f" path="res://scenes/fighter_2.tscn" id="5_nlkml"]
@@ -10,16 +8,6 @@
 
 [node name="Arena2d" type="StaticBody2D" unique_id=613410957]
 position = Vector2(1317, 1592)
-
-[node name="PlayerV2" parent="." unique_id=222677225 node_paths=PackedStringArray("health_bar") instance=ExtResource("1_nqblx")]
-visible = false
-position = Vector2(-558, -163)
-health_bar = NodePath("../Health")
-
-[node name="Enemy1" parent="." unique_id=847371369 node_paths=PackedStringArray("health_bar") instance=ExtResource("2_4pi78")]
-visible = false
-position = Vector2(714, -151)
-health_bar = NodePath("../Health2")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1356225281]
 position = Vector2(0, 201)

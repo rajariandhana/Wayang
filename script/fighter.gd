@@ -82,3 +82,7 @@ func play_attack() -> void:
 	skeleton_animation_player.play("RESET")
 
 	can_attack = true
+
+
+func _on_hitbox_area_entered(area: Area2D) -> void:
+	print(area.name)
