@@ -4,6 +4,7 @@ extends Node2D
 @export var character_name: String = ""
 @export var health := 100
 @export var hit_cooldown := 2
+@export var health_bar: HealthBar
 
 var facing = 1
 
@@ -17,6 +18,9 @@ var can_attack = true
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @export var skeleton_animation_player: AnimationPlayer
+
+func _ready():
+	health_bar.set_health(health)
 
 func _physics_process(delta):
 
@@ -91,3 +95,10 @@ func play_attack() -> void:
 
 func got_hit(opponent: Fighter, damage: int):
 	print(character_name, " got_hit by ", opponent.character_name, " by ", damage)
+	health -= damage
+	health_bar.set_health(health)
+	if health <= 0:
+		die()
+
+func die():
+	print(character_name, " died!")

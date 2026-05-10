@@ -72,8 +72,9 @@ _data = {
 &"attack": SubResource("Animation_yvql6")
 }
 
-[node name="Fighter2" unique_id=969771174 node_paths=PackedStringArray("skeleton_animation_player") instance=ExtResource("1_tmhyp")]
+[node name="Fighter2" unique_id=969771174 node_paths=PackedStringArray("health_bar", "skeleton_animation_player") instance=ExtResource("1_tmhyp")]
 character_name = "Player 2"
+health_bar = NodePath("")
 input_attack = "p2_attack"
 skeleton_animation_player = NodePath("Node2D/AnimationPlayer")
 
@@ -98,15 +99,15 @@ offset = Vector2(-34, 134)
 
 [node name="RForearm" parent="Node2D/Sprites" parent_id_path=PackedInt32Array(1747101555) index="4" unique_id=1940700127]
 position = Vector2(-103, -125)
-rotation = 0.5942812
+rotation = 0.4328829
 scale = Vector2(1, 1)
 texture = ExtResource("3_ykps0")
 offset = Vector2(13, 91)
 
 [node name="RArm" parent="Node2D/Sprites" parent_id_path=PackedInt32Array(1747101555) index="5" unique_id=1686462921]
-position = Vector2(-217.49097, 42.635986)
-rotation = -0.07886342
-scale = Vector2(0.9999995, 0.9999995)
+position = Vector2(-189.06413, 58.85582)
+rotation = 0.07297931
+scale = Vector2(0.9999996, 0.9999996)
 texture = ExtResource("4_qce2h")
 offset = Vector2(-34, 134)
 
@@ -119,7 +120,7 @@ rotation = -0.2396211
 
 [node name="LArm" parent="Node2D/Skeleton2D/Hip/LForearm" index="0" unique_id=2064872569]
 position = Vector2(-1, 201)
-rotation = 0.6770494
+rotation = 0.67704934
 
 [node name="LHand" parent="Node2D/Skeleton2D/Hip/LForearm/LArm" index="0" unique_id=909013083]
 position = Vector2(-3, 194)
