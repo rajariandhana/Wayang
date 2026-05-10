@@ -15,7 +15,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 [application]
 
 config/name="Wayang"
-run/main_scene="uid://0x452fdnsaav"
+run/main_scene="uid://cpms5hhjnxbhj"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="res://icon.svg"
 
