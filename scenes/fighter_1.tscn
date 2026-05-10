@@ -74,6 +74,7 @@ _data = {
 
 [node name="Fighter1" unique_id=969771174 node_paths=PackedStringArray("skeleton_animation_player", "hitbox") instance=ExtResource("1_r4071")]
 character_name = "Player 1"
+health_bar = NodePath("")
 input_attack = "p1_attack"
 skeleton_animation_player = NodePath("Node2D/AnimationPlayer")
 hitbox = NodePath("Node2D/Skeleton2D/Hip/LForearm/LArm/LHand/Hitbox")
@@ -84,15 +85,15 @@ texture = ExtResource("2_31u0u")
 
 [node name="LForearm" parent="Node2D/Sprites" parent_id_path=PackedInt32Array(1747101555) index="2" unique_id=811048158]
 position = Vector2(116, -164)
-rotation = -2.7864394
+rotation = -0.3848068
 scale = Vector2(0.9999996, 0.9999996)
 texture = ExtResource("3_c4eld")
 offset = Vector2(-250, 177)
 
 [node name="LArm" parent="Node2D/Sprites" parent_id_path=PackedInt32Array(1747101555) index="3" unique_id=1172647800]
-position = Vector2(177.98422, -371.3883)
-rotation = 2.8776064
-scale = Vector2(0.99999905, 0.99999905)
+position = Vector2(210.05826, 30.948715)
+rotation = 0.3251829
+scale = Vector2(0.9999989, 0.9999989)
 texture = ExtResource("4_im8wx")
 offset = Vector2(-212, -42)
 
@@ -118,7 +119,7 @@ scale = Vector2(0.9999996, 0.9999996)
 [node name="LArm" parent="Node2D/Skeleton2D/Hip/LForearm" index="0" unique_id=2064872569]
 position = Vector2(14, 216)
 rotation = 0.7099897
-scale = Vector2(0.9999995, 0.9999995)
+scale = Vector2(0.99999934, 0.99999934)
 
 [node name="LHand" parent="Node2D/Skeleton2D/Hip/LForearm/LArm" index="0" unique_id=909013083]
 position = Vector2(11, 160)
