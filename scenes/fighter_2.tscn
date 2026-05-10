@@ -1,8 +1,11 @@
 [gd_scene format=3 uid="uid://drhj44refvy4f"]
 
 [ext_resource type="PackedScene" uid="uid://bh6sn8po7xro" path="res://scenes/fighter.tscn" id="1_tmhyp"]
+[ext_resource type="AudioStream" uid="uid://cnajr5piqwe8o" path="res://asset/sound/body hit 1.ogg" id="2_jwkur"]
 [ext_resource type="Texture2D" uid="uid://c8vs8qsxpa1w6" path="res://asset/WayangDasamuka/body.png" id="2_l5hlh"]
+[ext_resource type="AudioStream" uid="uid://do8yaw0sse7j4" path="res://asset/sound/body hit 2.ogg" id="3_exhlj"]
 [ext_resource type="Texture2D" uid="uid://djsr7xpa8orcu" path="res://asset/WayangDasamuka/forearm.png" id="3_ykps0"]
+[ext_resource type="AudioStream" uid="uid://bsmtrn22mhp3s" path="res://asset/sound/body hit 3.ogg" id="4_abhkv"]
 [ext_resource type="Texture2D" uid="uid://d3ada7i3gkeqs" path="res://asset/WayangDasamuka/arm.png" id="4_qce2h"]
 [ext_resource type="PackedScene" uid="uid://c2qhf77cymbwl" path="res://scenes/hitbox.tscn" id="5_qce2h"]
 
@@ -74,9 +77,9 @@ _data = {
 
 [node name="Fighter2" unique_id=969771174 node_paths=PackedStringArray("skeleton_animation_player", "hitbox") instance=ExtResource("1_tmhyp")]
 character_name = "Player 2"
-health_bar = NodePath("")
 input_attack = "p2_attack"
 skeleton_animation_player = NodePath("Node2D/AnimationPlayer")
+hit_sounds = Array[AudioStream]([ExtResource("2_jwkur"), ExtResource("3_exhlj"), ExtResource("4_abhkv")])
 hitbox = NodePath("Node2D/Skeleton2D/Hip/RForearm/RArm/RHand/Hitbox")
 
 [node name="Body" parent="Node2D/Sprites" parent_id_path=PackedInt32Array(1747101555) index="1" unique_id=321438573]

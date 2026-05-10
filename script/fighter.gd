@@ -19,7 +19,13 @@ var can_attack = true
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @export var skeleton_animation_player: AnimationPlayer
 
+@export var hit_sounds: Array[AudioStream]
+@onready var audio: AudioStreamPlayer = AudioStreamPlayer.new()
+
 @export var hitbox: Hitbox = null
+
+func _ready():
+	add_child(audio)
 
 func _physics_process(delta):
 
@@ -97,6 +103,9 @@ func got_hit(opponent: Fighter, damage: int):
 	print(character_name, " got_hit by ", opponent.character_name, " by ", damage)
 	health -= damage
 	health_bar.set_health(health)
+	if hit_sounds.size() > 0:
+		audio.stream = hit_sounds[randi() % hit_sounds.size()]
+		audio.play()
 	if health <= 0:
 		die()
 
