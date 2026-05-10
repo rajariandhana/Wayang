@@ -8,9 +8,6 @@
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_im8wx"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_c4eld"]
-size = Vector2(200, 560)
-
 [sub_resource type="Animation" id="Animation_c4eld"]
 length = 0.001
 tracks/0/type = "value"
@@ -74,7 +71,6 @@ _data = {
 
 [node name="Fighter1" unique_id=969771174 node_paths=PackedStringArray("skeleton_animation_player", "hitbox") instance=ExtResource("1_r4071")]
 character_name = "Player 1"
-health_bar = NodePath("")
 input_attack = "p1_attack"
 skeleton_animation_player = NodePath("Node2D/AnimationPlayer")
 hitbox = NodePath("Node2D/Skeleton2D/Hip/LForearm/LArm/LHand/Hitbox")
@@ -142,12 +138,14 @@ rotation = -0.713456
 [node name="RHand" parent="Node2D/Skeleton2D/Hip/RForearm/RArm" index="0" unique_id=2002948701]
 position = Vector2(14, 166)
 
-[node name="CollisionShape2D" parent="Node2D/Hurtbox" parent_id_path=PackedInt32Array(1032956574) index="0" unique_id=1635202012]
-position = Vector2(-7, 106)
-shape = SubResource("RectangleShape2D_c4eld")
+[node name="Hitbox" type="Area2D" parent="Node2D" parent_id_path=PackedInt32Array(1857375845) index="2" unique_id=1934797665]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/Hitbox" index="0" unique_id=692450720]
+debug_color = Color(0.9721311, 0, 0.44646728, 0.41960785)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Node2D" parent_id_path=PackedInt32Array(1857375845) index="3" unique_id=646190441]
 libraries/ = SubResource("AnimationLibrary_xgiqx")
 
+[connection signal="area_entered" from="Node2D/Hitbox" to="." method="_on_hitbox_area_entered"]
+
 [editable path="Node2D/Skeleton2D/Hip/LForearm/LArm/LHand/Hitbox"]
-[editable path="Node2D/Hurtbox"]
