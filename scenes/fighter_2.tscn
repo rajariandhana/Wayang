@@ -72,10 +72,11 @@ _data = {
 &"attack": SubResource("Animation_yvql6")
 }
 
-[node name="Fighter2" unique_id=969771174 node_paths=PackedStringArray("skeleton_animation_player") instance=ExtResource("1_tmhyp")]
+[node name="Fighter2" unique_id=969771174 node_paths=PackedStringArray("skeleton_animation_player", "hitbox") instance=ExtResource("1_tmhyp")]
 character_name = "Player 2"
 input_attack = "p2_attack"
 skeleton_animation_player = NodePath("Node2D/AnimationPlayer")
+hitbox = NodePath("Node2D/Skeleton2D/Hip/RForearm/RArm/RHand/Hitbox")
 
 [node name="Body" parent="Node2D/Sprites" parent_id_path=PackedInt32Array(1747101555) index="1" unique_id=321438573]
 position = Vector2(71, 4)

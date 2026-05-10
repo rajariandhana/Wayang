@@ -73,4 +73,4 @@ func _animate_out_and_start():
 	tween.tween_interval(0.1) # Tiny buffer to ensure they are off-screen
 	await tween.finished
 	
-	get_tree().change_scene_to_file("res://level_1.tscn")
+	get_tree().change_scene_to_file("res://arena.tscn")

@@ -1,19 +1,18 @@
 class_name Hitbox
 extends Area2D
-# The Damager: Yang Menyakiti
 
 @export var fighter: Fighter = null
 @export var damage := 10
 
+var is_attacking := false
+
 func _ready():
 	monitoring = false
 
-func _on_area_entered(area):
-	print("_on_area_entered hitbox")
+func start_attack():
+	is_attacking = true
+	monitoring = true
 
-	# if area is Hurtbox:
-
-	# 	area.take_damage(damage)
-
-func _on_body_entered(body):
-	print("_on_body_entered hitbox")
+func end_attack():
+	is_attacking = false
+	monitoring = false

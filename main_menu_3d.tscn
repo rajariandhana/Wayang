@@ -1,7 +1,7 @@
-[gd_scene format=3 uid="uid://cncgx5tnmxpvj"]
+[gd_scene format=3 uid="uid://cpms5hhjnxbhj"]
 
-[ext_resource type="Script" uid="uid://cjoq1477phhd7" path="res://main_menu_3d.gd" id="1_qyrbl"]
-[ext_resource type="Script" uid="uid://c1tsdllibt16e" path="res://omni_light_3d.gd" id="2_axt0k"]
+[ext_resource type="Script" path="res://main_menu_3d.gd" id="1_qyrbl"]
+[ext_resource type="Script" path="res://omni_light_3d.gd" id="2_axt0k"]
 [ext_resource type="Texture2D" uid="uid://crnsiqddx3qik" path="res://cloth_texture.jpg" id="2_m4dq2"]
 [ext_resource type="Texture2D" uid="uid://dt3swce7gjjv3" path="res://title_logo.png" id="3_axt0k"]
 [ext_resource type="Texture2D" uid="uid://dkisat3qex4uc" path="res://Start Game.png" id="4_ohct5"]

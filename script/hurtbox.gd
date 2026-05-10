@@ -9,11 +9,7 @@ var can_be_hit := true
 
 func _on_area_entered(area):
 	# print("_on_area_entered hurtbox")
-	if not can_be_hit:
-		return
-	if area is not Hitbox:
-		return
-	if fighter == area.fighter:
+	if !can_be_hit or area is not Hitbox or !area.is_attacking or fighter == area.fighter:
 		return
 	can_be_hit = false
 	fighter.got_hit(area.fighter, area.damage)
