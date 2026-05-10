@@ -18,11 +18,11 @@ shape = SubResource("WorldBoundaryShape2D_sjqlj")
 [node name="Health2" parent="." unique_id=478094916 instance=ExtResource("3_4pi78")]
 
 [node name="Fighter1" parent="." unique_id=969771174 instance=ExtResource("5_dyqqe")]
-position = Vector2(-576, -240)
+position = Vector2(-530, -240)
 input_left = "p1_left"
 input_right = "p1_right"
 
 [node name="Fighter2" parent="." unique_id=830160189 instance=ExtResource("5_nlkml")]
-position = Vector2(587, -226)
+position = Vector2(530, -240)
 input_left = "p2_left"
 input_right = "p2_right"

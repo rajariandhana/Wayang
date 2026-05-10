@@ -1,4 +1,9 @@
+class_name Fighter
 extends Node2D
+
+@export var character_name: String = ""
+@export var health := 100
+@export var hit_cooldown := 2
 
 var facing = 1
 
@@ -80,9 +85,9 @@ func play_attack() -> void:
 	# COOLDOWN
 	await get_tree().create_timer(0.5).timeout
 	skeleton_animation_player.play("RESET")
-
+	await get_tree().create_timer(hit_cooldown - 0.5).timeout
 	can_attack = true
 
 
-func _on_hitbox_area_entered(area: Area2D) -> void:
-	print(area.name)
+func got_hit(opponent: Fighter, damage: int):
+	print(character_name, " got_hit by ", opponent.character_name, " by ", damage)

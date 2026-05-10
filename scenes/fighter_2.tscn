@@ -4,10 +4,12 @@
 [ext_resource type="Texture2D" uid="uid://c8vs8qsxpa1w6" path="res://asset/WayangDasamuka/body.png" id="2_l5hlh"]
 [ext_resource type="Texture2D" uid="uid://djsr7xpa8orcu" path="res://asset/WayangDasamuka/forearm.png" id="3_ykps0"]
 [ext_resource type="Texture2D" uid="uid://d3ada7i3gkeqs" path="res://asset/WayangDasamuka/arm.png" id="4_qce2h"]
-[ext_resource type="PackedScene" uid="uid://kwofpgkgfhn5" path="res://scenes/hand_damager.tscn" id="5_qce2h"]
+[ext_resource type="PackedScene" uid="uid://c2qhf77cymbwl" path="res://scenes/hitbox.tscn" id="5_qce2h"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_yvql6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qce2h"]
-size = Vector2(220, 514)
+size = Vector2(159, 488)
 
 [sub_resource type="Animation" id="Animation_qce2h"]
 length = 0.001
@@ -38,7 +40,7 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id="Animation_yvql6"]
 resource_name = "attack"
-length = 0.3
+length = 0.2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -46,7 +48,7 @@ tracks/0/path = NodePath("Skeleton2D/Hip/RForearm:rotation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"times": PackedFloat32Array(0, 0.050056398, 0.100112796, 0.149779),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
 "values": [2.8026786, 1.9920716, 1.2836325, 0.5942812]
@@ -58,7 +60,7 @@ tracks/1/path = NodePath("Skeleton2D/Hip/RForearm/RArm:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"times": PackedFloat32Array(0, 0.050056398, 0.100112796, 0.149779),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
 "values": [0.30445346, 0.84200215, 0.09007788, -0.6731447]
@@ -71,35 +73,40 @@ _data = {
 }
 
 [node name="Fighter2" unique_id=969771174 node_paths=PackedStringArray("skeleton_animation_player") instance=ExtResource("1_tmhyp")]
+character_name = "Player 2"
 input_attack = "p2_attack"
 skeleton_animation_player = NodePath("Node2D/AnimationPlayer")
 
-[node name="Body" parent="Node2D/Sprites" parent_id_path=PackedInt32Array(1747101555) index="0" unique_id=321438573]
+[node name="Body" parent="Node2D/Sprites" parent_id_path=PackedInt32Array(1747101555) index="1" unique_id=321438573]
 position = Vector2(71, 4)
+scale = Vector2(1, 1)
 texture = ExtResource("2_l5hlh")
 
-[node name="LForearm" parent="Node2D/Sprites" parent_id_path=PackedInt32Array(1747101555) index="1" unique_id=811048158]
+[node name="LForearm" parent="Node2D/Sprites" parent_id_path=PackedInt32Array(1747101555) index="2" unique_id=811048158]
 position = Vector2(223, -85)
-rotation = -0.23962113
+rotation = -0.2396211
+scale = Vector2(1, 1)
 texture = ExtResource("3_ykps0")
 offset = Vector2(13, 90)
 
-[node name="LArm" parent="Node2D/Sprites" parent_id_path=PackedInt32Array(1747101555) index="2" unique_id=1172647800]
+[node name="LArm" parent="Node2D/Sprites" parent_id_path=PackedInt32Array(1747101555) index="3" unique_id=1172647800]
 position = Vector2(269.73282, 110.494354)
 rotation = 0.43742827
+scale = Vector2(1, 1)
 texture = ExtResource("4_qce2h")
 offset = Vector2(-34, 134)
 
-[node name="RForearm" parent="Node2D/Sprites" parent_id_path=PackedInt32Array(1747101555) index="3" unique_id=1940700127]
+[node name="RForearm" parent="Node2D/Sprites" parent_id_path=PackedInt32Array(1747101555) index="4" unique_id=1940700127]
 position = Vector2(-103, -125)
-rotation = 2.8026786
+rotation = 0.5942812
+scale = Vector2(1, 1)
 texture = ExtResource("3_ykps0")
 offset = Vector2(13, 91)
 
-[node name="RArm" parent="Node2D/Sprites" parent_id_path=PackedInt32Array(1747101555) index="4" unique_id=1686462921]
-position = Vector2(-169.5469, -316.78503)
-rotation = 3.107132
-scale = Vector2(0.99999994, 0.99999994)
+[node name="RArm" parent="Node2D/Sprites" parent_id_path=PackedInt32Array(1747101555) index="5" unique_id=1686462921]
+position = Vector2(-217.49097, 42.635986)
+rotation = -0.07886342
+scale = Vector2(0.9999995, 0.9999995)
 texture = ExtResource("4_qce2h")
 offset = Vector2(-34, 134)
 
@@ -108,7 +115,7 @@ position = Vector2(71, 4)
 
 [node name="LForearm" parent="Node2D/Skeleton2D/Hip" index="0" unique_id=278228581]
 position = Vector2(152, -89)
-rotation = -0.23962113
+rotation = -0.2396211
 
 [node name="LArm" parent="Node2D/Skeleton2D/Hip/LForearm" index="0" unique_id=2064872569]
 position = Vector2(-1, 201)
@@ -124,16 +131,24 @@ rotation = 0.4328829
 [node name="RArm" parent="Node2D/Skeleton2D/Hip/RForearm" index="0" unique_id=1086879264]
 position = Vector2(-1, 203)
 rotation = -0.3599036
-scale = Vector2(0.9999999, 0.9999999)
+scale = Vector2(0.9999995, 0.9999995)
 
 [node name="RHand" parent="Node2D/Skeleton2D/Hip/RForearm/RArm" index="0" unique_id=2002948701]
 position = Vector2(-4, 196)
 
-[node name="HandDamager" parent="Node2D/Skeleton2D/Hip/RForearm/RArm/RHand" index="0" unique_id=962977205 instance=ExtResource("5_qce2h")]
+[node name="Hitbox" parent="Node2D/Skeleton2D/Hip/RForearm/RArm/RHand" index="0" unique_id=1963551931 node_paths=PackedStringArray("fighter") instance=ExtResource("5_qce2h")]
+fighter = NodePath("../../../../../../..")
 
-[node name="CollisionShape2D" parent="Node2D/Hitbox" parent_id_path=PackedInt32Array(1934797665) index="0" unique_id=692450720]
-position = Vector2(-4, 119)
+[node name="CollisionShape2D" parent="Node2D/Skeleton2D/Hip/RForearm/RArm/RHand/Hitbox" index="0" unique_id=27140660]
+scale = Vector2(3, 3)
+shape = SubResource("CircleShape2D_yvql6")
+
+[node name="CollisionShape2D" parent="Node2D/Hurtbox" parent_id_path=PackedInt32Array(1032956574) index="0" unique_id=1635202012]
+position = Vector2(9.5, 120)
 shape = SubResource("RectangleShape2D_qce2h")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Node2D" parent_id_path=PackedInt32Array(1857375845) index="3" unique_id=1244614335]
 libraries/ = SubResource("AnimationLibrary_x05ow")
+
+[editable path="Node2D/Skeleton2D/Hip/RForearm/RArm/RHand/Hitbox"]
+[editable path="Node2D/Hurtbox"]

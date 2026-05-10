@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://bse1ibrpikg6w"]
+
+[ext_resource type="Script" uid="uid://3nejw3xrlphp" path="res://script/hurtbox.gd" id="1_ksusc"]
+[ext_resource type="PackedScene" uid="uid://bykakijabavqt" path="res://scenes/damage_particle.tscn" id="2_ppkhk"]
+
+[node name="Hurtbox" type="Area2D" unique_id=1032956574]
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("1_ksusc")
+damage_particle = ExtResource("2_ppkhk")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1635202012]
+debug_color = Color(0.41181436, 0.5954649, 0.3081778, 0.7882353)
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
