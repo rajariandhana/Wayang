@@ -19,8 +19,7 @@ var can_attack = true
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @export var skeleton_animation_player: AnimationPlayer
 
-func _ready():
-	health_bar.set_health(health)
+@export var hitbox: Hitbox = null
 
 func _physics_process(delta):
 
@@ -71,6 +70,7 @@ func play_attack() -> void:
 
 	is_attacking = true
 	can_attack = false
+	hitbox.start_attack()
 
 	var anim_name = "attack"
 	var anim_length = skeleton_animation_player.get_animation(anim_name).length
@@ -81,9 +81,9 @@ func play_attack() -> void:
 		return
 	
 	skeleton_animation_player.play(anim_name)
-
 	await get_tree().create_timer(anim_length).timeout
 
+	hitbox.end_attack()
 	is_attacking = false
 
 	# COOLDOWN

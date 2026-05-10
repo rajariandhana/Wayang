@@ -72,11 +72,12 @@ _data = {
 &"attack": SubResource("Animation_im8wx")
 }
 
-[node name="Fighter1" unique_id=969771174 node_paths=PackedStringArray("health_bar", "skeleton_animation_player") instance=ExtResource("1_r4071")]
+[node name="Fighter1" unique_id=969771174 node_paths=PackedStringArray("skeleton_animation_player", "hitbox") instance=ExtResource("1_r4071")]
 character_name = "Player 1"
 health_bar = NodePath("")
 input_attack = "p1_attack"
 skeleton_animation_player = NodePath("Node2D/AnimationPlayer")
+hitbox = NodePath("Node2D/Skeleton2D/Hip/LForearm/LArm/LHand/Hitbox")
 
 [node name="Body" parent="Node2D/Sprites" parent_id_path=PackedInt32Array(1747101555) index="1" unique_id=321438573]
 scale = Vector2(1, 1)

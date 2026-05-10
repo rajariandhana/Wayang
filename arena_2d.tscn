@@ -19,13 +19,14 @@ health_bar = NodePath("../Health")
 input_left = "p1_left"
 input_right = "p1_right"
 
-[node name="Fighter2" parent="." unique_id=830160189 instance=ExtResource("5_nlkml")]
+[node name="Fighter2" parent="." unique_id=830160189 node_paths=PackedStringArray("health_bar") instance=ExtResource("5_nlkml")]
 position = Vector2(530, -240)
+health_bar = NodePath("../Health2")
 input_left = "p2_left"
 input_right = "p2_right"
 
 [node name="Health" parent="." unique_id=1653025873 instance=ExtResource("3_4pi78")]
-position = Vector2(-1318, -912)
+position = Vector2(-1200, -900)
 
-[node name="Health2" parent="." unique_id=1115693174 instance=ExtResource("3_4pi78")]
-position = Vector2(400, -912)
+[node name="Health2" parent="." unique_id=191386998 instance=ExtResource("3_4pi78")]
+position = Vector2(400, -900)
