@@ -5,6 +5,8 @@ extends Node3D
 @onready var title = $MenuContainer/Title
 @onready var start_btn = $MenuContainer/Start
 @onready var quit_btn = $MenuContainer/Quit
+@onready var intro_start = $IntroStart
+@onready var intro_loop = $IntroLoop
 
 var max_tilt = deg_to_rad(2) 
 var is_animating = false 
@@ -14,6 +16,12 @@ func _ready():
 	$MenuContainer/Start/Area3D.input_event.connect(_on_start_clicked)
 	$MenuContainer/Quit/Area3D.input_event.connect(_on_quit_clicked)
 	print("Single Pane Menu is ready!")
+	
+	# 1. Connect the 'finished' signal of the first track to a custom function
+	intro_start.finished.connect(_on_intro_start_finished)
+	
+	# 2. Play the intro track (if you don't already have 'Autoplay' checked in the Inspector)
+	intro_start.play()
 
 
 func _process(delta):
@@ -46,6 +54,10 @@ func _on_quit_clicked(camera, event, position, normal, shape_idx):
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 		get_tree().quit()
 
+
+# 3. This function runs automatically the exact moment IntroStart ends
+func _on_intro_start_finished():
+	intro_loop.play()
 
 # --- THE FLY-AWAY ANIMATION ---
 # --- THE FLY-AWAY ANIMATION ---
