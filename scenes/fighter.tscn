@@ -31,6 +31,22 @@ tracks/1/keys = {
 "values": [0.0]
 }
 
+[sub_resource type="Animation" id="Animation_tlqsq"]
+resource_name = "death"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Node2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(149, 136), Vector2(-177, 255), Vector2(2, 506)]
+}
+
 [sub_resource type="Animation" id="Animation_rsphg"]
 resource_name = "backward"
 length = 0.2
@@ -90,6 +106,7 @@ tracks/1/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_38ety"]
 _data = {
 &"RESET": SubResource("Animation_38ety"),
+&"death": SubResource("Animation_tlqsq"),
 &"left": SubResource("Animation_rsphg"),
 &"right": SubResource("Animation_1q4ya")
 }
@@ -106,20 +123,15 @@ position = Vector2(0, 394)
 texture = ExtResource("2_1q4ya")
 
 [node name="Body" type="Sprite2D" parent="Node2D/Sprites" unique_id=321438573]
-scale = Vector2(1.0000001, 1.0000001)
 offset = Vector2(-47, 12)
 
 [node name="LForearm" type="Sprite2D" parent="Node2D/Sprites" unique_id=811048158]
-scale = Vector2(1.0000001, 1.0000001)
 
 [node name="LArm" type="Sprite2D" parent="Node2D/Sprites" unique_id=1172647800]
-scale = Vector2(1.0000001, 1.0000001)
 
 [node name="RForearm" type="Sprite2D" parent="Node2D/Sprites" unique_id=1940700127]
-scale = Vector2(1.0000001, 1.0000001)
 
 [node name="RArm" type="Sprite2D" parent="Node2D/Sprites" unique_id=1686462921]
-scale = Vector2(1.0000001, 1.0000001)
 
 [node name="Skeleton2D" type="Skeleton2D" parent="Node2D" unique_id=1944065169]
 

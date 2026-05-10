@@ -80,7 +80,6 @@ skeleton_animation_player = NodePath("Node2D/AnimationPlayer")
 hitbox = NodePath("Node2D/Skeleton2D/Hip/LForearm/LArm/LHand/Hitbox")
 
 [node name="Body" parent="Node2D/Sprites" parent_id_path=PackedInt32Array(1747101555) index="1" unique_id=321438573]
-scale = Vector2(1, 1)
 texture = ExtResource("2_31u0u")
 
 [node name="LForearm" parent="Node2D/Sprites" parent_id_path=PackedInt32Array(1747101555) index="2" unique_id=811048158]
@@ -91,7 +90,7 @@ texture = ExtResource("3_c4eld")
 offset = Vector2(-250, 177)
 
 [node name="LArm" parent="Node2D/Sprites" parent_id_path=PackedInt32Array(1747101555) index="3" unique_id=1172647800]
-position = Vector2(210.05826, 30.948715)
+position = Vector2(210.05826, 30.94873)
 rotation = 0.3251829
 scale = Vector2(0.9999989, 0.9999989)
 texture = ExtResource("4_im8wx")
@@ -100,14 +99,12 @@ offset = Vector2(-212, -42)
 [node name="RForearm" parent="Node2D/Sprites" parent_id_path=PackedInt32Array(1747101555) index="4" unique_id=1940700127]
 position = Vector2(-182, -168)
 rotation = 0.7237567
-scale = Vector2(1, 1)
 texture = ExtResource("3_c4eld")
 offset = Vector2(-253, 179)
 
 [node name="RArm" parent="Node2D/Sprites" parent_id_path=PackedInt32Array(1747101555) index="5" unique_id=1686462921]
 position = Vector2(-321.60324, 3.5603027)
 rotation = 0.010300699
-scale = Vector2(1, 1)
 texture = ExtResource("4_im8wx")
 offset = Vector2(-210, -36)
 

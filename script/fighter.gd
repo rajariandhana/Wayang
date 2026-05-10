@@ -101,4 +101,5 @@ func got_hit(opponent: Fighter, damage: int):
 		die()
 
 func die():
+	animation_player.play("death")
 	print(character_name, " died!")
