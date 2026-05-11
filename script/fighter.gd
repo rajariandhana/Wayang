@@ -24,10 +24,14 @@ var can_attack = true
 
 @export var hitbox: Hitbox = null
 
+var is_dead = false
+
 func _ready():
 	add_child(audio)
 
 func _physics_process(delta):
+	if is_dead:
+		return
 
 	var axis = Input.get_axis(input_left, input_right)
 
@@ -50,6 +54,8 @@ func _physics_process(delta):
 
 
 func play_tilt(anim_name: String) -> void:
+	if is_dead:
+		return
 
 	is_tilting = true
 
@@ -73,6 +79,8 @@ func play_tilt(anim_name: String) -> void:
 
 
 func play_attack() -> void:
+	if is_dead:
+		return
 
 	is_attacking = true
 	can_attack = false
@@ -112,3 +120,4 @@ func got_hit(opponent: Fighter, damage: int):
 func die():
 	animation_player.play("death")
 	print(character_name, " died!")
+	is_dead = true

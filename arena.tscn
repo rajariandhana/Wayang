@@ -243,8 +243,7 @@ texture = ExtResource("5_sbb53")
 script = ExtResource("12_u834y")
 
 [node name="ground" type="Sprite3D" parent="." unique_id=491983772]
-transform = Transform3D(-0.28, 0, 5.284853e-08, 0, 0.257, 0, -4.2278824e-08, 0, -0.35, 0.4879713, -0.8038008, -0.8465159)
-visible = false
+transform = Transform3D(-0.28, 0, 5.284853e-08, 0, 0.477, 0, -4.2278824e-08, 0, -0.35, 0.4879713, -0.8545188, -2.9359956)
 shaded = true
 alpha_cut = 1
 texture = ExtResource("14_3vubs")
