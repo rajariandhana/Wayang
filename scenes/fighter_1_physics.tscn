@@ -1,0 +1,122 @@
+[gd_scene format=3 uid="uid://f1phys001a"]
+
+[ext_resource type="PackedScene" uid="uid://ckucsmrppc0rw" path="res://scenes/fighter_1.tscn" id="1_f1p"]
+[ext_resource type="PackedScene" uid="uid://kwofpgkgfhn5" path="res://scenes/hand_damager.tscn" id="2_f1p"]
+
+[sub_resource type="CapsuleShape2D" id="Capsule_LForearm"]
+radius = 18.0
+height = 216.0
+
+[sub_resource type="CapsuleShape2D" id="Capsule_LArm"]
+radius = 14.0
+height = 160.0
+
+[sub_resource type="CapsuleShape2D" id="Capsule_RForearm"]
+radius = 18.0
+height = 220.0
+
+[sub_resource type="CapsuleShape2D" id="Capsule_RArm"]
+radius = 14.0
+height = 165.0
+
+; ── Root ─────────────────────────────────────────────────────────────────────
+[node name="Fighter1" node_paths=PackedStringArray("l_forearm_rb", "l_arm_rb", "r_forearm_rb", "r_arm_rb", "l_shoulder_joint", "r_shoulder_joint", "l_hand_area", "r_hand_area", "l_forearm_bone", "l_arm_bone", "r_forearm_bone", "r_arm_bone") instance=ExtResource("1_f1p")]
+l_forearm_rb    = NodePath("LForearmRB")
+l_arm_rb        = NodePath("LArmRB")
+r_forearm_rb    = NodePath("RForearmRB")
+r_arm_rb        = NodePath("RArmRB")
+l_shoulder_joint = NodePath("Node2D/LShoulderJoint")
+r_shoulder_joint = NodePath("Node2D/RShoulderJoint")
+l_hand_area     = NodePath("LArmRB/LHandDamager")
+r_hand_area     = NodePath("RArmRB/RHandDamager")
+l_forearm_bone  = NodePath("Node2D/Skeleton2D/Hip/LForearm")
+l_arm_bone      = NodePath("Node2D/Skeleton2D/Hip/LForearm/LArm")
+r_forearm_bone  = NodePath("Node2D/Skeleton2D/Hip/RForearm")
+r_arm_bone      = NodePath("Node2D/Skeleton2D/Hip/RForearm/RArm")
+
+; ── Shoulder pins (inside animated Node2D so they follow body tilt) ──────────
+; Paths to the RigidBody2D are set programmatically in fighter.gd _ready().
+[node name="LShoulderJoint" type="PinJoint2D" parent="Node2D" parent_id_path=PackedInt32Array(1857375845) index="4" unique_id=2100001]
+position = Vector2(116, -164)
+disable_collision = true
+
+[node name="RShoulderJoint" type="PinJoint2D" parent="Node2D" parent_id_path=PackedInt32Array(1857375845) index="5" unique_id=2100002]
+position = Vector2(-182, -168)
+disable_collision = true
+
+; ── Shoulder anchors — AnimatableBody2D gives PinJoint2D a real physics body ─
+; Moved each frame in fighter.gd to track the animated shoulder joint position.
+[node name="LShoulderAnchor" type="AnimatableBody2D" parent="." unique_id=2100015]
+position = Vector2(116, -164)
+collision_layer = 0
+collision_mask = 0
+sync_to_physics = false
+
+[node name="RShoulderAnchor" type="AnimatableBody2D" parent="." unique_id=2100016]
+position = Vector2(-182, -168)
+collision_layer = 0
+collision_mask = 0
+sync_to_physics = false
+
+; ── Left forearm ─────────────────────────────────────────────────────────────
+; Shoulder (116,-164) + half-forearm (0,108) = center (116,-56)
+[node name="LForearmRB" type="RigidBody2D" parent="." unique_id=2100003]
+position = Vector2(116, -56)
+collision_layer = 2
+collision_mask = 1
+linear_damp = 0.5
+angular_damp = 2.0
+
+[node name="LForearmShape" type="CollisionShape2D" parent="LForearmRB" unique_id=2100004]
+shape = SubResource("Capsule_LForearm")
+
+; Elbow at local (0,108) = bottom of forearm; node refs wired in _ready()
+[node name="LElbowJoint" type="PinJoint2D" parent="LForearmRB" unique_id=2100005]
+position = Vector2(0, 108)
+disable_collision = true
+
+; ── Left arm ─────────────────────────────────────────────────────────────────
+; Elbow world (116,52) + half-arm (0,80) = center (116,132)
+[node name="LArmRB" type="RigidBody2D" parent="." unique_id=2100006]
+position = Vector2(116, 132)
+collision_layer = 2
+collision_mask = 1
+linear_damp = 1.0
+angular_damp = 3.0
+
+[node name="LArmShape" type="CollisionShape2D" parent="LArmRB" unique_id=2100007]
+shape = SubResource("Capsule_LArm")
+
+[node name="LHandDamager" parent="LArmRB" unique_id=2100008 instance=ExtResource("2_f1p")]
+position = Vector2(0, 80)
+
+; ── Right forearm ─────────────────────────────────────────────────────────────
+; Shoulder (-182,-168) + half-forearm (0,110) = center (-182,-58)
+[node name="RForearmRB" type="RigidBody2D" parent="." unique_id=2100009]
+position = Vector2(-182, -58)
+collision_layer = 2
+collision_mask = 1
+linear_damp = 0.5
+angular_damp = 2.0
+
+[node name="RForearmShape" type="CollisionShape2D" parent="RForearmRB" unique_id=2100010]
+shape = SubResource("Capsule_RForearm")
+
+[node name="RElbowJoint" type="PinJoint2D" parent="RForearmRB" unique_id=2100011]
+position = Vector2(0, 110)
+disable_collision = true
+
+; ── Right arm ─────────────────────────────────────────────────────────────────
+; Elbow world (-182,52) + half-arm (0,82) = center (-182,134)
+[node name="RArmRB" type="RigidBody2D" parent="." unique_id=2100012]
+position = Vector2(-182, 134)
+collision_layer = 2
+collision_mask = 1
+linear_damp = 1.0
+angular_damp = 3.0
+
+[node name="RArmShape" type="CollisionShape2D" parent="RArmRB" unique_id=2100013]
+shape = SubResource("Capsule_RArm")
+
+[node name="RHandDamager" parent="RArmRB" unique_id=2100014 instance=ExtResource("2_f1p")]
+position = Vector2(0, 82)

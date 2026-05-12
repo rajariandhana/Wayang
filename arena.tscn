@@ -14,9 +14,11 @@
 [ext_resource type="Texture2D" uid="uid://df0t4h6bbv8ew" path="res://scenes/mega_3.png" id="9_uvldv"]
 [ext_resource type="Texture2D" uid="uid://c36ffm0pf2x1f" path="res://scenes/mega_4.png" id="10_nb1nt"]
 [ext_resource type="Script" uid="uid://cvq6fgkvcpt4j" path="res://castle_2.gd" id="12_u834y"]
+[ext_resource type="Texture2D" uid="uid://bvfrr4qpqyttq" path="res://asset/tanah.png" id="14_3vubs"]
 [ext_resource type="PackedScene" uid="uid://dd050n4s04ihr" path="res://arena_2d.tscn" id="15_1s3fb"]
 [ext_resource type="Script" uid="uid://dlibi3b4aga7n" path="res://player_3d.gd" id="16_1s3fb"]
 [ext_resource type="Texture2D" uid="uid://dxbsksk36llhe" path="res://asset/fire/FireFrames.png" id="17_ffcej"]
+[ext_resource type="AudioStream" uid="uid://bud184lsb4d1e" path="res://bgmusic.WAV" id="20_1vpcs"]
 [ext_resource type="Script" uid="uid://brngc1aiqcjev" path="res://animated_sprite_3d.gd" id="20_6p4q2"]
 
 [sub_resource type="Environment" id="Environment_u834y"]
@@ -35,6 +37,7 @@ albedo_texture = ExtResource("2_h0wof")
 
 [sub_resource type="QuadMesh" id="QuadMesh_1s3fb"]
 size = Vector2(3.96, 2)
+center_offset = Vector3(0, 1, 0)
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_1pekq"]
 viewport_path = NodePath("SubViewport")
@@ -155,12 +158,6 @@ shaded = true
 alpha_cut = 1
 texture = ExtResource("3_sbb53")
 
-[node name="fire1" type="Sprite3D" parent="." unique_id=1713366874]
-transform = Transform3D(0.61, 0, 0, 0, 0.874, 0, 0, 0, 0.691, -3.4065301, 0.33411932, -2.333413)
-visible = false
-shaded = true
-alpha_cut = 1
-
 [node name="DrAngka" type="Sprite3D" parent="." unique_id=1544782527]
 transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, 0.0067361593, -0.4861004, 0.54833835)
 shaded = true
@@ -169,7 +166,42 @@ texture = ExtResource("3_h0wof")
 script = ExtResource("5_yokb4")
 
 [node name="castle" type="Sprite3D" parent="." unique_id=297873733]
-transform = Transform3D(0.28, 0, 0, 0, 0.257, 0, 0, 0, 0.35, -1.065453, -0.159, -0.77892447)
+transform = Transform3D(0.28, 0, 0, 0, 0.257, 0, 0, 0, 0.35, -1.0661025, -0.44203806, -0.7790605)
+shaded = true
+alpha_cut = 1
+texture = ExtResource("5_sbb53")
+script = ExtResource("7_nb1nt")
+
+[node name="castle3" type="Sprite3D" parent="." unique_id=1599309612]
+transform = Transform3D(-0.28, 0, 3.059797e-08, 0, 0.257, 0, -2.4478377e-08, 0, -0.35, 0.68041015, -0.2786581, -1.0885291)
+shaded = true
+alpha_cut = 1
+texture = ExtResource("5_sbb53")
+script = ExtResource("7_nb1nt")
+
+[node name="castle4" type="Sprite3D" parent="." unique_id=741309040]
+transform = Transform3D(-0.28, 0, 3.059797e-08, 0, 0.257, 0, -2.4478377e-08, 0, -0.35, -0.2691567, -0.26244634, -1.6527703)
+shaded = true
+alpha_cut = 1
+texture = ExtResource("5_sbb53")
+script = ExtResource("7_nb1nt")
+
+[node name="castle7" type="Sprite3D" parent="." unique_id=2004261574]
+transform = Transform3D(0.28, 0, 0, 0, 0.257, 0, 0, 0, 0.35, 4.226358, -0.159, -2.702291)
+shaded = true
+alpha_cut = 1
+texture = ExtResource("5_sbb53")
+script = ExtResource("7_nb1nt")
+
+[node name="castle5" type="Sprite3D" parent="." unique_id=1907888137]
+transform = Transform3D(0.28, 0, 0, 0, 0.257, 0, 0, 0, 0.35, -0.8465025, -0.159, -2.0893009)
+shaded = true
+alpha_cut = 1
+texture = ExtResource("5_sbb53")
+script = ExtResource("7_nb1nt")
+
+[node name="castle6" type="Sprite3D" parent="." unique_id=729422290]
+transform = Transform3D(-0.28, 0, 3.059797e-08, 0, 0.257, 0, -2.4478377e-08, 0, -0.35, -5.5255, -0.159, -2.7756584)
 shaded = true
 alpha_cut = 1
 texture = ExtResource("5_sbb53")
@@ -204,16 +236,17 @@ texture = ExtResource("10_nb1nt")
 script = ExtResource("9_u834y")
 
 [node name="castle2" type="Sprite3D" parent="." unique_id=186480505]
-transform = Transform3D(-0.28, 0, 5.284853e-08, 0, 0.257, 0, -4.2278824e-08, 0, -0.35, 2.429, 0.071, -0.638)
+transform = Transform3D(-0.28, 0, 5.284853e-08, 0, 0.257, 0, -4.2278824e-08, 0, -0.35, 2.05253, -0.21918729, -0.638)
 shaded = true
 alpha_cut = 1
 texture = ExtResource("5_sbb53")
 script = ExtResource("12_u834y")
 
 [node name="ground" type="Sprite3D" parent="." unique_id=491983772]
-transform = Transform3D(-0.28, 0, 5.284853e-08, 0, 0.257, 0, -4.2278824e-08, 0, -0.35, 0.4879713, -0.8187636, -0.60323083)
+transform = Transform3D(-0.28, 0, 5.284853e-08, 0, 0.477, 0, -4.2278824e-08, 0, -0.35, 0.4879713, -0.8545188, -2.9359956)
 shaded = true
 alpha_cut = 1
+texture = ExtResource("14_3vubs")
 script = ExtResource("12_u834y")
 
 [node name="BackgroundScreen" type="MeshInstance3D" parent="." unique_id=328712295]
@@ -229,14 +262,33 @@ render_target_update_mode = 4
 [node name="Arena2d" parent="SubViewport" unique_id=613410957 instance=ExtResource("15_1s3fb")]
 
 [node name="Player3D" type="MeshInstance3D" parent="." unique_id=1798971013]
-transform = Transform3D(1.49, 0, 0, 0, 1.77, 0, 0, 0, 1.18, -0.16204357, 0.51852953, -0.5738861)
+transform = Transform3D(1.49, 0, 0, 0, 1.77, 0, 0, 0, 1.18, 0.033833325, -1.3595247, -0.5738861)
 mesh = SubResource("QuadMesh_1s3fb")
 surface_material_override/0 = SubResource("StandardMaterial3D_ffcej")
 script = ExtResource("16_1s3fb")
 
 [node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="." unique_id=1134275417]
-transform = Transform3D(0.38, 0, 0, 0, 0.38, 0, 0, 0, 0.38, -1.425, -0.26, -1.801)
+transform = Transform3D(0.38, 0, 0, 0, 0.38, 0, 0, 0, 0.38, -1.425, -0.48680794, -1.801)
 sprite_frames = SubResource("SpriteFrames_1pekq")
 frame_progress = 0.62156594
 speed_scale = 0.5
 script = ExtResource("20_6p4q2")
+
+[node name="AnimatedSprite3D2" type="AnimatedSprite3D" parent="." unique_id=1845209383]
+transform = Transform3D(-0.2, 0, 3.019916e-08, 0, 0.2, 0, -3.019916e-08, 0, -0.2, 2.1195023, -0.64294773, -0.7021473)
+sprite_frames = SubResource("SpriteFrames_1pekq")
+frame_progress = 0.62156594
+speed_scale = 0.5
+script = ExtResource("20_6p4q2")
+
+[node name="AnimatedSprite3D3" type="AnimatedSprite3D" parent="." unique_id=516028209]
+transform = Transform3D(-0.42180198, 0.083564945, 6.369032e-08, 0.083564945, 0.42180198, -1.26179565e-08, -6.4928194e-08, 0, -0.43, 2.2228587, -0.12371236, -2.2490723)
+sprite_frames = SubResource("SpriteFrames_1pekq")
+frame_progress = 0.62156594
+speed_scale = 0.5
+script = ExtResource("20_6p4q2")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1478308453]
+stream = ExtResource("20_1vpcs")
+volume_db = -6.0
+autoplay = true

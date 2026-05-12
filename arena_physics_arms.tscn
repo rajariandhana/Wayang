@@ -1,0 +1,242 @@
+[gd_scene format=3 uid="uid://dvq6ilvcofeqy"]
+
+[ext_resource type="Script" uid="uid://c1tsdllibt16e" path="res://omni_light_3d.gd" id="1_27ga2"]
+[ext_resource type="Texture2D" uid="uid://crnsiqddx3qik" path="res://cloth_texture.jpg" id="2_h0wof"]
+[ext_resource type="Texture2D" uid="uid://dpw5l3ayhalns" path="res://asset/dalang_frame.png" id="3_fu4bq"]
+[ext_resource type="Texture2D" uid="uid://8anwl2bwwg1j" path="res://asset/dr angka.png" id="3_h0wof"]
+[ext_resource type="Texture2D" uid="uid://bjl6gc24obxn7" path="res://asset/edge.png" id="3_sbb53"]
+[ext_resource type="Texture2D" uid="uid://dej3llqljplyf" path="res://asset/castle_texture.png" id="5_sbb53"]
+[ext_resource type="Script" uid="uid://bid587oa22bn6" path="res://dr_angka.gd" id="5_yokb4"]
+[ext_resource type="Texture2D" uid="uid://cdxcagioe4h63" path="res://scenes/mega_1.png" id="7_35c7g"]
+[ext_resource type="Script" uid="uid://cg5pnkr6o01bj" path="res://castle.gd" id="7_nb1nt"]
+[ext_resource type="Texture2D" uid="uid://6aejj6emwqac" path="res://scenes/mega_2.png" id="8_g8a64"]
+[ext_resource type="Script" uid="uid://be7dcoxqbfbmw" path="res://awan_1.gd" id="9_u834y"]
+[ext_resource type="Texture2D" uid="uid://df0t4h6bbv8ew" path="res://scenes/mega_3.png" id="9_uvldv"]
+[ext_resource type="Texture2D" uid="uid://c36ffm0pf2x1f" path="res://scenes/mega_4.png" id="10_nb1nt"]
+[ext_resource type="Script" uid="uid://cvq6fgkvcpt4j" path="res://castle_2.gd" id="12_u834y"]
+[ext_resource type="PackedScene" uid="uid://dvq6ilvbofeqy" path="res://arena_2d_physics_arms.tscn" id="15_1s3fb"]
+[ext_resource type="Script" uid="uid://dlibi3b4aga7n" path="res://player_3d.gd" id="16_1s3fb"]
+[ext_resource type="Texture2D" uid="uid://dxbsksk36llhe" path="res://asset/fire/FireFrames.png" id="17_ffcej"]
+[ext_resource type="Script" uid="uid://brngc1aiqcjev" path="res://animated_sprite_3d.gd" id="20_6p4q2"]
+
+[sub_resource type="Environment" id="Environment_u834y"]
+fog_enabled = true
+fog_density = 0.0093
+volumetric_fog_enabled = true
+volumetric_fog_albedo = Color(0.723171, 0.5574355, 0.17350432, 1)
+volumetric_fog_emission = Color(0.33101895, 0.33101892, 0.33101892, 1)
+volumetric_fog_length = 288.41
+
+[sub_resource type="QuadMesh" id="QuadMesh_sbb53"]
+size = Vector2(15, 10)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pbtuc"]
+albedo_texture = ExtResource("2_h0wof")
+
+[sub_resource type="QuadMesh" id="QuadMesh_1s3fb"]
+size = Vector2(3.96, 2)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_1pekq"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ffcej"]
+resource_local_to_scene = true
+transparency = 4
+cull_mode = 2
+albedo_texture = SubResource("ViewportTexture_1pekq")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3vubs"]
+atlas = ExtResource("17_ffcej")
+region = Rect2(0, 0, 1920, 1080)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6p4q2"]
+atlas = ExtResource("17_ffcej")
+region = Rect2(1920, 0, 1920, 1080)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1vpcs"]
+atlas = ExtResource("17_ffcej")
+region = Rect2(0, 1080, 1920, 1080)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mqgew"]
+atlas = ExtResource("17_ffcej")
+region = Rect2(1920, 1080, 1920, 1080)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r4b1s"]
+atlas = ExtResource("17_ffcej")
+region = Rect2(0, 2160, 1920, 1080)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6y7ov"]
+atlas = ExtResource("17_ffcej")
+region = Rect2(1920, 2160, 1920, 1080)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lue8h"]
+atlas = ExtResource("17_ffcej")
+region = Rect2(0, 3240, 1920, 1080)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bcirq"]
+atlas = ExtResource("17_ffcej")
+region = Rect2(1920, 3240, 1920, 1080)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hvhbd"]
+atlas = ExtResource("17_ffcej")
+region = Rect2(0, 4320, 1920, 1080)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k6stb"]
+atlas = ExtResource("17_ffcej")
+region = Rect2(1920, 4320, 1920, 1080)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1pekq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3vubs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6p4q2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1vpcs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mqgew")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r4b1s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6y7ov")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lue8h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bcirq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hvhbd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k6stb")
+}],
+"loop": true,
+"name": &"default",
+"speed": 12.0
+}]
+
+[node name="Node3D" type="Node3D" unique_id=1179833421]
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=268376077]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.0480173)
+environment = SubResource("Environment_u834y")
+current = true
+
+[node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=520345109]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9281226, 1.3919939)
+light_color = Color(0.9313727, 0.6572922, 0.2066547, 1)
+shadow_enabled = true
+script = ExtResource("1_27ga2")
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="." unique_id=1272323204]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.36172718, 3.1067548)
+light_color = Color(0.9313727, 0.6572922, 0.2066547, 1)
+shadow_enabled = true
+script = ExtResource("1_27ga2")
+min_energy = 3.0
+
+[node name="FrameDalang" type="Sprite3D" parent="." unique_id=1013943315]
+transform = Transform3D(0.3, 0, 0, 0, 0.43, 0, 0, 0, 0.35, 0, 0.24, -0.4764886)
+shaded = true
+alpha_cut = 1
+texture = ExtResource("3_fu4bq")
+
+[node name="edge" type="Sprite3D" parent="." unique_id=1430897650]
+transform = Transform3D(0.3, 0, 0, 0, 0.43, 0, 0, 0, 0.34, 0.058662653, 0.33411932, -0.5682157)
+shaded = true
+alpha_cut = 1
+texture = ExtResource("3_sbb53")
+
+[node name="fire1" type="Sprite3D" parent="." unique_id=1713366874]
+transform = Transform3D(0.61, 0, 0, 0, 0.874, 0, 0, 0, 0.691, -3.4065301, 0.33411932, -2.333413)
+visible = false
+shaded = true
+alpha_cut = 1
+
+[node name="DrAngka" type="Sprite3D" parent="." unique_id=1544782527]
+transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, 0.0067361593, -0.4861004, 0.54833835)
+shaded = true
+alpha_cut = 1
+texture = ExtResource("3_h0wof")
+script = ExtResource("5_yokb4")
+
+[node name="castle" type="Sprite3D" parent="." unique_id=297873733]
+transform = Transform3D(0.28, 0, 0, 0, 0.257, 0, 0, 0, 0.35, -1.065453, -0.159, -0.77892447)
+shaded = true
+alpha_cut = 1
+texture = ExtResource("5_sbb53")
+script = ExtResource("7_nb1nt")
+
+[node name="awan1" type="Sprite3D" parent="." unique_id=495071323]
+transform = Transform3D(0.41, 0, 0, 0, 0.376, 0, 0, 0, 0.513, 12.941667, 0.43651932, -0.917164)
+shaded = true
+alpha_cut = 1
+texture = ExtResource("7_35c7g")
+script = ExtResource("9_u834y")
+
+[node name="awan2" type="Sprite3D" parent="." unique_id=1426605555]
+transform = Transform3D(0.39877003, -0.08739893, 7.533918e-08, -0.09530204, -0.36570132, -1.800531e-08, 6.190828e-08, 0, -0.513, 5.21432, 0.5171926, -0.917164)
+shaded = true
+alpha_cut = 1
+texture = ExtResource("8_g8a64")
+script = ExtResource("9_u834y")
+
+[node name="awan3" type="Sprite3D" parent="." unique_id=686642485]
+transform = Transform3D(-0.17284533, 0.34095454, 0, -0.37178558, -0.15851183, 0, 0, 0, 0.5130001, -5.45156, 0.40010047, -0.9675884)
+shaded = true
+alpha_cut = 1
+texture = ExtResource("9_uvldv")
+script = ExtResource("9_u834y")
+
+[node name="awan4" type="Sprite3D" parent="." unique_id=708319952]
+transform = Transform3D(0.41, 0, 0, 0, 0.376, 0, 0, 0, 0.513, -10.887028, 1.2419605, -0.973092)
+shaded = true
+alpha_cut = 1
+texture = ExtResource("10_nb1nt")
+script = ExtResource("9_u834y")
+
+[node name="castle2" type="Sprite3D" parent="." unique_id=186480505]
+transform = Transform3D(-0.28, 0, 5.284853e-08, 0, 0.257, 0, -4.2278824e-08, 0, -0.35, 2.429, 0.071, -0.638)
+shaded = true
+alpha_cut = 1
+texture = ExtResource("5_sbb53")
+script = ExtResource("12_u834y")
+
+[node name="ground" type="Sprite3D" parent="." unique_id=491983772]
+transform = Transform3D(-0.28, 0, 5.284853e-08, 0, 0.257, 0, -4.2278824e-08, 0, -0.35, 0.4879713, -0.8187636, -0.60323083)
+shaded = true
+alpha_cut = 1
+script = ExtResource("12_u834y")
+
+[node name="BackgroundScreen" type="MeshInstance3D" parent="." unique_id=328712295]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3.0229087)
+mesh = SubResource("QuadMesh_sbb53")
+surface_material_override/0 = SubResource("StandardMaterial3D_pbtuc")
+
+[node name="SubViewport" type="SubViewport" parent="." unique_id=2063217269]
+transparent_bg = true
+size = Vector2i(2739, 1797)
+render_target_update_mode = 4
+
+[node name="Arena2d" parent="SubViewport" unique_id=613410957 instance=ExtResource("15_1s3fb")]
+
+[node name="Player3D" type="MeshInstance3D" parent="." unique_id=1798971013]
+transform = Transform3D(1.49, 0, 0, 0, 1.77, 0, 0, 0, 1.18, -0.16204357, 0.51852953, -0.5738861)
+mesh = SubResource("QuadMesh_1s3fb")
+surface_material_override/0 = SubResource("StandardMaterial3D_ffcej")
+script = ExtResource("16_1s3fb")
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="." unique_id=1134275417]
+transform = Transform3D(0.38, 0, 0, 0, 0.38, 0, 0, 0, 0.38, -1.425, -0.26, -1.801)
+sprite_frames = SubResource("SpriteFrames_1pekq")
+frame_progress = 0.62156594
+speed_scale = 0.5
+script = ExtResource("20_6p4q2")

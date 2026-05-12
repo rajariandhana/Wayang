@@ -1,8 +1,11 @@
 [gd_scene format=3 uid="uid://kwofpgkgfhn5"]
 
+[ext_resource type="Script" path="res://scenes/hand_damager.gd" id="1_hdmgr"]
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_1q4ya"]
 
 [node name="HandDamager" type="Area2D" unique_id=962977205]
+script = ExtResource("1_hdmgr")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1343155081]
 scale = Vector2(3, 3)

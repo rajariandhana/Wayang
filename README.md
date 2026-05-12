@@ -23,3 +23,8 @@ How to run the project
 4. It is advised to connect a game controller for better play
 5. Have fUN!
 
+## Todo:
+- Cutscene
+- How to play -> display controls
+- Show attack cooldown
+- end screen, replay button

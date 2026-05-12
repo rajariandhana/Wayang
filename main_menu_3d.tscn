@@ -6,6 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://dt3swce7gjjv3" path="res://title_logo.png" id="3_axt0k"]
 [ext_resource type="Texture2D" uid="uid://dkisat3qex4uc" path="res://Start Game.png" id="4_ohct5"]
 [ext_resource type="Texture2D" uid="uid://f71tiw1ga5f6" path="res://Quit.png" id="5_jdx38"]
+[ext_resource type="AudioStream" uid="uid://c7c7dayak41b1" path="res://intro_start.WAV" id="7_axt0k"]
+[ext_resource type="AudioStream" uid="uid://fee2p4gi27pv" path="res://intro_loop.WAV" id="8_ohct5"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_up8d4"]
 size = Vector2(10, 10)
@@ -59,3 +61,10 @@ texture = ExtResource("5_jdx38")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MenuContainer/Quit/Area3D" unique_id=37009022]
 shape = SubResource("BoxShape3D_ydasx")
+
+[node name="IntroStart" type="AudioStreamPlayer" parent="." unique_id=1260200709]
+stream = ExtResource("7_axt0k")
+autoplay = true
+
+[node name="IntroLoop" type="AudioStreamPlayer" parent="." unique_id=577943770]
+stream = ExtResource("8_ohct5")
