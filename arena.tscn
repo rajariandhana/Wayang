@@ -20,6 +20,7 @@
 [ext_resource type="Texture2D" uid="uid://dxbsksk36llhe" path="res://asset/fire/FireFrames.png" id="17_ffcej"]
 [ext_resource type="AudioStream" uid="uid://bud184lsb4d1e" path="res://bgmusic.WAV" id="20_1vpcs"]
 [ext_resource type="Script" uid="uid://brngc1aiqcjev" path="res://animated_sprite_3d.gd" id="20_6p4q2"]
+[ext_resource type="PackedScene" path="res://pause_menu.tscn" id="21_pause"]
 
 [sub_resource type="Environment" id="Environment_u834y"]
 fog_enabled = true
@@ -292,3 +293,5 @@ script = ExtResource("20_6p4q2")
 stream = ExtResource("20_1vpcs")
 volume_db = -6.0
 autoplay = true
+
+[node name="PauseMenu" parent="." instance=ExtResource("21_pause")]
