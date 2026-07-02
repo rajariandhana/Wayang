@@ -74,7 +74,7 @@ func _handle_click(mouse_pos: Vector2) -> void:
 			_show_how_to_play()
 		elif collider == _area_main:
 			get_tree().paused = false
-			get_tree().change_scene_to_file("res://main_menu_3d.tscn")
+			SceneManager.change_scene(SceneManager.main_menu)
 		elif collider == _area_quit:
 			get_tree().paused = false
 			get_tree().call_deferred("quit")
