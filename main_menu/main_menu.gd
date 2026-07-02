@@ -2,30 +2,30 @@ extends Node3D
 
 # Notice the paths have changed to look inside MenuContainer!
 @onready var menu_container = $MenuContainer
-@onready var title = $MenuContainer/Title
-@onready var start_btn = $MenuContainer/Start
-@onready var quit_btn = $MenuContainer/Quit
-@onready var intro_start = $IntroStart
-@onready var intro_loop = $IntroLoop
+@onready var title: Sprite3D = $MenuContainer/Title
+@onready var start_btn: Area3D = $MenuContainer/StartButton
+@onready var quit_btn: Area3D = $MenuContainer/QuitButton
+@onready var intro_start_audio: AudioStreamPlayer = $IntroStart
+@onready var intro_loop_audio: AudioStreamPlayer = $IntroLoop
 
 var max_tilt = deg_to_rad(2) 
-var is_animating = false 
+enum State {IDLE, ANIMATING}
+var state = State.IDLE
 
 func _ready():
 	# Connect the Click signals
-	$MenuContainer/Start/Area3D.input_event.connect(_on_start_clicked)
-	$MenuContainer/Quit/Area3D.input_event.connect(_on_quit_clicked)
-	print("Single Pane Menu is ready!")
+	start_btn.input_event.connect(_on_start_clicked)
+	quit_btn.input_event.connect(_on_quit_clicked)
 	
 	# 1. Connect the 'finished' signal of the first track to a custom function
-	intro_start.finished.connect(_on_intro_start_finished)
+	intro_start_audio.finished.connect(_on_intro_start_finished)
 	
 	# 2. Play the intro track (if you don't already have 'Autoplay' checked in the Inspector)
-	intro_start.play()
+	intro_start_audio.play()
 
 
 func _process(delta):
-	if is_animating:
+	if state == State.ANIMATING:
 		return
 		
 	var viewport_size = get_viewport().get_visible_rect().size
@@ -45,24 +45,23 @@ func _process(delta):
 
 
 # --- CLICK LOGIC ---
-func _on_start_clicked(camera, event, position, normal, shape_idx):
+func _on_start_clicked(_camera, event, _position, _normal, _shape_idx) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-		print("START CLICKED")
 		_animate_out_and_start()
 
-func _on_quit_clicked(camera, event, position, normal, shape_idx):
+func _on_quit_clicked(_camera, event, _position, _normal, _shape_idx) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-		get_tree().quit()
+		SceneManager.quit_game()
 
 
 # 3. This function runs automatically the exact moment IntroStart ends
 func _on_intro_start_finished():
-	intro_loop.play()
+	intro_loop_audio.play()
 
 # --- THE FLY-AWAY ANIMATION ---
 # --- THE FLY-AWAY ANIMATION ---
 func _animate_out_and_start():
-	is_animating = true 
+	state = State.ANIMATING
 	
 	var tween = create_tween()
 	tween.set_parallel(true)
@@ -85,4 +84,4 @@ func _animate_out_and_start():
 	tween.tween_interval(0.1) # Tiny buffer to ensure they are off-screen
 	await tween.finished
 	
-	get_tree().change_scene_to_file("res://arena.tscn")
+	SceneManager.change_scene(SceneManager.game_scene)
