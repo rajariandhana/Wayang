@@ -3,10 +3,12 @@
 [ext_resource type="PackedScene" uid="uid://c85s0gsxax6q" path="res://scenes/HealthBar.tscn" id="3_4pi78"]
 [ext_resource type="PackedScene" uid="uid://ckucsmrppc0rw" path="res://scenes/fighter_1.tscn" id="5_dyqqe"]
 [ext_resource type="PackedScene" uid="uid://drhj44refvy4f" path="res://scenes/fighter_2.tscn" id="5_nlkml"]
+[ext_resource type="Script" path="res://arena/arena_2d.gd" id="6_arena2d"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_sjqlj"]
 
 [node name="Arena2d" type="StaticBody2D" unique_id=613410957]
+script = ExtResource("6_arena2d")
 position = Vector2(1317, 1592)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1356225281]

@@ -1,6 +1,8 @@
 class_name Fighter
 extends Node2D
 
+signal died
+
 @export var character_name: String = ""
 @export var health:int = 100
 @export var hit_cooldown := 2 # seconds
@@ -132,8 +134,11 @@ func got_hit(opponent: Fighter, damage: int):
 		die()
 
 func die():
+	if is_dead:
+		return
 	can_attack = false
 	set_attack_indicator(false)
 	animation_player.play("death")
 	print(character_name, " died!")
 	is_dead = true
+	died.emit()

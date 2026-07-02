@@ -19,6 +19,8 @@
 [ext_resource type="Texture2D" uid="uid://dxbsksk36llhe" path="res://asset/fire/FireFrames.png" id="17_ffcej"]
 [ext_resource type="AudioStream" uid="uid://bud184lsb4d1e" path="res://arena/bgmusic.WAV" id="20_1vpcs"]
 [ext_resource type="PackedScene" uid="uid://cn81flegsb8nj" path="res://pause_menu.tscn" id="21_pause"]
+[ext_resource type="PackedScene" path="res://win_screen.tscn" id="22_winscreen"]
+[ext_resource type="Script" path="res://arena/arena.gd" id="23_arena"]
 
 [sub_resource type="Environment" id="Environment_u834y"]
 fog_enabled = true
@@ -166,6 +168,7 @@ animations = [{
 }]
 
 [node name="Node3D" type="Node3D" unique_id=1179833421]
+script = ExtResource("23_arena")
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=268376077]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.0480173)
@@ -339,3 +342,5 @@ volume_db = -6.0
 autoplay = true
 
 [node name="PauseMenu" parent="." unique_id=787018932 instance=ExtResource("21_pause")]
+
+[node name="WinScreen" parent="." unique_id=787018933 instance=ExtResource("22_winscreen")]
