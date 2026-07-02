@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://cpms5hhjnxbhj"]
 
 [ext_resource type="Script" uid="uid://cjoq1477phhd7" path="res://main_menu/main_menu.gd" id="1_ia84y"]
-[ext_resource type="Script" uid="uid://c1tsdllibt16e" path="res://omni_light_3d.gd" id="2_6at21"]
-[ext_resource type="Texture2D" uid="uid://crnsiqddx3qik" path="res://cloth_texture.jpg" id="3_og6xe"]
+[ext_resource type="Script" uid="uid://c1tsdllibt16e" path="res://arena/omni_light_3d.gd" id="2_6at21"]
+[ext_resource type="Texture2D" uid="uid://crnsiqddx3qik" path="res://asset/cloth_texture.jpg" id="3_og6xe"]
 [ext_resource type="Texture2D" uid="uid://dt3swce7gjjv3" path="res://main_menu/title_logo.png" id="4_mvfl2"]
 [ext_resource type="Texture2D" uid="uid://dkisat3qex4uc" path="res://main_menu/Start Game.png" id="5_qvn4f"]
 [ext_resource type="Texture2D" uid="uid://f71tiw1ga5f6" path="res://main_menu/Quit.png" id="6_g1omr"]
