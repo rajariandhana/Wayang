@@ -1,21 +1,23 @@
 [gd_scene format=3 uid="uid://dvq6ilvcofeqy"]
 
-[ext_resource type="Script" uid="uid://c1tsdllibt16e" path="res://arena/omni_light_3d.gd" id="1_27ga2"]
-[ext_resource type="Texture2D" uid="uid://crnsiqddx3qik" path="res://asset/cloth_texture.jpg" id="2_h0wof"]
+[ext_resource type="Script" uid="uid://c1tsdllibt16e" path="res://omni_light_3d.gd" id="1_27ga2"]
+[ext_resource type="Texture2D" uid="uid://crnsiqddx3qik" path="res://cloth_texture.jpg" id="2_h0wof"]
 [ext_resource type="Texture2D" uid="uid://dpw5l3ayhalns" path="res://asset/dalang_frame.png" id="3_fu4bq"]
 [ext_resource type="Texture2D" uid="uid://8anwl2bwwg1j" path="res://asset/dr angka.png" id="3_h0wof"]
 [ext_resource type="Texture2D" uid="uid://bjl6gc24obxn7" path="res://asset/edge.png" id="3_sbb53"]
 [ext_resource type="Texture2D" uid="uid://dej3llqljplyf" path="res://asset/castle_texture.png" id="5_sbb53"]
-[ext_resource type="Script" uid="uid://bid587oa22bn6" path="res://arena/dr_angka.gd" id="5_yokb4"]
-[ext_resource type="Texture2D" uid="uid://cdxcagioe4h63" path="res://asset/awan/mega_1.png" id="7_35c7g"]
-[ext_resource type="Script" uid="uid://cg5pnkr6o01bj" path="res://arena/castle.gd" id="7_nb1nt"]
-[ext_resource type="Texture2D" uid="uid://6aejj6emwqac" path="res://asset/awan/mega_2.png" id="8_g8a64"]
-[ext_resource type="Script" uid="uid://be7dcoxqbfbmw" path="res://arena/awan.gd" id="9_u834y"]
-[ext_resource type="Texture2D" uid="uid://df0t4h6bbv8ew" path="res://asset/awan/mega_3.png" id="9_uvldv"]
-[ext_resource type="Texture2D" uid="uid://c36ffm0pf2x1f" path="res://asset/awan/mega_4.png" id="10_nb1nt"]
-[ext_resource type="PackedScene" uid="uid://dvq6ilvbofeqy" path="res://arena/arena_2d_physics_arms.tscn" id="15_1s3fb"]
-[ext_resource type="Script" uid="uid://dlibi3b4aga7n" path="res://arena/player_3d.gd" id="16_1s3fb"]
+[ext_resource type="Script" uid="uid://bid587oa22bn6" path="res://dr_angka.gd" id="5_yokb4"]
+[ext_resource type="Texture2D" uid="uid://cdxcagioe4h63" path="res://scenes/mega_1.png" id="7_35c7g"]
+[ext_resource type="Script" uid="uid://cg5pnkr6o01bj" path="res://castle.gd" id="7_nb1nt"]
+[ext_resource type="Texture2D" uid="uid://6aejj6emwqac" path="res://scenes/mega_2.png" id="8_g8a64"]
+[ext_resource type="Script" uid="uid://be7dcoxqbfbmw" path="res://awan_1.gd" id="9_u834y"]
+[ext_resource type="Texture2D" uid="uid://df0t4h6bbv8ew" path="res://scenes/mega_3.png" id="9_uvldv"]
+[ext_resource type="Texture2D" uid="uid://c36ffm0pf2x1f" path="res://scenes/mega_4.png" id="10_nb1nt"]
+[ext_resource type="Script" uid="uid://cvq6fgkvcpt4j" path="res://castle_2.gd" id="12_u834y"]
+[ext_resource type="PackedScene" uid="uid://dvq6ilvbofeqy" path="res://arena_2d_physics_arms.tscn" id="15_1s3fb"]
+[ext_resource type="Script" uid="uid://dlibi3b4aga7n" path="res://player_3d.gd" id="16_1s3fb"]
 [ext_resource type="Texture2D" uid="uid://dxbsksk36llhe" path="res://asset/fire/FireFrames.png" id="17_ffcej"]
+[ext_resource type="Script" uid="uid://brngc1aiqcjev" path="res://animated_sprite_3d.gd" id="20_6p4q2"]
 
 [sub_resource type="Environment" id="Environment_u834y"]
 fog_enabled = true
@@ -206,12 +208,13 @@ transform = Transform3D(-0.28, 0, 5.284853e-08, 0, 0.257, 0, -4.2278824e-08, 0, 
 shaded = true
 alpha_cut = 1
 texture = ExtResource("5_sbb53")
-script = ExtResource("7_nb1nt")
+script = ExtResource("12_u834y")
 
 [node name="ground" type="Sprite3D" parent="." unique_id=491983772]
 transform = Transform3D(-0.28, 0, 5.284853e-08, 0, 0.257, 0, -4.2278824e-08, 0, -0.35, 0.4879713, -0.8187636, -0.60323083)
 shaded = true
 alpha_cut = 1
+script = ExtResource("12_u834y")
 
 [node name="BackgroundScreen" type="MeshInstance3D" parent="." unique_id=328712295]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3.0229087)
@@ -234,6 +237,6 @@ script = ExtResource("16_1s3fb")
 [node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="." unique_id=1134275417]
 transform = Transform3D(0.38, 0, 0, 0, 0.38, 0, 0, 0, 0.38, -1.425, -0.26, -1.801)
 sprite_frames = SubResource("SpriteFrames_1pekq")
-autoplay = "default"
 frame_progress = 0.62156594
 speed_scale = 0.5
+script = ExtResource("20_6p4q2")
