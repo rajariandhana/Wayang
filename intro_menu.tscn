@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://ppvmsvcba1e8"]
 
-[ext_resource type="Texture2D" uid="uid://crnsiqddx3qik" path="res://asset/cloth_texture.jpg" id="2_owss3"]
+[ext_resource type="Texture2D" uid="uid://crnsiqddx3qik" path="res://cloth_texture.jpg" id="2_owss3"]
 [ext_resource type="PackedScene" uid="uid://mdmo1jgxfhs7" path="res://scenes/Player.tscn" id="2_rv1xx"]
 
 [node name="MainMenu" type="Control" unique_id=1067288366]

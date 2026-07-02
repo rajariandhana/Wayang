@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cdxcagioe4h63"
-path.s3tc="res://.godot/imported/mega_1.png-6b1056592e1bab8d0e91d8af66624bd4.s3tc.ctex"
+uid="uid://df0t4h6bbv8ew"
+path.s3tc="res://.godot/imported/mega_3.png-a192fdcb60d53a27ba219018bc334968.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://asset/awan/mega_1.png"
-dest_files=["res://.godot/imported/mega_1.png-6b1056592e1bab8d0e91d8af66624bd4.s3tc.ctex"]
+source_file="res://scenes/mega_3.png"
+dest_files=["res://.godot/imported/mega_3.png-a192fdcb60d53a27ba219018bc334968.s3tc.ctex"]
 
 [params]
 
