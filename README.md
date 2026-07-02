@@ -2,13 +2,14 @@
 
 Made for UQCS Game Jam 2026
 Team Name: "the team that if we win, we will cut kenny's hair"
-Team members:
-- Dimas Gistha Adnyana
-- Ralfazza Rajariandhana
-- Shafa Kirana Mulia
-- Rogelio Kenny Arisandi
-- Muhammad Iqbal Shafarel
-- Farrell Reynard Jechoniah Simarmarta
+| Members | Role |
+| - | - |
+| Dimas Gistha Adnyana | Art |
+| Ralfazza Rajariandhana | Developer |
+| Shafa Kirana Mulia | Art |
+| Rogelio Kenny Arisandi | Developer |
+| Muhammad Iqbal Shafarel | Art |
+| Farrell Reynard Jechoniah Simarmarta | Art |
 
 Ashes of Alengka is a local multiplayer shadow puppet fighting simulator based off of the Ramayana story. The aim is to spread traditional Javanese/Malay/Indian tradition in a fun way.
 

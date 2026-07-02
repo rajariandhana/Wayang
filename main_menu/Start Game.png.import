@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://f71tiw1ga5f6"
-path.s3tc="res://.godot/imported/Quit.png-24c7f56da46db30b05c38d8010e10482.s3tc.ctex"
+uid="uid://dkisat3qex4uc"
+path.s3tc="res://.godot/imported/Start Game.png-acc0de68d3a2c38477e9cf1f72121df2.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://Quit.png"
-dest_files=["res://.godot/imported/Quit.png-24c7f56da46db30b05c38d8010e10482.s3tc.ctex"]
+source_file="res://main_menu/Start Game.png"
+dest_files=["res://.godot/imported/Start Game.png-acc0de68d3a2c38477e9cf1f72121df2.s3tc.ctex"]
 
 [params]
 
