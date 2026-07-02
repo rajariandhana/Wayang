@@ -84,33 +84,29 @@ hitbox = NodePath("Node2D/Skeleton2D/Hip/RForearm/RArm/RHand/Hitbox")
 
 [node name="Body" parent="Node2D/Sprites" parent_id_path=PackedInt32Array(1747101555) index="1" unique_id=321438573]
 position = Vector2(71, 4)
-scale = Vector2(1, 1)
 texture = ExtResource("2_l5hlh")
 
 [node name="LForearm" parent="Node2D/Sprites" parent_id_path=PackedInt32Array(1747101555) index="2" unique_id=811048158]
 position = Vector2(223, -85)
 rotation = -0.2396211
-scale = Vector2(1, 1)
 texture = ExtResource("3_ykps0")
 offset = Vector2(13, 90)
 
 [node name="LArm" parent="Node2D/Sprites" parent_id_path=PackedInt32Array(1747101555) index="3" unique_id=1172647800]
 position = Vector2(269.73282, 110.494354)
 rotation = 0.43742827
-scale = Vector2(1, 1)
 texture = ExtResource("4_qce2h")
 offset = Vector2(-34, 134)
 
 [node name="RForearm" parent="Node2D/Sprites" parent_id_path=PackedInt32Array(1747101555) index="4" unique_id=1940700127]
 position = Vector2(-103, -125)
 rotation = 0.4328829
-scale = Vector2(1, 1)
 texture = ExtResource("3_ykps0")
 offset = Vector2(13, 91)
 
 [node name="RArm" parent="Node2D/Sprites" parent_id_path=PackedInt32Array(1747101555) index="5" unique_id=1686462921]
 position = Vector2(-189.06413, 58.85582)
-rotation = 0.07297934
+rotation = 0.07297931
 scale = Vector2(0.9999996, 0.9999996)
 texture = ExtResource("4_qce2h")
 offset = Vector2(-34, 134)

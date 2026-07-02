@@ -2,9 +2,10 @@ class_name Fighter
 extends Node2D
 
 @export var character_name: String = ""
-@export var health := 100
-@export var hit_cooldown := 2
+@export var health:int = 100
+@export var hit_cooldown := 2 # seconds
 @export var health_bar: HealthBar
+@export var damage:int = 10
 
 var facing = 1
 
@@ -24,9 +25,15 @@ var can_attack = true
 
 @export var hitbox: Hitbox = null
 
+@onready var attack_indicator: Sprite2D = $Node2D/AttackIndicator
+
+const ATTACK_READY_OPACITY := 1.0
+const ATTACK_COOLDOWN_OPACITY := 0.5
+
 var is_dead = false
 
 func _ready():
+	hitbox.set_damage(damage)
 	add_child(audio)
 
 func _physics_process(delta):
@@ -76,6 +83,11 @@ func play_tilt(anim_name: String) -> void:
 
 	is_tilting = false
 
+func set_attack_indicator(ready: bool):
+	if ready:
+		attack_indicator.modulate.a = ATTACK_READY_OPACITY
+	else:
+		attack_indicator.modulate.a = ATTACK_COOLDOWN_OPACITY
 
 
 func play_attack() -> void:
@@ -84,6 +96,7 @@ func play_attack() -> void:
 
 	is_attacking = true
 	can_attack = false
+	set_attack_indicator(false)
 	hitbox.start_attack()
 
 	var anim_name = "attack"
@@ -105,6 +118,7 @@ func play_attack() -> void:
 	skeleton_animation_player.play("RESET")
 	await get_tree().create_timer(hit_cooldown - 0.5).timeout
 	can_attack = true
+	set_attack_indicator(true)
 
 
 func got_hit(opponent: Fighter, damage: int):
@@ -118,6 +132,8 @@ func got_hit(opponent: Fighter, damage: int):
 		die()
 
 func die():
+	can_attack = false
+	set_attack_indicator(false)
 	animation_player.play("death")
 	print(character_name, " died!")
 	is_dead = true

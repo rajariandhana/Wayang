@@ -2,7 +2,7 @@ class_name Hitbox
 extends Area2D
 
 @export var fighter: Fighter = null
-@export var damage := 10
+var damage := 10
 
 var is_attacking := false
 
@@ -16,3 +16,6 @@ func start_attack():
 func end_attack():
 	is_attacking = false
 	monitoring = false
+
+func set_damage(new_damage:int) -> void:
+	damage = new_damage

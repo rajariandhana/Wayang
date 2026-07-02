@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://ddgx1djb2bau" path="res://script/fighter.gd" id="1_1q4ya"]
 [ext_resource type="Texture2D" uid="uid://d1o1j6ybdv5cl" path="res://asset/stick.png" id="2_1q4ya"]
 [ext_resource type="PackedScene" uid="uid://bse1ibrpikg6w" path="res://scenes/hurtbox.tscn" id="3_38ety"]
+[ext_resource type="Texture2D" uid="uid://cisx8c31lhnrr" path="res://asset/attack_indicator.png" id="4_rsphg"]
 
 [sub_resource type="Animation" id="Animation_38ety"]
 length = 0.001
@@ -159,20 +160,15 @@ position = Vector2(0, 394)
 texture = ExtResource("2_1q4ya")
 
 [node name="Body" type="Sprite2D" parent="Node2D/Sprites" unique_id=321438573]
-scale = Vector2(0.99999994, 0.99999994)
 offset = Vector2(-47, 12)
 
 [node name="LForearm" type="Sprite2D" parent="Node2D/Sprites" unique_id=811048158]
-scale = Vector2(0.99999994, 0.99999994)
 
 [node name="LArm" type="Sprite2D" parent="Node2D/Sprites" unique_id=1172647800]
-scale = Vector2(0.99999994, 0.99999994)
 
 [node name="RForearm" type="Sprite2D" parent="Node2D/Sprites" unique_id=1940700127]
-scale = Vector2(0.99999994, 0.99999994)
 
 [node name="RArm" type="Sprite2D" parent="Node2D/Sprites" unique_id=1686462921]
-scale = Vector2(0.99999994, 0.99999994)
 
 [node name="Skeleton2D" type="Skeleton2D" parent="Node2D" unique_id=1944065169]
 
@@ -207,6 +203,11 @@ remote_path = NodePath("../../../Sprites/Body")
 
 [node name="Hurtbox" parent="Node2D" unique_id=1032956574 node_paths=PackedStringArray("fighter") instance=ExtResource("3_38ety")]
 fighter = NodePath("../..")
+
+[node name="AttackIndicator" type="Sprite2D" parent="Node2D" unique_id=1919046538]
+position = Vector2(0, -540)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("4_rsphg")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=2017779902]
 libraries/ = SubResource("AnimationLibrary_38ety")
