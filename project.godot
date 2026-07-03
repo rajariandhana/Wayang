@@ -22,6 +22,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 SceneManager="*uid://hkmirkrkl4x8"
+Util="*uid://rh28d012ccyq"
 
 [display]
 

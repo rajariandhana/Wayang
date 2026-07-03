@@ -78,6 +78,7 @@ size = Vector2(159, 488)
 [node name="Fighter1" unique_id=969771174 node_paths=PackedStringArray("skeleton_animation_player", "hitbox") instance=ExtResource("1_r4071")]
 position = Vector2(-1, 0)
 character_name = "Player 1"
+damage = 100
 input_attack = "p1_attack"
 skeleton_animation_player = NodePath("Node2D/AnimationPlayer")
 hit_sounds = Array[AudioStream]([ExtResource("2_4div2"), ExtResource("3_6sxb3"), ExtResource("4_qki53")])

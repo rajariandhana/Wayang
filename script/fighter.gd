@@ -4,16 +4,10 @@ extends Node2D
 signal died
 
 @export var character_name: String = ""
+@export var max_health:int = 100
 @export var health:int = 100
-@export var hit_cooldown := 2 # seconds
 @export var health_bar: HealthBar
 @export var damage:int = 10
-
-var facing = 1
-
-var is_tilting = false
-var is_attacking = false
-var can_attack = true
 
 @export var input_left := "left"
 @export var input_right := "right"
@@ -31,59 +25,61 @@ var can_attack = true
 
 const ATTACK_READY_OPACITY := 1.0
 const ATTACK_COOLDOWN_OPACITY := 0.5
+const ATTACK_COOLDOWN_TIME := 2.0
 
-var is_dead = false
+const POSITION_TILT_TIME = 0.5
+
+enum LifeState {ALIVE, DEAD}
+var life_state: LifeState = LifeState.ALIVE
+enum PositionState {IDLE, LEFT, RIGHT}
+var position_state: PositionState = PositionState.IDLE
+enum CombatState {READY, ATTACK, COOLDOWN}
+var combat_state: CombatState = CombatState.READY
+
+func reset() -> void:
+	health = max_health
+	life_state = LifeState.ALIVE
+	position_state = PositionState.IDLE
+	combat_state = CombatState.READY
+	hitbox.set_damage(damage)
+	set_attack_indicator(true)
 
 func _ready():
-	hitbox.set_damage(damage)
+	reset()
 	add_child(audio)
 
 func _physics_process(delta):
-	if is_dead:
+	if life_state == LifeState.DEAD:
 		return
+	
+	if combat_state == CombatState.READY:
+		if Input.is_action_just_pressed(input_attack):
+			await combat_attack()
+			await combat_cooldown()
+			combat_state = CombatState.READY
 
-	var axis = Input.get_axis(input_left, input_right)
-
-	# ATTACK
-	if Input.is_action_just_pressed(input_attack):
-
-		if can_attack and !is_attacking:
-			play_attack()
-
-
-	# TILT
-	if !is_tilting:
-
+	if position_state == PositionState.IDLE:
+		var axis = Input.get_axis(input_left, input_right)
 		if axis > 0:
-			play_tilt("right")
-
+			position_state = PositionState.RIGHT
+			await play_tilt("right")
 		elif axis < 0:
-			play_tilt("left")
-
-
+			position_state = PositionState.LEFT
+			await play_tilt("left")
+		position_state = PositionState.IDLE
 
 func play_tilt(anim_name: String) -> void:
-	if is_dead:
-		return
-
-	is_tilting = true
-
 	var anim_length = animation_player.get_animation(anim_name).length
 
 	# FORWARD
 	animation_player.play(anim_name)
-
-	await get_tree().create_timer(anim_length).timeout
-
+	await Util.wait(anim_length)
 	# HOLD
-	await get_tree().create_timer(0.5).timeout
-
+	await Util.wait(POSITION_TILT_TIME)
 	# BACKWARD
 	animation_player.play_backwards(anim_name)
 
-	await get_tree().create_timer(anim_length).timeout
-
-	is_tilting = false
+	await Util.wait(anim_length)
 
 func set_attack_indicator(ready: bool):
 	if ready:
@@ -91,37 +87,27 @@ func set_attack_indicator(ready: bool):
 	else:
 		attack_indicator.modulate.a = ATTACK_COOLDOWN_OPACITY
 
-
-func play_attack() -> void:
-	if is_dead:
-		return
-
-	is_attacking = true
-	can_attack = false
+func combat_attack() -> void:
+	combat_state = CombatState.ATTACK
 	set_attack_indicator(false)
 	hitbox.start_attack()
 
 	var anim_name = "attack"
-	var anim_length = skeleton_animation_player.get_animation(anim_name).length
-
-	if !skeleton_animation_player.has_animation("attack"):
-		is_attacking = false
-		can_attack = true
+	if !skeleton_animation_player.has_animation(anim_name):
 		return
+	var anim_length = skeleton_animation_player.get_animation(anim_name).length
 	
 	skeleton_animation_player.play(anim_name)
-	await get_tree().create_timer(anim_length).timeout
+	await Util.wait(anim_length)
 
 	hitbox.end_attack()
-	is_attacking = false
 
-	# COOLDOWN
-	await get_tree().create_timer(0.5).timeout
+func combat_cooldown() -> void:
+	combat_state = CombatState.COOLDOWN
+	await Util.wait(ATTACK_COOLDOWN_TIME/2)
 	skeleton_animation_player.play("RESET")
-	await get_tree().create_timer(hit_cooldown - 0.5).timeout
-	can_attack = true
+	await Util.wait(ATTACK_COOLDOWN_TIME/2)
 	set_attack_indicator(true)
-
 
 func got_hit(opponent: Fighter, damage: int):
 	print(character_name, " got_hit by ", opponent.character_name, " by ", damage)
@@ -134,11 +120,11 @@ func got_hit(opponent: Fighter, damage: int):
 		die()
 
 func die():
-	if is_dead:
+	if life_state == LifeState.DEAD:
 		return
-	can_attack = false
+	life_state = LifeState.DEAD
 	set_attack_indicator(false)
 	animation_player.play("death")
 	print(character_name, " died!")
-	is_dead = true
+	await animation_player.animation_finished
 	died.emit()
