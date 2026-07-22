@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://dvq6ilvbofeqy"]
+[gd_scene format=3 uid="uid://cvn15dionvtxt"]
 
 [ext_resource type="PackedScene" uid="uid://c85s0gsxax6q" path="res://scenes/HealthBar.tscn" id="3_4pi78"]
 [ext_resource type="PackedScene" uid="uid://f1phys001a" path="res://scenes/fighter_1_physics.tscn" id="5_dyqqe"]

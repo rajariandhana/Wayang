@@ -20,6 +20,7 @@ var _open := false
 var _hovered: Node3D = null
 
 func _ready() -> void:
+	add_to_group(&"t5_pointer_menu")
 	_rest_y[play_again_button] = play_again_button.position.y
 	_rest_y[main_menu_button] = main_menu_button.position.y
 	_rest_y[quit_button] = quit_button.position.y
@@ -58,31 +59,21 @@ func _handle_click(mouse_pos: Vector2) -> void:
 	var result := _raycast(mouse_pos)
 	if result.is_empty():
 		return
-	var collider = result.collider
-	var btn := _button_for(collider)
-	if btn:
-		_press(btn)
-	if collider == _area_play_again:
-		get_tree().paused = false
-		SceneManager.change_scene(SceneManager.game_scene)
-	elif collider == _area_main:
-		get_tree().paused = false
-		SceneManager.change_scene(SceneManager.main_menu)
-	elif collider == _area_quit:
-		get_tree().paused = false
-		get_tree().call_deferred("quit")
-
-func _button_for(collider: Object) -> Node3D:
-	if collider == _area_play_again: return play_again_button
-	elif collider == _area_main: return main_menu_button
-	elif collider == _area_quit: return quit_button
-	return null
+	pointer_click(result.collider)
 
 func _handle_hover(mouse_pos: Vector2) -> void:
 	var result := _raycast(mouse_pos)
-	var btn: Node3D = null
-	if not result.is_empty():
-		btn = _button_for(result.collider)
+	pointer_hover(result.collider if not result.is_empty() else null)
+
+# --- Shared pointer interface (mouse ray-pick and Tilt Five wand both feed
+#     these; see t5/wand_pointer.gd) ---------------------------------------
+
+## True while this menu should accept pointer input.
+func wants_pointer() -> bool:
+	return _open
+
+func pointer_hover(area: Object) -> void:
+	var btn := _button_for(area)
 	if btn == _hovered:
 		return
 	if _hovered:
@@ -90,6 +81,26 @@ func _handle_hover(mouse_pos: Vector2) -> void:
 	_hovered = btn
 	if _hovered:
 		_hover_in(_hovered)
+
+func pointer_click(area: Object) -> void:
+	var btn := _button_for(area)
+	if btn:
+		_press(btn)
+	if area == _area_play_again:
+		get_tree().paused = false
+		SceneManager.change_scene(SceneManager.game_scene)
+	elif area == _area_main:
+		get_tree().paused = false
+		SceneManager.change_scene(SceneManager.main_menu)
+	elif area == _area_quit:
+		get_tree().paused = false
+		get_tree().call_deferred("quit")
+
+func _button_for(area: Object) -> Node3D:
+	if area == _area_play_again: return play_again_button
+	elif area == _area_main: return main_menu_button
+	elif area == _area_quit: return quit_button
+	return null
 
 func _hover_in(node: Node3D) -> void:
 	var tween := create_tween()

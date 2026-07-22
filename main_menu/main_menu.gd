@@ -23,7 +23,11 @@ var max_tilt = deg_to_rad(2)
 enum State {IDLE, ANIMATING}
 var state = State.IDLE
 
+var _viewing_how_to_play := false
+var _hovered: Node3D = null
+
 func _ready():
+	add_to_group(&"t5_pointer_menu")
 	# Connect the Click signals
 	start_btn.input_event.connect(_on_start_clicked)
 	quit_btn.input_event.connect(_on_quit_clicked)
@@ -48,7 +52,14 @@ func _ready():
 func _process(delta):
 	if state == State.ANIMATING:
 		return
-		
+
+	# In Tilt Five the menu is viewed head-tracked on the gameboard; the
+	# mouse-driven parallax would just wobble it for the glasses wearer.
+	if T5Runtime.t5_active:
+		if menu_container.rotation != Vector3.ZERO:
+			menu_container.rotation = menu_container.rotation.lerp(Vector3.ZERO, 2.0 * delta)
+		return
+
 	var viewport_size = get_viewport().get_visible_rect().size
 	var mouse_pos = get_viewport().get_mouse_position()
 	
@@ -87,6 +98,7 @@ func _on_back_clicked(_camera, event, _position, _normal, _shape_idx) -> void:
 		_back_from_how_to_play()
 
 func _show_how_to_play() -> void:
+	_viewing_how_to_play = true
 	menu_container.visible = false
 	how_to_play_panel.visible = true
 	start_btn.input_ray_pickable = false
@@ -95,12 +107,58 @@ func _show_how_to_play() -> void:
 	_area_back.input_ray_pickable = true
 
 func _back_from_how_to_play() -> void:
+	_viewing_how_to_play = false
 	how_to_play_panel.visible = false
 	menu_container.visible = true
 	start_btn.input_ray_pickable = true
 	quit_btn.input_ray_pickable = true
 	_area_how_to_play.input_ray_pickable = true
 	_area_back.input_ray_pickable = false
+
+# --- Shared pointer interface (Tilt Five wand; see t5/wand_pointer.gd). The
+#     mouse path still uses the Area3D input_event/mouse_entered signals above,
+#     so these run only under Tilt Five where there is no mouse. --------------
+
+## True while this menu should accept pointer input (not mid fly-away).
+func wants_pointer() -> bool:
+	return state == State.IDLE
+
+func pointer_hover(area: Object) -> void:
+	var btn := _button_for_state(area)
+	if btn == _hovered:
+		return
+	if _hovered:
+		_hover_out(_hovered)
+	_hovered = btn
+	if _hovered:
+		_hover_in(_hovered)
+
+func pointer_click(area: Object) -> void:
+	var btn := _button_for_state(area)
+	if btn == null:
+		return
+	_press(btn)
+	if _viewing_how_to_play:
+		if area == _area_back:
+			_back_from_how_to_play()
+	elif area == start_btn:
+		_animate_out_and_start()
+	elif area == quit_btn:
+		SceneManager.quit_game()
+	elif area == _area_how_to_play:
+		_show_how_to_play()
+
+## Maps an Area3D to its button node, honouring the how-to-play state so stray
+## pointer hits on hidden buttons (whose colliders stay active) are ignored.
+func _button_for_state(area: Object) -> Node3D:
+	if _viewing_how_to_play:
+		if area == _area_back:
+			return back_btn
+		return null
+	if area == start_btn: return start_btn
+	elif area == quit_btn: return quit_btn
+	elif area == _area_how_to_play: return how_to_play_btn
+	return null
 
 # --- HOVER / PRESS MICRO-INTERACTIONS ---
 func _hover_in(node: Node3D) -> void:

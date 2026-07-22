@@ -25,6 +25,7 @@ var _viewing_how_to_play := false
 var _hovered: Node3D = null
 
 func _ready() -> void:
+	add_to_group(&"t5_pointer_menu")
 	_rest_y[resume_button] = resume_button.position.y
 	_rest_y[how_to_play_button] = how_to_play_button.position.y
 	_rest_y[main_menu_button] = main_menu_button.position.y
@@ -72,39 +73,22 @@ func _handle_click(mouse_pos: Vector2) -> void:
 	var result := _raycast(mouse_pos, mask)
 	if result.is_empty():
 		return
-	var collider = result.collider
-	var btn := _button_for(collider)
-	if btn:
-		_press(btn)
-	if _viewing_how_to_play:
-		if collider == _area_back:
-			_back_from_how_to_play()
-	else:
-		if collider == _area_resume:
-			_close()
-		elif collider == _area_htp:
-			_show_how_to_play()
-		elif collider == _area_main:
-			get_tree().paused = false
-			SceneManager.change_scene(SceneManager.main_menu)
-		elif collider == _area_quit:
-			get_tree().paused = false
-			get_tree().call_deferred("quit")
-
-func _button_for(collider: Object) -> Node3D:
-	if collider == _area_resume: return resume_button
-	elif collider == _area_htp: return how_to_play_button
-	elif collider == _area_main: return main_menu_button
-	elif collider == _area_quit: return quit_button
-	elif collider == _area_back: return $HowToPlayPanel/BackButton
-	return null
+	pointer_click(result.collider)
 
 func _handle_hover(mouse_pos: Vector2) -> void:
 	var mask := 2 if _viewing_how_to_play else 1
 	var result := _raycast(mouse_pos, mask)
-	var btn: Node3D = null
-	if not result.is_empty():
-		btn = _button_for(result.collider)
+	pointer_hover(result.collider if not result.is_empty() else null)
+
+# --- Shared pointer interface (mouse ray-pick and Tilt Five wand both feed
+#     these; see t5/wand_pointer.gd) ---------------------------------------
+
+## True while this menu should accept pointer input.
+func wants_pointer() -> bool:
+	return _open
+
+func pointer_hover(area: Object) -> void:
+	var btn := _button_for_state(area)
 	if btn == _hovered:
 		return
 	if _hovered:
@@ -112,6 +96,40 @@ func _handle_hover(mouse_pos: Vector2) -> void:
 	_hovered = btn
 	if _hovered:
 		_hover_in(_hovered)
+
+func pointer_click(area: Object) -> void:
+	var btn := _button_for_state(area)
+	if btn == null:
+		return
+	_press(btn)
+	if _viewing_how_to_play:
+		if area == _area_back:
+			_back_from_how_to_play()
+	else:
+		if area == _area_resume:
+			_close()
+		elif area == _area_htp:
+			_show_how_to_play()
+		elif area == _area_main:
+			get_tree().paused = false
+			SceneManager.change_scene(SceneManager.main_menu)
+		elif area == _area_quit:
+			get_tree().paused = false
+			get_tree().call_deferred("quit")
+
+## Maps an Area3D to its button node, honouring which panel is currently shown
+## so stray pointer hits on hidden buttons (whose colliders stay active) are
+## ignored.
+func _button_for_state(area: Object) -> Node3D:
+	if _viewing_how_to_play:
+		if area == _area_back:
+			return $HowToPlayPanel/BackButton
+		return null
+	if area == _area_resume: return resume_button
+	elif area == _area_htp: return how_to_play_button
+	elif area == _area_main: return main_menu_button
+	elif area == _area_quit: return quit_button
+	return null
 
 func _hover_in(node: Node3D) -> void:
 	var tween := create_tween()

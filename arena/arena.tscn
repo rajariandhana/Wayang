@@ -170,9 +170,11 @@ animations = [{
 [node name="Node3D" type="Node3D" unique_id=1179833421]
 script = ExtResource("23_arena")
 
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_u834y")
+
 [node name="Camera3D" type="Camera3D" parent="." unique_id=268376077]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.0480173)
-environment = SubResource("Environment_u834y")
 current = true
 
 [node name="Lights" type="Node3D" parent="." unique_id=77635610]
