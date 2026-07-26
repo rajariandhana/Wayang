@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://8anwl2bwwg1j" path="res://asset/dr angka.png" id="3_h0wof"]
 [ext_resource type="Texture2D" uid="uid://bjl6gc24obxn7" path="res://asset/edge.png" id="3_sbb53"]
 [ext_resource type="Texture2D" uid="uid://dej3llqljplyf" path="res://asset/castle_texture.png" id="5_sbb53"]
+[ext_resource type="Script" uid="uid://bee6r3be18mvn" path="res://addons/tiltfive/T5Manager.gd" id="7_pbtuc"]
 [ext_resource type="PackedScene" uid="uid://nk47tgqollu4" path="res://arena_2d.tscn" id="15_1s3fb"]
 [ext_resource type="Texture2D" uid="uid://dxbsksk36llhe" path="res://asset/fire/FireFrames.png" id="17_ffcej"]
 
@@ -210,3 +211,11 @@ transform = Transform3D(0.38, 0, 0, 0, 0.38, 0, 0, 0, 0.38, -1.425, -0.26, -1.80
 sprite_frames = SubResource("SpriteFrames_1pekq")
 frame_progress = 0.62156594
 speed_scale = 0.5
+
+[node name="T5Gameboard" type="T5Gameboard" parent="." unique_id=358200064]
+content_scale = 10.0
+
+[node name="T5Manager" type="Node" parent="." unique_id=125762283 node_paths=PackedStringArray("start_location")]
+script = ExtResource("7_pbtuc")
+start_location = NodePath("../T5Gameboard")
+metadata/_custom_type_script = "uid://bee6r3be18mvn"

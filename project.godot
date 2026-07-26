@@ -15,7 +15,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 [application]
 
 config/name="Wayang"
-run/main_scene="uid://cpms5hhjnxbhj"
+run/main_scene="uid://bb7o1cnvnhum3"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="res://icon.svg"
 
@@ -24,6 +24,7 @@ config/icon="res://icon.svg"
 Util="*res://Util.gd"
 SceneManager="*res://SceneManager.gd"
 T5Runtime="*res://t5/t5_runtime.gd"
+T5Interface="*uid://c38ebgwlww8uy"
 
 [display]
 
@@ -31,6 +32,10 @@ window/size/viewport_width=2560
 window/size/viewport_height=1600
 window/stretch/mode="canvas_items"
 window/stretch/aspect="keep_width"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/tiltfive/plugin.cfg")
 
 [input]
 
@@ -136,12 +141,12 @@ p2_attack={
 ]
 }
 
-[xr]
-
-shaders/enabled=true
-
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+
+[xr]
+
+shaders/enabled=true

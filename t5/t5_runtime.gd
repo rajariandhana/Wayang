@@ -17,20 +17,15 @@ extends Node
 const WAND_BUTTON_TRIGGER := &"trigger_click"
 const WAND_BUTTON_T5 := &"button_t5"
 const WAND_BUTTON_A := &"button_a"
+const WAND_BUTTON_1 := &"button_1"
+const WAND_BUTTON_2 := &"button_2"
 const WAND_ANALOG_STICK := &"stick"
 
 const WandPointer := preload("res://t5/wand_pointer.gd")
 
-## content_scale maps the physical 0.7 m board to this many world units across.
-## The gameplay quad is ~6 units wide, so 12 leaves a comfortable margin.
-## Tune on hardware (10-15).
 const BOARD_CONTENT_SCALE := 12.0
-## Gameboard centre placed at the diorama's ground centre so the puppet stage
-## stands upright on the board, facing the seated viewer (scene +Y = up).
 const BOARD_ORIGIN := Vector3(0.0, -3.0, -0.5)
-
 const STICK_DEADZONE := 0.15
-## Frames to hold an injected p1_attack so is_action_just_pressed() latches once.
 const ATTACK_HOLD_FRAMES := 2
 
 signal t5_state_changed(active: bool)
@@ -40,13 +35,21 @@ var t5_active := false
 var _manager: Node = null
 var _gameboard: Node = null
 var _rigs: Array = []
-var _pointers := {}              # rig -> WandPointer
+var _pointers := {}
 var _primary_wand: Node = null
 var _primary_pointer: Node = null
+var _secondary_wand: Node = null
+var _secondary_pointer: Node = null
 
+# Stick-hold state
 var _wand_left := false
 var _wand_right := false
+var _wand2_left := false
+var _wand2_right := false
+
+# Attack frame latching per player
 var _attack_frames := 0
+var _attack2_frames := 0
 
 func is_t5_available() -> bool:
 	return ClassDB.class_exists(&"TiltFiveXRInterface") and XRServer.find_interface(&"TiltFive") != null
@@ -60,14 +63,12 @@ func _ready() -> void:
 	_setup_manager()
 
 func _setup_manager() -> void:
-	# Gameboard: defines where and how large the diorama sits on the table.
 	if ClassDB.class_exists(&"T5Gameboard"):
 		_gameboard = ClassDB.instantiate(&"T5Gameboard")
 		_gameboard.set(&"content_scale", BOARD_CONTENT_SCALE)
 		_gameboard.set(&"transform", Transform3D(Basis.IDENTITY, BOARD_ORIGIN))
 		add_child(_gameboard)
 
-	# Instance the plugin manager via load() (never preload — keeps macOS clean).
 	var manager_script: Script = load("res://addons/tiltfive/T5Manager.gd")
 	if manager_script == null:
 		push_error("[T5Runtime] Could not load T5Manager.gd")
@@ -81,16 +82,12 @@ func _setup_manager() -> void:
 	_manager.connect(&"xr_rig_will_be_removed", _on_rig_removed)
 	add_child(_manager)
 
-	# Deferred so it runs after every autoload's _ready(), regardless of whether
-	# T5Interface is ordered before or after this autoload.
 	_ensure_interface_initialised.call_deferred()
 
-## The T5Interface autoload may have run _ready() before the manager was
-## registered (leaving the interface uninitialised); make sure it is running.
 func _ensure_interface_initialised() -> void:
 	var iface := get_node_or_null(^"/root/T5Interface")
 	if iface == null:
-		push_warning("[T5Runtime] T5Interface autoload missing - enable the Tilt Five plugin (Project Settings > Plugins) on this platform.")
+		push_warning("[T5Runtime] T5Interface autoload missing.")
 		return
 	var xr = iface.call(&"get_tilt_five_xr_interface")
 	if xr and not xr.call(&"is_initialized"):
@@ -115,6 +112,9 @@ func _on_rig_removed(rig) -> void:
 	if _primary_wand and rig.call(&"get_wand") == _primary_wand:
 		_primary_wand = null
 		_primary_pointer = null
+	if _secondary_wand and rig.call(&"get_wand") == _secondary_wand:
+		_secondary_wand = null
+		_secondary_pointer = null
 	if _rigs.is_empty() and t5_active:
 		t5_active = false
 		t5_state_changed.emit(false)
@@ -125,7 +125,6 @@ func _attach_rig(rig) -> void:
 		return
 	var wand = rig.call(&"get_wand")
 	if wand == null:
-		# Wand node not ready yet; retry next frame.
 		_attach_rig.call_deferred(rig)
 		return
 
@@ -135,46 +134,76 @@ func _attach_rig(rig) -> void:
 	wand.add_child(pointer)
 	_pointers[rig] = pointer
 
-	if not wand.is_connected(&"button_pressed", _on_wand_button_pressed):
-		wand.connect(&"button_pressed", _on_wand_button_pressed)
-		wand.connect(&"button_released", _on_wand_button_released)
-
-	# First wand becomes the P1 controller / menu pointer.
+	# First wand = P1, second wand = P2
 	if _primary_wand == null:
 		_primary_wand = wand
 		_primary_pointer = pointer
+		if not wand.is_connected(&"button_pressed", _on_p1_button_pressed):
+			wand.connect(&"button_pressed", _on_p1_button_pressed)
+			wand.connect(&"button_released", _on_p1_button_released)
+		print("[T5Runtime] Wand 1 (P1) attached.")
+	elif _secondary_wand == null:
+		_secondary_wand = wand
+		_secondary_pointer = pointer
+		if not wand.is_connected(&"button_pressed", _on_p2_button_pressed):
+			wand.connect(&"button_pressed", _on_p2_button_pressed)
+			wand.connect(&"button_released", _on_p2_button_released)
+		print("[T5Runtime] Wand 2 (P2) attached.")
 
-# --- Wand input --------------------------------------------------------------
+# --- Per-frame stick reading -------------------------------------------------
 
 func _process(_delta: float) -> void:
 	if _attack_frames > 0:
 		_attack_frames -= 1
 		if _attack_frames == 0:
 			Input.action_release(&"p1_attack")
+	if _attack2_frames > 0:
+		_attack2_frames -= 1
+		if _attack2_frames == 0:
+			Input.action_release(&"p2_attack")
 
-	if not t5_active or _primary_wand == null or not is_instance_valid(_primary_wand):
+	if not t5_active:
 		return
-
-	# In menus the stick must not drive the fighter.
 	if _menu_open():
 		_release_wand_actions()
 		return
 
-	var x: float = (_primary_wand.call(&"get_vector2", WAND_ANALOG_STICK) as Vector2).x
-	if x > STICK_DEADZONE:
-		Input.action_press(&"p1_right", x)
-		_wand_right = true
-	elif _wand_right:
-		Input.action_release(&"p1_right")
-		_wand_right = false
-	if x < -STICK_DEADZONE:
-		Input.action_press(&"p1_left", -x)
-		_wand_left = true
-	elif _wand_left:
-		Input.action_release(&"p1_left")
-		_wand_left = false
+	# P1 stick (analog fallback alongside buttons)
+	if _primary_wand and is_instance_valid(_primary_wand):
+		var x1: float = (_primary_wand.call(&"get_vector2", WAND_ANALOG_STICK) as Vector2).x
+		if x1 > STICK_DEADZONE:
+			Input.action_press(&"p1_right", x1)
+			_wand_right = true
+		elif _wand_right:
+			Input.action_release(&"p1_right")
+			_wand_right = false
+		if x1 < -STICK_DEADZONE:
+			Input.action_press(&"p1_left", -x1)
+			_wand_left = true
+		elif _wand_left:
+			Input.action_release(&"p1_left")
+			_wand_left = false
 
-func _on_wand_button_pressed(button_name: StringName) -> void:
+	# P2 stick
+	if _secondary_wand and is_instance_valid(_secondary_wand):
+		var x2: float = (_secondary_wand.call(&"get_vector2", WAND_ANALOG_STICK) as Vector2).x
+		# P2 stick is flipped so pushing "forward" moves toward opponent
+		if x2 > STICK_DEADZONE:
+			Input.action_press(&"p2_left", x2)
+			_wand2_left = true
+		elif _wand2_left:
+			Input.action_release(&"p2_left")
+			_wand2_left = false
+		if x2 < -STICK_DEADZONE:
+			Input.action_press(&"p2_right", -x2)
+			_wand2_right = true
+		elif _wand2_right:
+			Input.action_release(&"p2_right")
+			_wand2_right = false
+
+# --- P1 wand buttons ---------------------------------------------------------
+
+func _on_p1_button_pressed(button_name: StringName) -> void:
 	match button_name:
 		WAND_BUTTON_TRIGGER:
 			if _menu_open():
@@ -183,11 +212,49 @@ func _on_wand_button_pressed(button_name: StringName) -> void:
 			else:
 				Input.action_press(&"p1_attack")
 				_attack_frames = ATTACK_HOLD_FRAMES
+		WAND_BUTTON_1:
+			# Button 1 = back = LEFT for P1
+			if not _menu_open():
+				Input.action_press(&"p1_left")
+		WAND_BUTTON_2:
+			# Button 2 = front = RIGHT for P1
+			if not _menu_open():
+				Input.action_press(&"p1_right")
 		WAND_BUTTON_T5, WAND_BUTTON_A:
 			_inject_ui_cancel()
 
-func _on_wand_button_released(_name: StringName) -> void:
-	pass
+func _on_p1_button_released(button_name: StringName) -> void:
+	match button_name:
+		WAND_BUTTON_1:
+			Input.action_release(&"p1_left")
+		WAND_BUTTON_2:
+			Input.action_release(&"p1_right")
+
+# --- P2 wand buttons (opposite mapping) --------------------------------------
+
+func _on_p2_button_pressed(button_name: StringName) -> void:
+	match button_name:
+		WAND_BUTTON_TRIGGER:
+			if not _menu_open():
+				Input.action_press(&"p2_attack")
+				_attack2_frames = ATTACK_HOLD_FRAMES
+		WAND_BUTTON_1:
+			# Button 1 = back for P2 = RIGHT in world (P2 faces left)
+			if not _menu_open():
+				Input.action_press(&"p2_right")
+		WAND_BUTTON_2:
+			# Button 2 = front for P2 = LEFT in world
+			if not _menu_open():
+				Input.action_press(&"p2_left")
+
+func _on_p2_button_released(button_name: StringName) -> void:
+	match button_name:
+		WAND_BUTTON_1:
+			Input.action_release(&"p2_right")
+		WAND_BUTTON_2:
+			Input.action_release(&"p2_left")
+
+# --- Helpers -----------------------------------------------------------------
 
 func _menu_open() -> bool:
 	for m in get_tree().get_nodes_in_group(&"t5_pointer_menu"):
@@ -197,11 +264,13 @@ func _menu_open() -> bool:
 
 func _release_wand_actions() -> void:
 	if _wand_left:
-		Input.action_release(&"p1_left")
-		_wand_left = false
+		Input.action_release(&"p1_left"); _wand_left = false
 	if _wand_right:
-		Input.action_release(&"p1_right")
-		_wand_right = false
+		Input.action_release(&"p1_right"); _wand_right = false
+	if _wand2_left:
+		Input.action_release(&"p2_left"); _wand2_left = false
+	if _wand2_right:
+		Input.action_release(&"p2_right"); _wand2_right = false
 
 func _inject_ui_cancel() -> void:
 	var ev := InputEventAction.new()
