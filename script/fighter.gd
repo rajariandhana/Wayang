@@ -11,10 +11,26 @@ signal died
 
 @export var input_left := "left"
 @export var input_right := "right"
+@export var input_up := "up"
+@export var input_down := "down"
 @export var input_attack := "attack"
+
+@export var max_lean_angle_deg := 15.0
+## Tuned so a lone leaning attacker's reach (this distance + arm swing) lands
+## centered on a stationary opponent's hurtbox. If the opponent also leans in,
+## their hurtbox shifts past the attack's fixed landing point and it overshoots —
+## this is what makes mutual aggression whiff while one-sided aggression connects.
+## Fighter2 overrides this (see fighter_2.tscn) since its arm swing has shorter
+## reach on its own and needs more lean to compensate.
+@export var max_lean_distance := 550.0
+@export var max_lean_vertical_distance := 220.0
+@export var lean_response_rate := 8.0
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @export var skeleton_animation_player: AnimationPlayer
+
+@onready var puppet_visual: Node2D = $Node2D
+@onready var lean_pivot: Vector2 = $Node2D/Sprites/Stick.position
 
 @export var hit_sounds: Array[AudioStream]
 @onready var audio: AudioStreamPlayer = AudioStreamPlayer.new()
@@ -27,19 +43,17 @@ const ATTACK_READY_OPACITY := 1.0
 const ATTACK_COOLDOWN_OPACITY := 0.5
 const ATTACK_COOLDOWN_TIME := 2.0
 
-const POSITION_TILT_TIME = 0.5
-
 enum LifeState {ALIVE, DEAD}
 var life_state: LifeState = LifeState.ALIVE
-enum PositionState {IDLE, LEFT, RIGHT}
-var position_state: PositionState = PositionState.IDLE
 enum CombatState {READY, ATTACK, COOLDOWN}
 var combat_state: CombatState = CombatState.READY
+
+var _lean_rotation := 0.0
+var _lean_offset := Vector2.ZERO
 
 func reset() -> void:
 	health = max_health
 	life_state = LifeState.ALIVE
-	position_state = PositionState.IDLE
 	combat_state = CombatState.READY
 	hitbox.set_damage(damage)
 	set_attack_indicator(true)
@@ -51,35 +65,33 @@ func _ready():
 func _physics_process(delta):
 	if life_state == LifeState.DEAD:
 		return
-	
+
 	if combat_state == CombatState.READY:
 		if Input.is_action_just_pressed(input_attack):
 			await combat_attack()
 			await combat_cooldown()
 			combat_state = CombatState.READY
 
-	if position_state == PositionState.IDLE:
-		var axis = Input.get_axis(input_left, input_right)
-		if axis > 0:
-			position_state = PositionState.RIGHT
-			await play_tilt("right")
-		elif axis < 0:
-			position_state = PositionState.LEFT
-			await play_tilt("left")
-		position_state = PositionState.IDLE
+	_update_lean(delta)
 
-func play_tilt(anim_name: String) -> void:
-	var anim_length = animation_player.get_animation(anim_name).length
+func _update_lean(delta: float) -> void:
+	var input_vec := Vector2(
+		Input.get_axis(input_left, input_right),
+		Input.get_axis(input_up, input_down)
+	).clamp(Vector2(-1, -1), Vector2(1, 1))
 
-	# FORWARD
-	animation_player.play(anim_name)
-	await Util.wait(anim_length)
-	# HOLD
-	await Util.wait(POSITION_TILT_TIME)
-	# BACKWARD
-	animation_player.play_backwards(anim_name)
+	var target_rotation := input_vec.x * deg_to_rad(max_lean_angle_deg)
+	var target_offset := Vector2(
+		input_vec.x * max_lean_distance,
+		input_vec.y * max_lean_vertical_distance
+	)
 
-	await Util.wait(anim_length)
+	var t := 1.0 - exp(-lean_response_rate * delta)
+	_lean_rotation = lerpf(_lean_rotation, target_rotation, t)
+	_lean_offset = _lean_offset.lerp(target_offset, t)
+
+	puppet_visual.rotation = _lean_rotation
+	puppet_visual.position = lean_pivot - lean_pivot.rotated(_lean_rotation) + _lean_offset
 
 func set_attack_indicator(ready: bool):
 	if ready:

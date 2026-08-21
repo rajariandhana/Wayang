@@ -20,7 +20,6 @@
 [ext_resource type="AudioStream" uid="uid://bud184lsb4d1e" path="res://arena/bgmusic.WAV" id="20_1vpcs"]
 [ext_resource type="PackedScene" uid="uid://cn81flegsb8nj" path="res://pause_menu.tscn" id="21_pause"]
 [ext_resource type="PackedScene" path="res://win_screen.tscn" id="22_winscreen"]
-[ext_resource type="Script" uid="uid://bee6r3be18mvn" path="res://addons/tiltfive/T5Manager.gd" id="22_xvt2q"]
 [ext_resource type="Script" uid="uid://dp5jph6vsm886" path="res://arena/arena.gd" id="23_arena"]
 
 [sub_resource type="Environment" id="Environment_u834y"]
@@ -347,11 +346,3 @@ autoplay = true
 [node name="PauseMenu" parent="." unique_id=787018932 instance=ExtResource("21_pause")]
 
 [node name="WinScreen" parent="." unique_id=787018933 instance=ExtResource("22_winscreen")]
-
-[node name="T5Manager" type="Node" parent="." unique_id=224279326 node_paths=PackedStringArray("start_location")]
-script = ExtResource("22_xvt2q")
-start_location = NodePath("../T5Gameboard")
-metadata/_custom_type_script = "uid://bee6r3be18mvn"
-
-[node name="T5Gameboard" type="T5Gameboard" parent="." unique_id=895540023]
-content_scale = 10.0

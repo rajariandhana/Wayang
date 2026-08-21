@@ -44,8 +44,12 @@ var _secondary_pointer: Node = null
 # Stick-hold state
 var _wand_left := false
 var _wand_right := false
+var _wand_up := false
+var _wand_down := false
 var _wand2_left := false
 var _wand2_right := false
+var _wand2_up := false
+var _wand2_down := false
 
 # Attack frame latching per player
 var _attack_frames := 0
@@ -170,36 +174,63 @@ func _process(_delta: float) -> void:
 
 	# P1 stick (analog fallback alongside buttons)
 	if _primary_wand and is_instance_valid(_primary_wand):
-		var x1: float = (_primary_wand.call(&"get_vector2", WAND_ANALOG_STICK) as Vector2).x
-		if x1 > STICK_DEADZONE:
-			Input.action_press(&"p1_right", x1)
+		var stick1: Vector2 = _primary_wand.call(&"get_vector2", WAND_ANALOG_STICK)
+		if stick1.x > STICK_DEADZONE:
+			Input.action_press(&"p1_right", stick1.x)
 			_wand_right = true
 		elif _wand_right:
 			Input.action_release(&"p1_right")
 			_wand_right = false
-		if x1 < -STICK_DEADZONE:
-			Input.action_press(&"p1_left", -x1)
+		if stick1.x < -STICK_DEADZONE:
+			Input.action_press(&"p1_left", -stick1.x)
 			_wand_left = true
 		elif _wand_left:
 			Input.action_release(&"p1_left")
 			_wand_left = false
+		# Vertical is not flipped between players — rise/dip isn't a "toward
+		# opponent" concept, unlike left/right.
+		if stick1.y > STICK_DEADZONE:
+			Input.action_press(&"p1_down", stick1.y)
+			_wand_down = true
+		elif _wand_down:
+			Input.action_release(&"p1_down")
+			_wand_down = false
+		if stick1.y < -STICK_DEADZONE:
+			Input.action_press(&"p1_up", -stick1.y)
+			_wand_up = true
+		elif _wand_up:
+			Input.action_release(&"p1_up")
+			_wand_up = false
 
 	# P2 stick
 	if _secondary_wand and is_instance_valid(_secondary_wand):
-		var x2: float = (_secondary_wand.call(&"get_vector2", WAND_ANALOG_STICK) as Vector2).x
-		# P2 stick is flipped so pushing "forward" moves toward opponent
-		if x2 > STICK_DEADZONE:
-			Input.action_press(&"p2_left", x2)
+		var stick2: Vector2 = _secondary_wand.call(&"get_vector2", WAND_ANALOG_STICK)
+		# P2 stick X is flipped so pushing "forward" moves toward opponent
+		if stick2.x > STICK_DEADZONE:
+			Input.action_press(&"p2_left", stick2.x)
 			_wand2_left = true
 		elif _wand2_left:
 			Input.action_release(&"p2_left")
 			_wand2_left = false
-		if x2 < -STICK_DEADZONE:
-			Input.action_press(&"p2_right", -x2)
+		if stick2.x < -STICK_DEADZONE:
+			Input.action_press(&"p2_right", -stick2.x)
 			_wand2_right = true
 		elif _wand2_right:
 			Input.action_release(&"p2_right")
 			_wand2_right = false
+		# Vertical stays unflipped (see P1 above).
+		if stick2.y > STICK_DEADZONE:
+			Input.action_press(&"p2_down", stick2.y)
+			_wand2_down = true
+		elif _wand2_down:
+			Input.action_release(&"p2_down")
+			_wand2_down = false
+		if stick2.y < -STICK_DEADZONE:
+			Input.action_press(&"p2_up", -stick2.y)
+			_wand2_up = true
+		elif _wand2_up:
+			Input.action_release(&"p2_up")
+			_wand2_up = false
 
 # --- P1 wand buttons ---------------------------------------------------------
 
@@ -267,10 +298,18 @@ func _release_wand_actions() -> void:
 		Input.action_release(&"p1_left"); _wand_left = false
 	if _wand_right:
 		Input.action_release(&"p1_right"); _wand_right = false
+	if _wand_up:
+		Input.action_release(&"p1_up"); _wand_up = false
+	if _wand_down:
+		Input.action_release(&"p1_down"); _wand_down = false
 	if _wand2_left:
 		Input.action_release(&"p2_left"); _wand2_left = false
 	if _wand2_right:
 		Input.action_release(&"p2_right"); _wand2_right = false
+	if _wand2_up:
+		Input.action_release(&"p2_up"); _wand2_up = false
+	if _wand2_down:
+		Input.action_release(&"p2_down"); _wand2_down = false
 
 func _inject_ui_cancel() -> void:
 	var ev := InputEventAction.new()

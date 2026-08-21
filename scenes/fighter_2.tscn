@@ -78,6 +78,7 @@ _data = {
 [node name="Fighter2" unique_id=969771174 node_paths=PackedStringArray("skeleton_animation_player", "hitbox") instance=ExtResource("1_tmhyp")]
 character_name = "Player 2"
 input_attack = "p2_attack"
+max_lean_distance = 780.0
 hit_sounds = Array[AudioStream]([ExtResource("2_jwkur"), ExtResource("3_exhlj"), ExtResource("4_abhkv")])
 skeleton_animation_player = NodePath("Node2D/AnimationPlayer")
 hitbox = NodePath("Node2D/Skeleton2D/Hip/RForearm/RArm/RHand/Hitbox")
