@@ -1,0 +1,8 @@
+[gd_resource type="FontVariation" format=3 uid="uid://bnwclhvi4ernk"]
+
+[ext_resource type="FontFile" uid="uid://bw4q8g1j6qnyq" path="res://asset/InstrumentSerif-Regular.ttf" id="1_font"]
+
+[resource]
+base_font = ExtResource("1_font")
+variation_embolden = 1.4
+spacing_glyph = -3

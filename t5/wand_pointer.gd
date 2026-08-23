@@ -25,6 +25,7 @@ const RAY_MASK := 1 | 2  # menu buttons live on physics layers 1 (main) and 2 (h
 
 var _hovered_menu: Node = null
 var _hovered_area: Area3D = null
+var _hovered_point: Vector3 = Vector3.ZERO
 
 func _physics_process(_delta: float) -> void:
 	var menu := _active_menu()
@@ -65,6 +66,7 @@ func _physics_process(_delta: float) -> void:
 		_hovered_menu.call(&"pointer_hover", null)
 	_hovered_menu = hit_menu
 	_hovered_area = area
+	_hovered_point = hit_point
 	if hit_menu:
 		hit_menu.call(&"pointer_hover", area)
 
@@ -74,7 +76,7 @@ func _physics_process(_delta: float) -> void:
 ## Called by T5Runtime when the wand trigger is pressed while a menu is open.
 func click() -> void:
 	if _hovered_menu and is_instance_valid(_hovered_menu) and _hovered_area:
-		_hovered_menu.call(&"pointer_click", _hovered_area)
+		_hovered_menu.call(&"pointer_click", _hovered_area, _hovered_point)
 
 func _active_menu() -> Node:
 	for m in get_tree().get_nodes_in_group(MENU_GROUP):

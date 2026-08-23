@@ -24,6 +24,7 @@ config/icon="res://icon.svg"
 Util="*res://Util.gd"
 SceneManager="*res://SceneManager.gd"
 T5Runtime="*res://t5/t5_runtime.gd"
+Settings="*res://settings/settings.gd"
 
 [display]
 

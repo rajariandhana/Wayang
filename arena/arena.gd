@@ -1,6 +1,6 @@
 extends Node3D
 
-@onready var arena_2d: Arena2d = $SubViewport/Arena2d
+@onready var arena_2d: Arena2d = $ArenaBackdrop/SubViewport/Arena2d
 @onready var win_screen: Node3D = $WinScreen
 
 func _ready() -> void:

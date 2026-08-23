@@ -1,6 +1,5 @@
 [gd_scene format=3 uid="uid://dd050n4s04ihr"]
 
-[ext_resource type="PackedScene" uid="uid://c85s0gsxax6q" path="res://scenes/HealthBar.tscn" id="3_4pi78"]
 [ext_resource type="PackedScene" uid="uid://ckucsmrppc0rw" path="res://fighter/fighter_1.tscn" id="5_dyqqe"]
 [ext_resource type="PackedScene" uid="uid://drhj44refvy4f" path="res://fighter/fighter_2.tscn" id="5_nlkml"]
 [ext_resource type="Script" path="res://arena/arena_2d.gd" id="6_arena2d"]
@@ -15,24 +14,16 @@ position = Vector2(1317, 1592)
 position = Vector2(0, 201)
 shape = SubResource("WorldBoundaryShape2D_sjqlj")
 
-[node name="Fighter1" parent="." unique_id=969771174 node_paths=PackedStringArray("health_bar") instance=ExtResource("5_dyqqe")]
+[node name="Fighter1" parent="." unique_id=969771174 instance=ExtResource("5_dyqqe")]
 position = Vector2(-530, -240)
-health_bar = NodePath("../Health")
 input_left = "p1_left"
 input_right = "p1_right"
 input_up = "p1_up"
 input_down = "p1_down"
 
-[node name="Fighter2" parent="." unique_id=830160189 node_paths=PackedStringArray("health_bar") instance=ExtResource("5_nlkml")]
+[node name="Fighter2" parent="." unique_id=830160189 instance=ExtResource("5_nlkml")]
 position = Vector2(530, -240)
-health_bar = NodePath("../Health2")
 input_left = "p2_left"
 input_right = "p2_right"
 input_up = "p2_up"
 input_down = "p2_down"
-
-[node name="Health" parent="." unique_id=1653025873 instance=ExtResource("3_4pi78")]
-position = Vector2(-1200, -900)
-
-[node name="Health2" parent="." unique_id=191386998 instance=ExtResource("3_4pi78")]
-position = Vector2(400, -900)
