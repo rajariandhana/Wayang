@@ -1,6 +1,6 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://cqmjbft2j24j8"]
 
-[ext_resource type="Script" path="res://win_screen.gd" id="1_win"]
+[ext_resource type="Script" uid="uid://d2yk63dhd5ru5" path="res://win_screen.gd" id="1_win"]
 [ext_resource type="FontFile" uid="uid://bw4q8g1j6qnyq" path="res://asset/InstrumentSerif-Regular.ttf" id="2_win"]
 
 [sub_resource type="QuadMesh" id="Mesh_overlay"]
@@ -56,7 +56,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.01, 0)
 shape = SubResource("Box_btn")
 
 [node name="MainMenuButton" type="Node3D" parent="MenuContainer" unique_id=369982580]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="Label3D" type="Label3D" parent="MenuContainer/MainMenuButton" unique_id=1444034011]
 pixel_size = 0.001

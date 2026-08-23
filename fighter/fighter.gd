@@ -9,11 +9,11 @@ signal died
 @export var health_bar: HealthBar
 @export var damage:int = 10
 
-@export var input_left := "left"
-@export var input_right := "right"
-@export var input_up := "up"
-@export var input_down := "down"
-@export var input_attack := "attack"
+@export var input_left: String
+@export var input_right: String
+@export var input_up: String
+@export var input_down: String
+@export var input_attack: String
 
 @export var max_lean_angle_deg := 15.0
 ## Tuned so a lone leaning attacker's reach (this distance + arm swing) lands
@@ -65,6 +65,8 @@ func _ready():
 func _physics_process(delta):
 	if life_state == LifeState.DEAD:
 		return
+	
+	_debug_inputs()
 
 	if combat_state == CombatState.READY:
 		if Input.is_action_just_pressed(input_attack):
@@ -122,7 +124,8 @@ func combat_cooldown() -> void:
 	set_attack_indicator(true)
 
 func got_hit(opponent: Fighter, damage: int):
-	print(character_name, " got_hit by ", opponent.character_name, " by ", damage)
+	# print(character_name, " got_hit by ", opponent.character_name, " by ", damage)
+	print(opponent.character_name, " HITS ",character_name,": health -10")
 	health -= damage
 	health_bar.set_health(health)
 	if hit_sounds.size() > 0:
@@ -140,3 +143,18 @@ func die():
 	print(character_name, " died!")
 	await animation_player.animation_finished
 	died.emit()
+
+func _debug_inputs() -> void:
+	var inputs := {
+		"input_left": input_left,
+		"input_right": input_right,
+		"input_up": input_up,
+		"input_down": input_down,
+		"input_attack": input_attack
+	}
+
+	for input_name in inputs:
+		var action_name: String = inputs[input_name]
+		
+		if action_name != "" and Input.is_action_just_pressed(action_name):
+			print(character_name, " pressed ", input_name, " (", action_name, ")")

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://drhj44refvy4f"]
 
-[ext_resource type="PackedScene" uid="uid://bh6sn8po7xro" path="res://scenes/fighter.tscn" id="1_tmhyp"]
+[ext_resource type="PackedScene" uid="uid://bh6sn8po7xro" path="res://fighter/fighter.tscn" id="1_tmhyp"]
 [ext_resource type="AudioStream" uid="uid://cnajr5piqwe8o" path="res://asset/sound/body hit 1.ogg" id="2_jwkur"]
 [ext_resource type="Texture2D" uid="uid://c8vs8qsxpa1w6" path="res://asset/WayangDasamuka/body.png" id="2_l5hlh"]
 [ext_resource type="AudioStream" uid="uid://do8yaw0sse7j4" path="res://asset/sound/body hit 2.ogg" id="3_exhlj"]
@@ -79,33 +79,29 @@ _data = {
 character_name = "Player 2"
 input_attack = "p2_attack"
 max_lean_distance = 780.0
-hit_sounds = Array[AudioStream]([ExtResource("2_jwkur"), ExtResource("3_exhlj"), ExtResource("4_abhkv")])
 skeleton_animation_player = NodePath("Node2D/AnimationPlayer")
+hit_sounds = Array[AudioStream]([ExtResource("2_jwkur"), ExtResource("3_exhlj"), ExtResource("4_abhkv")])
 hitbox = NodePath("Node2D/Skeleton2D/Hip/RForearm/RArm/RHand/Hitbox")
 
 [node name="Body" parent="Node2D/Sprites" parent_id_path=PackedInt32Array(1747101555) index="1" unique_id=321438573]
 position = Vector2(71, 4)
-scale = Vector2(1, 1)
 texture = ExtResource("2_l5hlh")
 
 [node name="LForearm" parent="Node2D/Sprites" parent_id_path=PackedInt32Array(1747101555) index="2" unique_id=811048158]
 position = Vector2(223, -85)
 rotation = -0.2396211
-scale = Vector2(1, 1)
 texture = ExtResource("3_ykps0")
 offset = Vector2(13, 90)
 
 [node name="LArm" parent="Node2D/Sprites" parent_id_path=PackedInt32Array(1747101555) index="3" unique_id=1172647800]
 position = Vector2(269.73282, 110.494354)
 rotation = 0.43742827
-scale = Vector2(1, 1)
 texture = ExtResource("4_qce2h")
 offset = Vector2(-34, 134)
 
 [node name="RForearm" parent="Node2D/Sprites" parent_id_path=PackedInt32Array(1747101555) index="4" unique_id=1940700127]
 position = Vector2(-103, -125)
 rotation = 0.4328829
-scale = Vector2(1, 1)
 texture = ExtResource("3_ykps0")
 offset = Vector2(13, 91)
 
@@ -125,7 +121,7 @@ rotation = -0.2396211
 
 [node name="LArm" parent="Node2D/Skeleton2D/Hip/LForearm" index="0" unique_id=2064872569]
 position = Vector2(-1, 201)
-rotation = 0.67704934
+rotation = 0.6770494
 
 [node name="LHand" parent="Node2D/Skeleton2D/Hip/LForearm/LArm" index="0" unique_id=909013083]
 position = Vector2(-3, 194)

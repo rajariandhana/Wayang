@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://dd050n4s04ihr"]
 
 [ext_resource type="PackedScene" uid="uid://c85s0gsxax6q" path="res://scenes/HealthBar.tscn" id="3_4pi78"]
-[ext_resource type="PackedScene" uid="uid://ckucsmrppc0rw" path="res://scenes/fighter_1.tscn" id="5_dyqqe"]
-[ext_resource type="PackedScene" uid="uid://drhj44refvy4f" path="res://scenes/fighter_2.tscn" id="5_nlkml"]
+[ext_resource type="PackedScene" uid="uid://ckucsmrppc0rw" path="res://fighter/fighter_1.tscn" id="5_dyqqe"]
+[ext_resource type="PackedScene" uid="uid://drhj44refvy4f" path="res://fighter/fighter_2.tscn" id="5_nlkml"]
 [ext_resource type="Script" path="res://arena/arena_2d.gd" id="6_arena2d"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_sjqlj"]

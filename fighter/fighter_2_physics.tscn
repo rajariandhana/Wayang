@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://f2phys001a"]
 
-[ext_resource type="PackedScene" uid="uid://drhj44refvy4f" path="res://scenes/fighter_2.tscn" id="1_f2p"]
+[ext_resource type="PackedScene" uid="uid://drhj44refvy4f" path="res://fighter/fighter_2.tscn" id="1_f2p"]
 [ext_resource type="PackedScene" uid="uid://kwofpgkgfhn5" path="res://scenes/hand_damager.tscn" id="2_f2p"]
 
 ; Hip is at (71,4) in Node2D space for fighter_2.

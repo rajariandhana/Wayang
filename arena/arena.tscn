@@ -20,7 +20,7 @@
 [ext_resource type="AudioStream" uid="uid://bud184lsb4d1e" path="res://arena/bgmusic.WAV" id="20_1vpcs"]
 [ext_resource type="PackedScene" uid="uid://cn81flegsb8nj" path="res://pause_menu.tscn" id="21_pause"]
 [ext_resource type="PackedScene" path="res://win_screen.tscn" id="22_winscreen"]
-[ext_resource type="Script" uid="uid://dp5jph6vsm886" path="res://arena/arena.gd" id="23_arena"]
+[ext_resource type="Script" path="res://arena/arena.gd" id="23_arena"]
 
 [sub_resource type="Environment" id="Environment_u834y"]
 fog_enabled = true

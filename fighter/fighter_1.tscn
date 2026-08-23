@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://ckucsmrppc0rw"]
 
-[ext_resource type="PackedScene" uid="uid://bh6sn8po7xro" path="res://scenes/fighter.tscn" id="1_r4071"]
+[ext_resource type="PackedScene" uid="uid://bh6sn8po7xro" path="res://fighter/fighter.tscn" id="1_r4071"]
 [ext_resource type="AudioStream" uid="uid://cnajr5piqwe8o" path="res://asset/sound/body hit 1.ogg" id="2_4div2"]
 [ext_resource type="Texture2D" uid="uid://cll63wxl62s3t" path="res://asset/WayangPlayer/body.png" id="2_31u0u"]
 [ext_resource type="AudioStream" uid="uid://do8yaw0sse7j4" path="res://asset/sound/body hit 2.ogg" id="3_6sxb3"]

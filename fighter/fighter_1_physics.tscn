@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://f1phys001a"]
 
-[ext_resource type="PackedScene" uid="uid://ckucsmrppc0rw" path="res://scenes/fighter_1.tscn" id="1_f1p"]
+[ext_resource type="PackedScene" uid="uid://ckucsmrppc0rw" path="res://fighter/fighter_1.tscn" id="1_f1p"]
 [ext_resource type="PackedScene" uid="uid://kwofpgkgfhn5" path="res://scenes/hand_damager.tscn" id="2_f1p"]
 
 [sub_resource type="CapsuleShape2D" id="Capsule_LForearm"]

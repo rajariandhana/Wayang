@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://bh6sn8po7xro"]
 
-[ext_resource type="Script" uid="uid://ddgx1djb2bau" path="res://script/fighter.gd" id="1_1q4ya"]
-[ext_resource type="Texture2D" uid="uid://d1o1j6ybdv5cl" path="res://asset/stick.png" id="2_1q4ya"]
-[ext_resource type="PackedScene" uid="uid://bse1ibrpikg6w" path="res://scenes/hurtbox.tscn" id="3_38ety"]
-[ext_resource type="Texture2D" uid="uid://cisx8c31lhnrr" path="res://asset/attack_indicator.png" id="4_rsphg"]
+[ext_resource type="Script" uid="uid://ddgx1djb2bau" path="res://fighter/fighter.gd" id="1_p2hm0"]
+[ext_resource type="Texture2D" uid="uid://d1o1j6ybdv5cl" path="res://asset/stick.png" id="2_jt8mh"]
+[ext_resource type="PackedScene" uid="uid://bse1ibrpikg6w" path="res://scenes/hurtbox.tscn" id="3_np4d7"]
+[ext_resource type="Texture2D" uid="uid://cisx8c31lhnrr" path="res://asset/attack_indicator.png" id="4_7n60b"]
 
 [sub_resource type="Animation" id="Animation_38ety"]
 length = 0.001
@@ -91,7 +91,7 @@ _data = {
 }
 
 [node name="Fighter" type="Node2D" unique_id=969771174]
-script = ExtResource("1_1q4ya")
+script = ExtResource("1_p2hm0")
 
 [node name="Node2D" type="Node2D" parent="." unique_id=1857375845]
 
@@ -99,7 +99,7 @@ script = ExtResource("1_1q4ya")
 
 [node name="Stick" type="Sprite2D" parent="Node2D/Sprites" unique_id=640457899]
 position = Vector2(0, 394)
-texture = ExtResource("2_1q4ya")
+texture = ExtResource("2_jt8mh")
 
 [node name="Body" type="Sprite2D" parent="Node2D/Sprites" unique_id=321438573]
 offset = Vector2(-47, 12)
@@ -143,13 +143,13 @@ remote_path = NodePath("../../../../Sprites/RForearm")
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="Node2D/Skeleton2D/Hip" unique_id=448490148]
 remote_path = NodePath("../../../Sprites/Body")
 
-[node name="Hurtbox" parent="Node2D" unique_id=1032956574 node_paths=PackedStringArray("fighter") instance=ExtResource("3_38ety")]
+[node name="Hurtbox" parent="Node2D" unique_id=1032956574 node_paths=PackedStringArray("fighter") instance=ExtResource("3_np4d7")]
 fighter = NodePath("../..")
 
 [node name="AttackIndicator" type="Sprite2D" parent="Node2D" unique_id=1919046538]
 position = Vector2(0, -540)
 scale = Vector2(0.3, 0.3)
-texture = ExtResource("4_rsphg")
+texture = ExtResource("4_7n60b")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=2017779902]
 libraries/ = SubResource("AnimationLibrary_38ety")
