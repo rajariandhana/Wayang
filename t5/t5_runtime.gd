@@ -190,17 +190,17 @@ func _process(_delta: float) -> void:
 		# Vertical is not flipped between players — rise/dip isn't a "toward
 		# opponent" concept, unlike left/right.
 		if stick1.y > STICK_DEADZONE:
-			Input.action_press(&"p1_down", stick1.y)
-			_wand_down = true
-		elif _wand_down:
-			Input.action_release(&"p1_down")
-			_wand_down = false
-		if stick1.y < -STICK_DEADZONE:
-			Input.action_press(&"p1_up", -stick1.y)
+			Input.action_press(&"p1_up", stick1.y)
 			_wand_up = true
 		elif _wand_up:
 			Input.action_release(&"p1_up")
 			_wand_up = false
+		if stick1.y < -STICK_DEADZONE:
+			Input.action_press(&"p1_down", -stick1.y)
+			_wand_down = true
+		elif _wand_down:
+			Input.action_release(&"p1_down")
+			_wand_down = false
 
 	# P2 stick
 	if _secondary_wand and is_instance_valid(_secondary_wand):
@@ -220,17 +220,17 @@ func _process(_delta: float) -> void:
 			_wand2_right = false
 		# Vertical stays unflipped (see P1 above).
 		if stick2.y > STICK_DEADZONE:
-			Input.action_press(&"p2_down", stick2.y)
-			_wand2_down = true
-		elif _wand2_down:
-			Input.action_release(&"p2_down")
-			_wand2_down = false
-		if stick2.y < -STICK_DEADZONE:
-			Input.action_press(&"p2_up", -stick2.y)
+			Input.action_press(&"p2_up", stick2.y)
 			_wand2_up = true
 		elif _wand2_up:
 			Input.action_release(&"p2_up")
 			_wand2_up = false
+		if stick2.y < -STICK_DEADZONE:
+			Input.action_press(&"p2_down", -stick2.y)
+			_wand2_down = true
+		elif _wand2_down:
+			Input.action_release(&"p2_down")
+			_wand2_down = false
 
 # --- P1 wand buttons ---------------------------------------------------------
 
