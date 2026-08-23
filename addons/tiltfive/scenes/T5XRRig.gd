@@ -4,7 +4,7 @@ class_name T5XRRig extends SubViewport
 var _glasses_id : StringName
 var _gameboard_type := T5Def.GameboardType.Unknown
 var _gameboard_size := AABB()
-	var _origin : T5Origin3D
+var _origin : T5Origin3D
 var _camera : T5Camera3D
 var _wand : T5Controller3D
 
