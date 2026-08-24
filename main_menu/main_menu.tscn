@@ -1,79 +1,72 @@
 [gd_scene format=3 uid="uid://cpms5hhjnxbhj"]
 
-[ext_resource type="Script" path="res://main_menu/main_menu.gd" id="1_ia84y"]
-[ext_resource type="PackedScene" path="res://arena/arena_backdrop.tscn" id="2_backdrop"]
-[ext_resource type="Texture2D" path="res://main_menu/title_logo.png" id="4_mvfl2"]
-[ext_resource type="AudioStream" path="res://main_menu/intro_start.WAV" id="7_kwfav"]
-[ext_resource type="AudioStream" path="res://main_menu/intro_loop.WAV" id="8_n70vs"]
+[ext_resource type="Script" uid="uid://cjoq1477phhd7" path="res://main_menu/main_menu.gd" id="1_ia84y"]
+[ext_resource type="Texture2D" uid="uid://dt3swce7gjjv3" path="res://main_menu/title_logo.png" id="4_mvfl2"]
+[ext_resource type="AudioStream" uid="uid://c7c7dayak41b1" path="res://main_menu/intro_start.WAV" id="7_kwfav"]
+[ext_resource type="AudioStream" uid="uid://fee2p4gi27pv" path="res://main_menu/intro_loop.WAV" id="8_n70vs"]
 [ext_resource type="PackedScene" path="res://ui/menu_button_3d.tscn" id="9_btn"]
 [ext_resource type="PackedScene" path="res://ui/how_to_play_panel.tscn" id="10_htp"]
 [ext_resource type="PackedScene" path="res://settings/settings_panel.tscn" id="11_settings"]
-[ext_resource type="Shader" path="res://ui/screen_blur.gdshader" id="12_blur"]
+[ext_resource type="Script" uid="uid://c1tsdllibt16e" path="res://arena/omni_light_3d.gd" id="14_light"]
+[ext_resource type="Texture2D" uid="uid://crnsiqddx3qik" path="res://asset/cloth_texture.jpg" id="15_cloth"]
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_backdrop"]
-viewport_path = NodePath("BackdropViewport")
+[sub_resource type="QuadMesh" id="QuadMesh_up8d4"]
+size = Vector2(10, 10)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_blur"]
-resource_local_to_scene = true
-shader = ExtResource("12_blur")
-shader_parameter/screen_tex = SubResource("ViewportTexture_backdrop")
-shader_parameter/blur_size = 0.0025
-shader_parameter/darken = 0.5
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uchu1"]
+albedo_texture = ExtResource("15_cloth")
 
-[sub_resource type="QuadMesh" id="QuadMesh_blurbg"]
-size = Vector2(15, 10)
-
-[node name="MainMenu" type="Node3D"]
+[node name="MainMenu" type="Node3D" unique_id=1925124316]
 script = ExtResource("1_ia84y")
 
-[node name="Camera3D" type="Camera3D" parent="."]
+[node name="Camera3D" type="Camera3D" parent="." unique_id=752308611]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.0480173)
 current = true
 
-[node name="BackdropViewport" type="SubViewport" parent="."]
-own_world_3d = true
-size = Vector2i(1920, 1200)
-render_target_update_mode = 4
+[node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=1033042786]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9281226, 1.3919939)
+light_color = Color(0.9313727, 0.6572922, 0.2066547, 1)
+shadow_enabled = true
+script = ExtResource("14_light")
 
-[node name="ArenaBackdrop" parent="BackdropViewport" instance=ExtResource("2_backdrop")]
+[node name="BackgroundScreen" type="MeshInstance3D" parent="." unique_id=377252373]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+mesh = SubResource("QuadMesh_up8d4")
+surface_material_override/0 = SubResource("StandardMaterial3D_uchu1")
 
-[node name="BlurredBackdropScreen" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3.0229087)
-mesh = SubResource("QuadMesh_blurbg")
-surface_material_override/0 = SubResource("ShaderMaterial_blur")
+[node name="MenuContainer" type="Node3D" parent="." unique_id=605410975]
+transform = Transform3D(0.88, 0, 0, 0, 0.88, 0, 0, 0, 0.88, 0, 0, 0)
 
-[node name="MenuContainer" type="Node3D" parent="."]
-
-[node name="Title" type="Sprite3D" parent="MenuContainer"]
+[node name="Title" type="Sprite3D" parent="MenuContainer" unique_id=1306883690]
 transform = Transform3D(0.19, 0, 0, 0, 0.19, 0, 0, 0, 0.19, 0, 0.85, 0)
-alpha_cut = 1
 no_depth_test = true
+alpha_cut = 1
 render_priority = 10
 texture = ExtResource("4_mvfl2")
 
-[node name="StartButton" parent="MenuContainer" instance=ExtResource("9_btn")]
+[node name="StartButton" parent="MenuContainer" unique_id=1104394051 instance=ExtResource("9_btn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 0)
 text = "Start Game"
 
-[node name="HowToPlayButton" parent="MenuContainer" instance=ExtResource("9_btn")]
+[node name="HowToPlayButton" parent="MenuContainer" unique_id=1151044648 instance=ExtResource("9_btn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
 text = "How to Play"
 
-[node name="SettingsButton" parent="MenuContainer" instance=ExtResource("9_btn")]
+[node name="SettingsButton" parent="MenuContainer" unique_id=450632524 instance=ExtResource("9_btn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.65, 0)
 text = "Settings"
 
-[node name="QuitButton" parent="MenuContainer" instance=ExtResource("9_btn")]
+[node name="QuitButton" parent="MenuContainer" unique_id=1394125529 instance=ExtResource("9_btn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.05, 0)
 text = "Quit"
 
-[node name="HowToPlayPanel" parent="." instance=ExtResource("10_htp")]
+[node name="HowToPlayPanel" parent="." unique_id=2007210976 instance=ExtResource("10_htp")]
 
-[node name="SettingsPanel" parent="." instance=ExtResource("11_settings")]
+[node name="SettingsPanel" parent="." unique_id=571789423 instance=ExtResource("11_settings")]
 
-[node name="IntroStart" type="AudioStreamPlayer" parent="."]
+[node name="IntroStart" type="AudioStreamPlayer" parent="." unique_id=550612502]
 stream = ExtResource("7_kwfav")
 autoplay = true
 
-[node name="IntroLoop" type="AudioStreamPlayer" parent="."]
+[node name="IntroLoop" type="AudioStreamPlayer" parent="." unique_id=1322429353]
 stream = ExtResource("8_n70vs")
