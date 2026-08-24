@@ -205,19 +205,19 @@ func _process(_delta: float) -> void:
 	# P2 stick
 	if _secondary_wand and is_instance_valid(_secondary_wand):
 		var stick2: Vector2 = _secondary_wand.call(&"get_vector2", WAND_ANALOG_STICK)
-		# P2 stick X is flipped so pushing "forward" moves toward opponent
+		# X stays unflipped, same as Y (see P1 above).
 		if stick2.x > STICK_DEADZONE:
-			Input.action_press(&"p2_left", stick2.x)
-			_wand2_left = true
-		elif _wand2_left:
-			Input.action_release(&"p2_left")
-			_wand2_left = false
-		if stick2.x < -STICK_DEADZONE:
-			Input.action_press(&"p2_right", -stick2.x)
+			Input.action_press(&"p2_right", stick2.x)
 			_wand2_right = true
 		elif _wand2_right:
 			Input.action_release(&"p2_right")
 			_wand2_right = false
+		if stick2.x < -STICK_DEADZONE:
+			Input.action_press(&"p2_left", -stick2.x)
+			_wand2_left = true
+		elif _wand2_left:
+			Input.action_release(&"p2_left")
+			_wand2_left = false
 		# Vertical stays unflipped (see P1 above).
 		if stick2.y > STICK_DEADZONE:
 			Input.action_press(&"p2_up", stick2.y)
@@ -261,7 +261,7 @@ func _on_p1_button_released(button_name: StringName) -> void:
 		WAND_BUTTON_2:
 			Input.action_release(&"p1_right")
 
-# --- P2 wand buttons (opposite mapping) --------------------------------------
+# --- P2 wand buttons ----------------------------------------------------------
 
 func _on_p2_button_pressed(button_name: StringName) -> void:
 	match button_name:
@@ -270,20 +270,20 @@ func _on_p2_button_pressed(button_name: StringName) -> void:
 				Input.action_press(&"p2_attack")
 				_attack2_frames = ATTACK_HOLD_FRAMES
 		WAND_BUTTON_1:
-			# Button 1 = back for P2 = RIGHT in world (P2 faces left)
-			if not _menu_open():
-				Input.action_press(&"p2_right")
-		WAND_BUTTON_2:
-			# Button 2 = front for P2 = LEFT in world
+			# Button 1 = back = LEFT for P2 (same mapping as P1).
 			if not _menu_open():
 				Input.action_press(&"p2_left")
+		WAND_BUTTON_2:
+			# Button 2 = front = RIGHT for P2 (same mapping as P1).
+			if not _menu_open():
+				Input.action_press(&"p2_right")
 
 func _on_p2_button_released(button_name: StringName) -> void:
 	match button_name:
 		WAND_BUTTON_1:
-			Input.action_release(&"p2_right")
-		WAND_BUTTON_2:
 			Input.action_release(&"p2_left")
+		WAND_BUTTON_2:
+			Input.action_release(&"p2_right")
 
 # --- Helpers -----------------------------------------------------------------
 
