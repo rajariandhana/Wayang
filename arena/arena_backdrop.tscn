@@ -81,9 +81,11 @@ center_offset = Vector3(0, 1, 0)
 viewport_path = NodePath("SubViewport")
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_hb1"]
+resource_local_to_scene = true
 viewport_path = NodePath("HealthBars/HealthBar1/SubViewport")
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_hb2"]
+resource_local_to_scene = true
 viewport_path = NodePath("HealthBars/HealthBar2/SubViewport")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ffcej"]
