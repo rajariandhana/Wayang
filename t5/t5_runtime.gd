@@ -266,7 +266,10 @@ func _on_p1_button_released(button_name: StringName) -> void:
 func _on_p2_button_pressed(button_name: StringName) -> void:
 	match button_name:
 		WAND_BUTTON_TRIGGER:
-			if not _menu_open():
+			if _menu_open():
+				if _secondary_pointer and is_instance_valid(_secondary_pointer):
+					_secondary_pointer.call(&"click")
+			else:
 				Input.action_press(&"p2_attack")
 				_attack2_frames = ATTACK_HOLD_FRAMES
 		WAND_BUTTON_1:
@@ -277,6 +280,8 @@ func _on_p2_button_pressed(button_name: StringName) -> void:
 			# Button 2 = front = RIGHT for P2 (same mapping as P1).
 			if not _menu_open():
 				Input.action_press(&"p2_right")
+		WAND_BUTTON_T5, WAND_BUTTON_A:
+			_inject_ui_cancel()
 
 func _on_p2_button_released(button_name: StringName) -> void:
 	match button_name:

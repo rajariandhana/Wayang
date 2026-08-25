@@ -19,7 +19,7 @@ func _accepts_input() -> bool:
 	return _open
 
 func show_win(winner_name: String) -> void:
-	title_label.text = "%s Wins" % winner_name
+	title_label.text = "Draw!" if winner_name == "Draw" else "%s Wins" % winner_name
 	_open = true
 	visible = true
 	get_tree().paused = true
