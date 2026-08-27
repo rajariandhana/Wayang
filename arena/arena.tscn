@@ -12,7 +12,7 @@ script = ExtResource("23_arena")
 
 [node name="ArenaBackdrop" parent="." unique_id=34079998 instance=ExtResource("1_backdrop")]
 
-[node name="Hud" parent="." instance=ExtResource("24_hud")]
+[node name="Hud" parent="." unique_id=745471039 instance=ExtResource("24_hud")]
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1478308453]
 stream = ExtResource("20_1vpcs")

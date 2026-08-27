@@ -1,16 +1,13 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://ui/hud.gd" id="1_hud"]
-[ext_resource type="PackedScene" uid="uid://c85s0gsxax6q" path="res://scenes/HealthBar.tscn" id="2_healthbar"]
+[ext_resource type="PackedScene" path="res://ui/health_bar_3d.tscn" id="2_healthbar3d"]
 
-[node name="Hud" type="CanvasLayer"]
-process_mode = 3
+[node name="Hud" type="Node3D"]
 script = ExtResource("1_hud")
 
-[node name="HealthBar1" parent="." instance=ExtResource("2_healthbar")]
-position = Vector2(196.67, 339.73)
-scale = Vector2(0.7867, 0.7867)
+[node name="HealthBar1" parent="." instance=ExtResource("2_healthbar3d")]
+transform = Transform3D(1.6, 0, 0, 0, 4, 0, 0, 0, 1, -2.6165, 1.1115, -0.47)
 
-[node name="HealthBar2" parent="." instance=ExtResource("2_healthbar")]
-position = Vector2(1521.6, 339.73)
-scale = Vector2(0.7867, 0.7867)
+[node name="HealthBar2" parent="." instance=ExtResource("2_healthbar3d")]
+transform = Transform3D(1.6, 0, 0, 0, 4, 0, 0, 0, 1, 0.5835, 1.1115, -0.47)

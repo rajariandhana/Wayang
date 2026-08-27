@@ -1,0 +1,28 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://ui/health_bar_3d.gd" id="1_hb3d"]
+[ext_resource type="Texture2D" uid="uid://bbo35yd24ctwu" path="res://asset/WayangPlayer/HPBar (1).png" id="2_under"]
+[ext_resource type="Texture2D" uid="uid://beajdt3msdkar" path="res://asset/WayangPlayer/Rectangle 3.png" id="3_progress"]
+
+[node name="HealthBar3D" type="Node3D"]
+script = ExtResource("1_hb3d")
+
+[node name="Under" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6156, -0.01045, 0)
+pixel_size = 0.0019
+no_depth_test = true
+shaded = false
+alpha_cut = 1
+render_priority = 5
+texture = ExtResource("2_under")
+
+[node name="Progress" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6099, -0.01045, 0)
+pixel_size = 0.0019
+no_depth_test = true
+shaded = false
+alpha_cut = 1
+render_priority = 6
+region_enabled = true
+region_rect = Rect2(0, 0, 642, 11)
+texture = ExtResource("3_progress")

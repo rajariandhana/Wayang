@@ -6,7 +6,7 @@ signal died
 @export var character_name: String = ""
 @export var max_health:int = 100
 @export var health:int = 100
-@export var health_bar: HealthBar
+@export var health_bar: HealthBar3D
 @export var damage:int = 10
 
 @export var input_left: String
