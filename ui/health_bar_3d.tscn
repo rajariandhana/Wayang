@@ -17,11 +17,10 @@ render_priority = 5
 texture = ExtResource("2_under")
 
 [node name="Progress" type="Sprite3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6099, -0.01045, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6099, -0.01045, 0.01)
 pixel_size = 0.0019
 no_depth_test = true
 shaded = false
-alpha_cut = 1
 render_priority = 6
 region_enabled = true
 region_rect = Rect2(0, 0, 642, 11)

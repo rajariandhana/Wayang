@@ -10,6 +10,14 @@ extends Node3D
 ##
 ## Built from two plain Sprite3Ds. No SubViewport or ViewportTexture anywhere:
 ## that was the pipeline that silently stopped updating in exported builds.
+##
+## The two sprites are separated by render PASS, not by render_priority. Under
+## uses ALPHA_CUT_DISCARD, which puts it in the opaque pass; Progress leaves
+## alpha_cut disabled so it lands in the transparent pass, which always runs
+## after the opaque one in every renderer -- the flat viewport and the Tilt Five
+## stereo path included. render_priority alone was not enough: both sprites were
+## coplanar, both in the opaque pass, both with no_depth_test, and that ordering
+## is undefined, so the fill drew behind the plate in T5 but not on flat.
 
 @onready var under: Sprite3D = $Under
 @onready var progress: Sprite3D = $Progress
