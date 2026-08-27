@@ -5,11 +5,14 @@
 [ext_resource type="PackedScene" uid="uid://cn81flegsb8nj" path="res://pause_menu.tscn" id="21_pause"]
 [ext_resource type="PackedScene" uid="uid://cqmjbft2j24j8" path="res://win_screen.tscn" id="22_winscreen"]
 [ext_resource type="Script" uid="uid://dp5jph6vsm886" path="res://arena/arena.gd" id="23_arena"]
+[ext_resource type="PackedScene" path="res://ui/hud.tscn" id="24_hud"]
 
 [node name="Node3D" type="Node3D" unique_id=1179833421]
 script = ExtResource("23_arena")
 
 [node name="ArenaBackdrop" parent="." unique_id=34079998 instance=ExtResource("1_backdrop")]
+
+[node name="Hud" parent="." instance=ExtResource("24_hud")]
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1478308453]
 stream = ExtResource("20_1vpcs")

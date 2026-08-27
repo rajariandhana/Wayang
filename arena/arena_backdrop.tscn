@@ -17,7 +17,6 @@
 [ext_resource type="PackedScene" uid="uid://dd050n4s04ihr" path="res://arena/arena_2d.tscn" id="15_1s3fb"]
 [ext_resource type="Script" uid="uid://dlibi3b4aga7n" path="res://arena/player_3d.gd" id="16_1s3fb"]
 [ext_resource type="Texture2D" uid="uid://dxbsksk36llhe" path="res://asset/fire/FireFrames.png" id="17_ffcej"]
-[ext_resource type="PackedScene" uid="uid://c85s0gsxax6q" path="res://scenes/HealthBar.tscn" id="24_healthbar"]
 
 [sub_resource type="Environment" id="Environment_u834y"]
 fog_enabled = true
@@ -79,14 +78,6 @@ center_offset = Vector3(0, 1, 0)
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_1pekq"]
 viewport_path = NodePath("SubViewport")
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_hb1"]
-resource_local_to_scene = true
-viewport_path = NodePath("HealthBars/HealthBar1/SubViewport")
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_hb2"]
-resource_local_to_scene = true
-viewport_path = NodePath("HealthBars/HealthBar2/SubViewport")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ffcej"]
 resource_local_to_scene = true
@@ -208,46 +199,6 @@ shaded = true
 alpha_cut = 1
 texture = ExtResource("3_sbb53")
 
-[node name="HealthBars" type="Node3D" parent="."]
-
-[node name="HealthBar1" type="Node3D" parent="HealthBars"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.6, 0.95, -0.47)
-
-[node name="SubViewport" type="SubViewport" parent="HealthBars/HealthBar1"]
-transparent_bg = true
-size = Vector2i(1090, 180)
-render_target_update_mode = 4
-
-[node name="Health" parent="HealthBars/HealthBar1/SubViewport" instance=ExtResource("24_healthbar")]
-position = Vector2(10, 5)
-
-[node name="Sprite3D" type="Sprite3D" parent="HealthBars/HealthBar1"]
-pixel_size = 0.0019
-no_depth_test = true
-shaded = false
-alpha_cut = 1
-render_priority = 6
-texture = SubResource("ViewportTexture_hb1")
-
-[node name="HealthBar2" type="Node3D" parent="HealthBars"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.6, 0.95, -0.47)
-
-[node name="SubViewport" type="SubViewport" parent="HealthBars/HealthBar2"]
-transparent_bg = true
-size = Vector2i(1090, 180)
-render_target_update_mode = 4
-
-[node name="Health" parent="HealthBars/HealthBar2/SubViewport" instance=ExtResource("24_healthbar")]
-position = Vector2(10, 5)
-
-[node name="Sprite3D" type="Sprite3D" parent="HealthBars/HealthBar2"]
-pixel_size = 0.0019
-no_depth_test = true
-shaded = false
-alpha_cut = 1
-render_priority = 6
-texture = SubResource("ViewportTexture_hb2")
-
 [node name="DrAngka" type="Sprite3D" parent="."]
 transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, 0.0067361593, -0.4861004, 0.54833835)
 shaded = true
@@ -352,12 +303,6 @@ size = Vector2i(2739, 1797)
 render_target_update_mode = 4
 
 [node name="Arena2d" parent="SubViewport" instance=ExtResource("15_1s3fb")]
-
-[node name="Fighter1" parent="SubViewport/Arena2d" node_paths=PackedStringArray("health_bar")]
-health_bar = NodePath("../../../HealthBars/HealthBar1/SubViewport/Health")
-
-[node name="Fighter2" parent="SubViewport/Arena2d" node_paths=PackedStringArray("health_bar")]
-health_bar = NodePath("../../../HealthBars/HealthBar2/SubViewport/Health")
 
 [node name="Player3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1.49, 0, 0, 0, 1.77, 0, 0, 0, 1.18, 0.033833325, -1.3595247, -0.5738861)

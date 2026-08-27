@@ -57,6 +57,8 @@ func reset() -> void:
 	combat_state = CombatState.READY
 	hitbox.set_damage(damage)
 	set_attack_indicator(true)
+	if health_bar:
+		health_bar.set_health(health)
 
 func _ready():
 	reset()
@@ -127,7 +129,8 @@ func got_hit(opponent: Fighter, damage: int):
 	# print(character_name, " got_hit by ", opponent.character_name, " by ", damage)
 	print(opponent.character_name, " HITS ",character_name,": health -10")
 	health -= damage
-	health_bar.set_health(health)
+	if health_bar:
+		health_bar.set_health(health)
 	if hit_sounds.size() > 0:
 		audio.stream = hit_sounds[randi() % hit_sounds.size()]
 		audio.play()
