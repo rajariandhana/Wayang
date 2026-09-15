@@ -102,6 +102,10 @@ func _ensure_interface_initialised() -> void:
 func _on_rig_added(rig) -> void:
 	if not _rigs.has(rig):
 		_rigs.append(rig)
+		# The desktop CanvasLayer does not reach the glasses' own viewport.
+		# Give each rig one final-image treatment, not the nested fighter viewport.
+		var aged_screen: PackedScene = load("res://ui/aged_screen.tscn")
+		rig.add_child(aged_screen.instantiate())
 	_attach_rig.call_deferred(rig)
 	if not t5_active:
 		t5_active = true
@@ -169,6 +173,9 @@ func _process(_delta: float) -> void:
 	if not t5_active:
 		return
 	if _menu_open():
+		_release_wand_actions()
+		return
+	if not SceneManager.is_combat_input_enabled():
 		_release_wand_actions()
 		return
 
@@ -240,7 +247,7 @@ func _on_p1_button_pressed(button_name: StringName) -> void:
 			if _menu_open():
 				if _primary_pointer and is_instance_valid(_primary_pointer):
 					_primary_pointer.call(&"click")
-			else:
+			elif SceneManager.is_combat_input_enabled():
 				Input.action_press(&"p1_attack")
 				_attack_frames = ATTACK_HOLD_FRAMES
 		WAND_BUTTON_1:
@@ -269,7 +276,7 @@ func _on_p2_button_pressed(button_name: StringName) -> void:
 			if _menu_open():
 				if _secondary_pointer and is_instance_valid(_secondary_pointer):
 					_secondary_pointer.call(&"click")
-			else:
+			elif SceneManager.is_combat_input_enabled():
 				Input.action_press(&"p2_attack")
 				_attack2_frames = ATTACK_HOLD_FRAMES
 		WAND_BUTTON_1:
@@ -299,6 +306,10 @@ func _menu_open() -> bool:
 	return false
 
 func _release_wand_actions() -> void:
+	Input.action_release(&"p1_attack")
+	Input.action_release(&"p2_attack")
+	_attack_frames = 0
+	_attack2_frames = 0
 	if _wand_left:
 		Input.action_release(&"p1_left"); _wand_left = false
 	if _wand_right:
@@ -315,6 +326,9 @@ func _release_wand_actions() -> void:
 		Input.action_release(&"p2_up"); _wand2_up = false
 	if _wand2_down:
 		Input.action_release(&"p2_down"); _wand2_down = false
+
+func clear_combat_input() -> void:
+	_release_wand_actions()
 
 func _inject_ui_cancel() -> void:
 	var ev := InputEventAction.new()

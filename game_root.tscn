@@ -1,0 +1,88 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://game_root.gd" id="1_root"]
+[ext_resource type="PackedScene" path="res://arena/arena_backdrop.tscn" id="2_theatre"]
+[ext_resource type="PackedScene" path="res://main_menu/main_menu.tscn" id="3_main"]
+[ext_resource type="PackedScene" path="res://pause_menu.tscn" id="4_pause"]
+[ext_resource type="PackedScene" path="res://win_screen.tscn" id="5_win"]
+[ext_resource type="PackedScene" path="res://ui/hud.tscn" id="6_hud"]
+[ext_resource type="Script" path="res://transition_controller.gd" id="7_transition"]
+[ext_resource type="Script" path="res://curtain.gd" id="8_curtain"]
+[ext_resource type="Texture2D" path="res://asset/cloth_texture.jpg" id="9_cloth"]
+[ext_resource type="Script" path="res://music_controller.gd" id="10_music"]
+[ext_resource type="AudioStream" path="res://main_menu/intro_start.WAV" id="11_intro"]
+[ext_resource type="AudioStream" path="res://main_menu/intro_loop.WAV" id="12_loop"]
+[ext_resource type="AudioStream" path="res://arena/bgmusic.WAV" id="13_game"]
+[ext_resource type="Shader" path="res://curtain.gdshader" id="14_curtain_shader"]
+[ext_resource type="Script" path="res://menu_spotlight.gd" id="15_spotlight"]
+
+[sub_resource type="QuadMesh" id="CurtainMesh"]
+size = Vector2(5.1, 10)
+
+[sub_resource type="ShaderMaterial" id="CurtainMaterial"]
+render_priority = 5
+shader = ExtResource("14_curtain_shader")
+shader_parameter/cloth_texture = ExtResource("9_cloth")
+shader_parameter/curtain_tint = Color(0.16, 0.032, 0.022, 1)
+shader_parameter/open_amount = 0.0
+
+[node name="GameRoot" type="Node3D"]
+process_mode = 3
+script = ExtResource("1_root")
+
+[node name="MenuSpotlight" type="SpotLight3D" parent="."]
+position = Vector3(0, 0.95, 1.65)
+light_color = Color(1, 0.63, 0.3, 1)
+light_energy = 3.4
+light_indirect_energy = 0.0
+shadow_enabled = true
+distance_fade_enabled = true
+distance_fade_begin = 3.0
+distance_fade_shadow = 4.0
+spot_range = 4.0
+spot_angle = 54.0
+spot_angle_attenuation = 2.2
+script = ExtResource("15_spotlight")
+
+[node name="Theatre" type="Node3D" parent="."]
+
+[node name="ArenaBackdrop" parent="Theatre" instance=ExtResource("2_theatre")]
+
+[node name="HUD" parent="." instance=ExtResource("6_hud")]
+
+[node name="Menus" type="Node3D" parent="."]
+
+[node name="MainMenu" parent="Menus" instance=ExtResource("3_main")]
+
+[node name="PauseMenu" parent="Menus" instance=ExtResource("4_pause")]
+
+[node name="WinScreen" parent="Menus" instance=ExtResource("5_win")]
+
+[node name="TransitionController" type="Node" parent="."]
+script = ExtResource("7_transition")
+
+[node name="Curtain" type="Node3D" parent="TransitionController"]
+script = ExtResource("8_curtain")
+
+[node name="Left" type="MeshInstance3D" parent="TransitionController/Curtain"]
+position = Vector3(-2.5, 0, 0.45)
+mesh = SubResource("CurtainMesh")
+surface_material_override/0 = SubResource("CurtainMaterial")
+
+[node name="Right" type="MeshInstance3D" parent="TransitionController/Curtain"]
+position = Vector3(2.5, 0, 0.45)
+mesh = SubResource("CurtainMesh")
+surface_material_override/0 = SubResource("CurtainMaterial")
+
+[node name="MusicController" type="Node" parent="."]
+script = ExtResource("10_music")
+
+[node name="MenuIntro" type="AudioStreamPlayer" parent="MusicController"]
+stream = ExtResource("11_intro")
+
+[node name="MenuLoop" type="AudioStreamPlayer" parent="MusicController"]
+stream = ExtResource("12_loop")
+
+[node name="GameMusic" type="AudioStreamPlayer" parent="MusicController"]
+stream = ExtResource("13_game")
+volume_db = -80.0

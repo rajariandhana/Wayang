@@ -15,7 +15,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 [application]
 
 config/name="Wayang"
-run/main_scene="uid://cpms5hhjnxbhj"
+run/main_scene="res://game_root.tscn"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="res://icon.svg"
 
@@ -25,6 +25,9 @@ Util="*res://Util.gd"
 SceneManager="*res://SceneManager.gd"
 T5Runtime="*res://t5/t5_runtime.gd"
 Settings="*res://settings/settings.gd"
+Sfx="*res://script/sfx.gd"
+Juice="*res://script/juice.gd"
+TheatreLook="*res://ui/aged_screen.tscn"
 
 [display]
 

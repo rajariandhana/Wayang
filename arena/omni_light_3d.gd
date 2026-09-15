@@ -2,6 +2,9 @@ extends OmniLight3D
 
 @export var min_energy: float = 0.5   # The darkest the flame gets
 @export var max_energy: float = 3.0   # The brightest the flame gets (crank this up if it's too dim)
+## Flow-controlled multiplier. The flicker still moves naturally while the
+## closed-curtain menu keeps the theatre deliberately dark.
+@export_range(0.0, 1.0) var intensity_multiplier: float = 1.0
 
 var target_energy: float = 1.0
 var target_pos: Vector3
@@ -29,5 +32,5 @@ func _process(delta):
 		timer = randf_range(0.05, 0.15)
 
 	# Smoothly glide towards those targets incredibly fast
-	light_energy = lerp(light_energy, target_energy, 6.0 * delta)
+	light_energy = lerp(light_energy, target_energy * intensity_multiplier, 6.0 * delta)
 	position = lerp(position, target_pos, 6.0 * delta)

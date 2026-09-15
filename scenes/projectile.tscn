@@ -1,0 +1,98 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://script/projectile.gd" id="1_proj"]
+[ext_resource type="Texture2D" uid="uid://bm55xbn2j2rhv" path="res://asset/fire/Fire 01.png" id="2_f01"]
+[ext_resource type="Texture2D" uid="uid://dx57s1ae6oybn" path="res://asset/fire/Fire 02.png" id="3_f02"]
+[ext_resource type="Texture2D" uid="uid://cujbtm4id6b7i" path="res://asset/fire/Fire 03.png" id="4_f03"]
+[ext_resource type="Texture2D" uid="uid://ccgmxw0exqe55" path="res://asset/fire/Fire 04.png" id="5_f04"]
+[ext_resource type="Texture2D" uid="uid://dfro04korggx1" path="res://asset/fire/Fire 05.png" id="6_f05"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_proj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_f01")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_f02")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_f03")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_f04")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_f05")
+}],
+"loop": true,
+"name": &"default",
+"speed": 14.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_trail"]
+offsets = PackedFloat32Array(0, 0.4, 1)
+colors = PackedColorArray(1, 0.86, 0.4, 0.9, 1, 0.36, 0.08, 0.6, 0.45, 0.06, 0.02, 0)
+
+[sub_resource type="Gradient" id="Gradient_burst"]
+offsets = PackedFloat32Array(0, 0.3, 1)
+colors = PackedColorArray(1, 0.95, 0.7, 1, 1, 0.45, 0.1, 0.8, 0.35, 0.04, 0.01, 0)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_proj"]
+size = Vector2(200, 460)
+
+[node name="Projectile" type="Area2D"]
+collision_layer = 2
+collision_mask = 4
+script = ExtResource("1_proj")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -80)
+rotation = -1.5707963
+scale = Vector2(1.1, 0.95)
+sprite_frames = SubResource("SpriteFrames_proj")
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+debug_color = Color(0.9, 0.45, 0.15, 0.42)
+shape = SubResource("RectangleShape2D_proj")
+
+[node name="Trail" type="CPUParticles2D" parent="."]
+position = Vector2(0, -80)
+emitting = false
+amount = 34
+lifetime = 0.5
+local_coords = false
+texture = ExtResource("6_f05")
+emission_shape = 1
+emission_sphere_radius = 70.0
+spread = 180.0
+gravity = Vector2(0, -140)
+initial_velocity_min = 20.0
+initial_velocity_max = 110.0
+angular_velocity_min = -180.0
+angular_velocity_max = 180.0
+scale_amount_min = 0.06
+scale_amount_max = 0.2
+color_ramp = SubResource("Gradient_trail")
+
+[node name="Burst" type="CPUParticles2D" parent="."]
+position = Vector2(0, -80)
+emitting = false
+amount = 26
+lifetime = 0.55
+one_shot = true
+explosiveness = 0.95
+local_coords = false
+texture = ExtResource("6_f05")
+spread = 180.0
+gravity = Vector2(0, -90)
+initial_velocity_min = 180.0
+initial_velocity_max = 520.0
+angular_velocity_min = -320.0
+angular_velocity_max = 320.0
+scale_amount_min = 0.08
+scale_amount_max = 0.3
+color_ramp = SubResource("Gradient_burst")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

@@ -17,11 +17,19 @@ extends Node3D
 
 const RAY_LENGTH := 20.0
 
+@export var panel_transition_duration := 0.34
+@export var panel_transition_offset := 2.6
+
 var main_panel: Node3D
 var _active_panel: Node3D
 var _area_to_control := {}
+var _area_layers := {}
 var _hovered: MenuControl3D = null
 var _dragging: MenuSlider3D = null
+var _menu_active := true
+var _panel_transitioning := false
+var _panel_positions := {}
+var _panel_scales := {}
 
 func _ready() -> void:
 	add_to_group(&"t5_pointer_menu")
@@ -29,6 +37,7 @@ func _ready() -> void:
 		var area := ctrl.get_node_or_null(^"Area3D") as Area3D
 		if area:
 			_area_to_control[area] = ctrl
+			_area_layers[area] = area.collision_layer
 
 func _controls_under(node: Node) -> Array:
 	var result: Array = []
@@ -43,28 +52,94 @@ func _init_panels(main: Node3D, subs: Array) -> void:
 	main_panel = main
 	_active_panel = main
 	_set_panel_active(main, true)
+	_panel_positions[main] = main.position
+	_panel_scales[main] = main.scale
 	for p in subs:
+		_panel_positions[p] = p.position
+		_panel_scales[p] = p.scale
 		_set_panel_active(p, false)
 
 func _set_panel_active(panel: Node3D, active: bool) -> void:
 	panel.visible = active
+	_set_panel_interactive(panel, active)
+
+func _set_panel_interactive(panel: Node3D, active: bool) -> void:
 	for ctrl in _controls_under(panel):
 		var area := ctrl.get_node_or_null(^"Area3D") as Area3D
 		if area:
-			area.collision_layer = 1 if active else 0
+			area.collision_layer = int(_area_layers.get(area, 1)) if active else 0
 		if not active:
 			ctrl.scale = Vector3.ONE
 
 func _show_panel(panel: Node3D) -> void:
-	if _active_panel:
-		_set_panel_active(_active_panel, false)
-	_active_panel = panel
-	_set_panel_active(panel, true)
-	_hovered = null
-	_dragging = null
+	_transition_panel(panel)
 
 func _show_main_panel() -> void:
 	_show_panel(main_panel)
+
+func _transition_panel(panel: Node3D) -> void:
+	if _panel_transitioning or panel == _active_panel or not is_instance_valid(panel):
+		return
+	_panel_transitioning = true
+	_clear_pointer_state()
+	var outgoing := _active_panel
+	# Keep both panels visible for the cross-slide, but make both inert until
+	# the motion finishes. Previously _set_panel_active hid the outgoing panel
+	# before its first tween frame, making the animation appear broken.
+	_set_panel_interactive(outgoing, false)
+	var outgoing_rest: Vector3 = _panel_positions.get(outgoing, outgoing.position)
+	var incoming_rest: Vector3 = _panel_positions.get(panel, panel.position)
+	var outgoing_scale: Vector3 = _panel_scales.get(outgoing, outgoing.scale)
+	var incoming_scale: Vector3 = _panel_scales.get(panel, panel.scale)
+	var direction := -1.0 if panel == main_panel else 1.0
+	panel.position = incoming_rest + Vector3(panel_transition_offset * direction, 0.0, 0.0)
+	panel.scale = incoming_scale * 0.92
+	panel.visible = true
+	_set_panel_interactive(panel, false)
+	var tween := create_tween().set_pause_mode(Tween.TWEEN_PAUSE_PROCESS).set_parallel(true)
+	tween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUART)
+	tween.tween_property(outgoing, "position:x", outgoing_rest.x - panel_transition_offset * direction, panel_transition_duration)
+	tween.tween_property(outgoing, "scale", outgoing_scale * 0.92, panel_transition_duration)
+	tween.tween_property(panel, "position", incoming_rest, panel_transition_duration)
+	tween.tween_property(panel, "scale", incoming_scale, panel_transition_duration)
+	await tween.finished
+	outgoing.visible = false
+	outgoing.position = outgoing_rest
+	outgoing.scale = outgoing_scale
+	_active_panel = panel
+	_set_panel_interactive(panel, true)
+	_panel_transitioning = false
+
+func set_menu_active(active: bool) -> void:
+	# This gates input only. Presentation code owns visibility so a menu can be
+	# visible-but-inert while it animates. The old implementation called
+	# _set_panel_active(..., false), hiding the panel before every flow tween.
+	_menu_active = active
+	if not active:
+		_clear_pointer_state()
+	for panel in _panel_positions:
+		_set_panel_interactive(panel, active and panel == _active_panel)
+
+func reset_menu() -> void:
+	_panel_transitioning = false
+	for panel in _panel_positions:
+		panel.position = _panel_positions[panel]
+		panel.scale = _panel_scales[panel]
+	_show_panel_immediately(main_panel)
+
+func _show_panel_immediately(panel: Node3D) -> void:
+	for candidate in _panel_positions:
+		_set_panel_active(candidate, false)
+	_active_panel = panel
+	panel.visible = true
+	_set_panel_interactive(panel, _menu_active)
+	_clear_pointer_state()
+
+func _clear_pointer_state() -> void:
+	if _hovered:
+		_hovered.play_hover_out()
+	_hovered = null
+	_dragging = null
 
 # --- Input dispatch (mouse: hover, click, and drag for sliders) -------------
 
@@ -135,7 +210,7 @@ func _handle_hover(mouse_pos: Vector2) -> void:
 ## True while this menu should accept pointer input. Override to gate on
 ## whatever "open" state a subclass has.
 func wants_pointer() -> bool:
-	return _accepts_input()
+	return _menu_active and not _panel_transitioning and _accepts_input()
 
 func _accepts_input() -> bool:
 	return true
