@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://bwa7nv5317p50"
 path.s3tc="res://.godot/imported/castle.png-63ec433d59b8596d346051de90b5cc4f.s3tc.ctex"
+path.etc2="res://.godot/imported/castle.png-63ec433d59b8596d346051de90b5cc4f.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://asset/castle.png"
-dest_files=["res://.godot/imported/castle.png-63ec433d59b8596d346051de90b5cc4f.s3tc.ctex"]
+dest_files=["res://.godot/imported/castle.png-63ec433d59b8596d346051de90b5cc4f.s3tc.ctex", "res://.godot/imported/castle.png-63ec433d59b8596d346051de90b5cc4f.etc2.ctex"]
 
 [params]
 

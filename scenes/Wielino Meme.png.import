@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://dw3bwgp0el6xi"
 path.s3tc="res://.godot/imported/Wielino Meme.png-9321caa67c65c637efd866b689d10f65.s3tc.ctex"
+path.etc2="res://.godot/imported/Wielino Meme.png-9321caa67c65c637efd866b689d10f65.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://scenes/Wielino Meme.png"
-dest_files=["res://.godot/imported/Wielino Meme.png-9321caa67c65c637efd866b689d10f65.s3tc.ctex"]
+dest_files=["res://.godot/imported/Wielino Meme.png-9321caa67c65c637efd866b689d10f65.s3tc.ctex", "res://.godot/imported/Wielino Meme.png-9321caa67c65c637efd866b689d10f65.etc2.ctex"]
 
 [params]
 

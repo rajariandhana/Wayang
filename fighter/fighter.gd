@@ -5,6 +5,8 @@ signal died
 ## Emitted when this fighter's stance made an incoming attack whiff.
 ## Hook VFX / sound here later.
 signal dodged(attacker: Fighter, attack_height: int)
+signal attack_connected(target: Fighter, move: Dictionary)
+signal debug_trace(message: String)
 
 @export var character_name: String = ""
 @export var max_health:int = 100
@@ -46,6 +48,11 @@ signal dodged(attacker: Fighter, attack_height: int)
 
 @export var debug_combat := false
 
+## Display-only instance (character select preview, etc). No physics input,
+## no combat areas active - just the rig, its tint and its idle pose. Set this
+## before add_child so _ready sees it.
+@export var preview_mode := false
+
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @export var skeleton_animation_player: AnimationPlayer
 
@@ -68,49 +75,12 @@ signal dodged(attacker: Fighter, attack_height: int)
 
 const ATTACK_READY_OPACITY := 1.0
 const ATTACK_COOLDOWN_OPACITY := 0.5
-const ATTACK_COOLDOWN_TIME := 2.0
-
-## Step 1 move table. Deliberately a plain Dictionary: once the timings feel
-## right this lifts straight into Move / MoveSet resources (see
-## COMBAT_MOVESET_DESIGN.md) so a character becomes a .tres file.
-##   damage_scale : multiplies the exported `damage`, so per-character tuning still works
-##   startup      : puppet moves into stance, hitbox NOT live yet
-##   reach_scale  : multiplies the hitbox collision shape
-##   lunge / drop : offset applied to the puppet for the duration of the swing
-##   projectile   : also launch a travelling hitbox when the swing goes live
-const MOVES := {
-	"sabetan": {
-		"name": "Sabetan",
-		"anim": "attack",
-		"anim_speed": 1.0,
-		"height": Combat.Height.MID,
-		"damage_scale": 1.0,
-		"startup": 0.0,
-		"active": 0.2,
-		"recovery": 1.2,
-		"reach_scale": 1.0,
-		"lunge": 0.0,
-		"drop": 0.0,
-		"projectile": false,
-	},
-	# Ranged. The swing throws a low wave across the floor, so a player camping
-	# in a far corner can still be reached. Damage is lower than a melee sweep
-	# would be and the recovery stays long: it is a zoning tool, not a burst.
-	"sabet_bawah": {
-		"name": "Sabet Bawah",
-		"anim": "attack",
-		"anim_speed": 0.55,
-		"height": Combat.Height.LOW,
-		"damage_scale": 1.2,
-		"startup": 0.28,
-		"active": 0.30,
-		"recovery": 2.0,
-		"reach_scale": 1.15,
-		"lunge": 60.0,
-		"drop": 150.0,
-		"projectile": true,
-	},
-}
+## Commands remain ordered, but the buffer is deliberately generous because
+## one stick also physically moves the puppet. Players should not need to hit
+## a frame-perfect neutral between a lean and a diagonal.
+const MOTION_WINDOW := 0.75
+const ATTACK_AFTER_MOTION_WINDOW := 0.28
+const SPECIAL_CANCEL_WINDOW := 0.18
 
 enum LifeState {ALIVE, DEAD}
 var life_state: LifeState = LifeState.ALIVE
@@ -129,42 +99,210 @@ var _attack_offset_tween: Tween = null
 ## it a load-time one, which is the flavour GDScript refuses to resolve.
 const PROJECTILE_SCENE_PATH := "res://scenes/projectile.tscn"
 var _projectile_scene_cache: PackedScene = null
+var character_definition: Dictionary = CharacterRoster.definition(&"anoman")
+var _current_move: Dictionary = {}
+var _attack_serial := 0
+var _cancel_until := 0.0
+var _hitstun_until := 0.0
+var _motion_history: Array[Dictionary] = []
+var _last_direction := "N"
+var _weapon_prop: WeaponProp
+const ANOMAN_ANIMATION = preload("res://script/anoman_animation.gd")
+const DASAMUKA_ANIMATION = preload("res://script/dasamuka_animation.gd")
+var _anoman_animation: RefCounted
+var _dasamuka_animation: RefCounted
+@onready var _rig_lean_distance := max_lean_distance
+
+func _move_animator(move: Dictionary) -> RefCounted:
+	if not move.has("presentation"):
+		return null
+	return _dasamuka_animation if move.get("animation_style", "anoman") == "dasamuka" else _anoman_animation
+
+func _restore_attack_pose() -> void:
+	if _attack_offset_tween and _attack_offset_tween.is_valid():
+		_attack_offset_tween.kill()
+	if _anoman_animation:
+		_anoman_animation.restore()
+	if skeleton_animation_player:
+		skeleton_animation_player.speed_scale = 1.0
+		skeleton_animation_player.play("RESET")
+		skeleton_animation_player.advance(0.0)
+
+func configure_character(id: StringName) -> void:
+	character_definition = CharacterRoster.definition(id)
+	character_name = character_definition["name"]
+	damage = int(round(10.0 * float(character_definition["power"])))
+	lean_response_rate = 8.0 * float(character_definition["speed"])
+	if is_node_ready():
+		# The new poses extend fully. The second rig's old 780px lean
+		# compensated for its shorter swing and overshoots with these timelines.
+		max_lean_distance = 550.0 if character_definition["name"] in ["Anoman", "Dasamuka"] else _rig_lean_distance
+		sprites.modulate = character_definition["tint"]
+		_configure_weapon_prop()
+		reset()
 
 func reset() -> void:
+	_restore_attack_pose()
+	if hitbox:
+		hitbox.end_attack()
 	health = max_health
 	life_state = LifeState.ALIVE
 	combat_state = CombatState.READY
 	_attack_offset = Vector2.ZERO
+	_attack_serial += 1
+	_current_move = {}
+	_cancel_until = 0.0
+	_hitstun_until = 0.0
+	_motion_history.clear()
+	if _weapon_prop:
+		_weapon_prop.set_arrow_ready(false)
 	hitbox.set_damage(damage)
 	set_attack_indicator(true)
 	if health_bar:
 		health_bar.set_health(health)
 
 func _ready():
+	if character_definition["name"] in ["Anoman", "Dasamuka"]:
+		max_lean_distance = 550.0
+	if skeleton_animation_player and hitbox:
+		_anoman_animation = ANOMAN_ANIMATION.new(skeleton_animation_player, hitbox.get_parent())
+		_dasamuka_animation = DASAMUKA_ANIMATION.new(skeleton_animation_player, hitbox.get_parent())
+	sprites.modulate = character_definition["tint"]
+	_configure_weapon_prop()
 	reset()
 	dodged.connect(_on_dodged)
+	if preview_mode:
+		_enter_preview_mode()
+
+## Strips this instance down to a display-only rig: no physics/input reads,
+## no active hit/hurt areas, no attack-cooldown flash. Used by the character
+## select screen so placeholder puppets can sit in a SubViewport safely.
+func _enter_preview_mode() -> void:
+	set_physics_process(false)
+	if hitbox:
+		hitbox.process_mode = Node.PROCESS_MODE_DISABLED
+	var hurtbox := get_node_or_null(^"Node2D/Hurtbox")
+	if hurtbox:
+		hurtbox.process_mode = Node.PROCESS_MODE_DISABLED
+	if attack_indicator:
+		attack_indicator.visible = false
 
 func _physics_process(delta):
 	if life_state == LifeState.DEAD:
 		return
 
-	_debug_inputs()
+	if _in_hitstun():
+		return
 
-	if combat_state == CombatState.READY and Input.is_action_just_pressed(input_attack):
-		# Not awaited: _perform_attack runs synchronously up to its first await,
-		# which is past the point where combat_state becomes ATTACK, so re-entry
-		# is already blocked and the lean below keeps updating every frame.
-		_perform_attack(_select_move())
+	_debug_inputs()
+	_record_direction()
+	if Input.is_action_just_pressed(input_attack):
+		var special := _matching_special()
+		if combat_state == CombatState.READY:
+			var selected := special if not special.is_empty() else _select_normal()
+			debug_trace.emit("TRIGGER → %s" % selected["name"])
+			_start_attack(selected)
+		elif _can_cancel() and not special.is_empty():
+			debug_trace.emit("CANCEL → %s" % special["name"])
+			_interrupt_attack()
+			_start_attack(special)
+		else:
+			debug_trace.emit("TRIGGER ignored: state=%s, special=%s" % [CombatState.keys()[combat_state], "yes" if not special.is_empty() else "no"])
 
 	_update_lean(delta)
 
-## Samples the stick at the instant of the press. This is the whole move-select
-## vocabulary: one stick plus one trigger is all each player has.
-func _select_move() -> Dictionary:
+func _select_normal() -> Dictionary:
 	var vertical := Input.get_axis(input_up, input_down)
-	if vertical > Combat.STICK_DIR_THRESHOLD:
-		return MOVES["sabet_bawah"]
-	return MOVES["sabetan"]
+	var moves: Dictionary = character_definition["moves"]
+	if vertical > Combat.STICK_DIR_THRESHOLD: return moves["down"]
+	if vertical < -Combat.STICK_DIR_THRESHOLD: return moves["up"]
+	return moves["neutral"]
+
+func _record_direction() -> void:
+	var next := _input_direction()
+	if next == _last_direction:
+		return
+	var previous := _last_direction
+	_last_direction = next
+	if next == "N":
+		return
+	var now := Time.get_ticks_msec() / 1000.0
+	# Starting a diagonal while forward/back is held is a natural way to enter a
+	# motion on a physical wand. Record the newly added vertical component first,
+	# so F → DF is recognised as F → D → DF instead of losing its D input.
+	if next in ["DF", "DB"] and previous == next.right(1):
+		_motion_history.append({"dir": "D", "time": now})
+	_motion_history.append({"dir": next, "time": now})
+	_prune_motion_history(now)
+	debug_trace.emit("INPUT %s | buffer: %s" % [next, _motion_text()])
+
+func _input_direction() -> String:
+	var horizontal := Input.get_axis(input_left, input_right) * facing
+	var vertical := Input.get_axis(input_up, input_down)
+	var h := "F" if horizontal > Combat.STICK_DIR_THRESHOLD else "B" if horizontal < -Combat.STICK_DIR_THRESHOLD else ""
+	var v := "D" if vertical > Combat.STICK_DIR_THRESHOLD else "U" if vertical < -Combat.STICK_DIR_THRESHOLD else ""
+	if v != "" and h != "": return v + h
+	return v if v != "" else h if h != "" else "N"
+
+func _matching_special() -> Dictionary:
+	if _motion_history.is_empty(): return {}
+	var now := Time.get_ticks_msec() / 1000.0
+	_prune_motion_history(now)
+	if _motion_history.is_empty(): return {}
+	if now - float(_motion_history.back()["time"]) > ATTACK_AFTER_MOTION_WINDOW: return {}
+	var matches: Array[Dictionary] = []
+	for key in ["melee_special", "ranged_special"]:
+		var move: Dictionary = character_definition["moves"][key]
+		var motion: Array = move["motion"]
+		if _matches_motion(motion): matches.append(move)
+	if matches.is_empty(): return {}
+	matches.sort_custom(func(a, b): return a["motion"].size() > b["motion"].size())
+	_motion_history.clear()
+	return matches[0]
+
+func _motion_text() -> String:
+	var directions: Array[String] = []
+	for entry in _motion_history:
+		directions.append(entry["dir"])
+	return " → ".join(directions)
+
+func _prune_motion_history(now: float) -> void:
+	while not _motion_history.is_empty() and now - float(_motion_history[0]["time"]) > MOTION_WINDOW:
+		_motion_history.pop_front()
+
+func _matches_motion(motion: Array) -> bool:
+	if motion.size() > _motion_history.size():
+		return false
+	# Required directions must appear in order. Extra directions are allowed:
+	# this keeps a deliberate command distinct while tolerating a player briefly
+	# leaning through an adjacent direction on a real analog stick.
+	var expected_index := 0
+	for entry in _motion_history:
+		if entry["dir"] == motion[expected_index]:
+			expected_index += 1
+			if expected_index == motion.size():
+				return true
+	return false
+
+func _can_cancel() -> bool:
+	return not _current_move.is_empty() and not bool(_current_move.get("special", false)) and Time.get_ticks_msec() / 1000.0 <= _cancel_until
+
+func _in_hitstun() -> bool:
+	return Time.get_ticks_msec() / 1000.0 < _hitstun_until
+
+func _configure_weapon_prop() -> void:
+	if _weapon_prop:
+		_weapon_prop.queue_free()
+		_weapon_prop = null
+	if character_definition["name"] != "Arjuna" or hitbox == null:
+		return
+	var hand := hitbox.get_parent() as Node2D
+	if hand == null:
+		return
+	_weapon_prop = WeaponProp.new()
+	_weapon_prop.position = Vector2(10, -15)
+	_weapon_prop.tint = character_definition["tint"]
+	hand.add_child(_weapon_prop)
 
 func _update_lean(delta: float) -> void:
 	var input_vec := Vector2(
@@ -199,6 +337,11 @@ func get_stance() -> Combat.Stance:
 ## LOW whiffs against a raised puppet, HIGH whiffs against a crouched one,
 ## MID always connects. See the matrix in COMBAT_MOVESET_DESIGN.md.
 func dodges(attack_height: int) -> bool:
+	# A hit-confirmed follow-up lands while the defender is in hitstun. The
+	# fighter cannot change stance during that short window, so this is a real
+	# two-hit combo instead of a guess after the first hit.
+	if _in_hitstun():
+		return false
 	match get_stance():
 		Combat.Stance.RAISED:
 			return attack_height == Combat.Height.LOW
@@ -223,12 +366,27 @@ func _tween_attack_offset(target: Vector2, duration: float) -> void:
 	_attack_offset_tween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
 	_attack_offset_tween.tween_property(self, "_attack_offset", target, duration)
 
-func _perform_attack(move: Dictionary) -> void:
-	await combat_attack(move)
-	await combat_cooldown(move)
-	combat_state = CombatState.READY
+func _start_attack(move: Dictionary) -> void:
+	_attack_serial += 1
+	_current_move = move
+	_cancel_until = 0.0
+	_perform_attack(move, _attack_serial)
 
-func combat_attack(move: Dictionary) -> void:
+func _interrupt_attack() -> void:
+	_attack_serial += 1
+	hitbox.end_attack()
+	_attack_offset = Vector2.ZERO
+	_restore_attack_pose()
+
+func _perform_attack(move: Dictionary, serial: int) -> void:
+	await combat_attack(move, serial)
+	if serial != _attack_serial: return
+	await combat_cooldown(move, serial)
+	if serial == _attack_serial:
+		combat_state = CombatState.READY
+		_current_move = {}
+
+func combat_attack(move: Dictionary, serial: int) -> void:
 	combat_state = CombatState.ATTACK
 	set_attack_indicator(false)
 
@@ -238,30 +396,44 @@ func combat_attack(move: Dictionary) -> void:
 	# Startup: the puppet drops and commits forward while the hitbox is still
 	# cold. This is what makes a heavy move readable and therefore dodgeable.
 	var committed := Vector2(float(move["lunge"]) * facing, float(move["drop"]))
+	if _weapon_prop:
+		_weapon_prop.set_arrow_ready(String(move.get("projectile_profile", "")) == "arrow")
 	_tween_attack_offset(committed, maxf(float(move["startup"]), 0.05))
+	var pose_animation := _move_animator(move)
+	if pose_animation:
+		pose_animation.play(move)
 	if float(move["startup"]) > 0.0:
 		await Util.wait(float(move["startup"]))
+		if serial != _attack_serial: return
+	if pose_animation:
+		# Contact starts at the release pose, independent of render frame timing.
+		skeleton_animation_player.seek(float(move["startup"]), true)
 
-	var move_damage := int(round(damage * float(move["damage_scale"])))
-	hitbox.start_attack(move_damage, int(move["height"]), float(move["reach_scale"]))
+	var move_damage := int(move["damage"])
+	hitbox.start_attack(move_damage, int(move["height"]), float(move["reach_scale"]), bool(move.get("special", false)))
 	Sfx.play(&"swing")
 	if bool(move["projectile"]):
-		_spawn_projectile(move_damage, int(move["height"]))
+		_spawn_projectile(move_damage, int(move["height"]), bool(move.get("special", false)), String(move.get("projectile_profile", "fire")))
+		if _weapon_prop:
+			_weapon_prop.set_arrow_ready(false)
 
-	var anim_name: String = move["anim"]
 	var active_time := float(move["active"])
-	if skeleton_animation_player and skeleton_animation_player.has_animation(anim_name):
-		var speed := maxf(float(move["anim_speed"]), 0.01)
-		skeleton_animation_player.speed_scale = speed
-		skeleton_animation_player.play(anim_name)
-		active_time = skeleton_animation_player.get_animation(anim_name).length / speed
+	var anim_name := StringName(move.get("anim", "attack"))
+	if skeleton_animation_player and not pose_animation:
+		if not skeleton_animation_player.has_animation(anim_name):
+			anim_name = &"attack"
+		if skeleton_animation_player.has_animation(anim_name):
+			var animation := skeleton_animation_player.get_animation(anim_name)
+			skeleton_animation_player.speed_scale = animation.length / maxf(active_time, 0.01)
+			skeleton_animation_player.play(anim_name)
 
 	# Always awaited and always followed by end_attack(). The old code returned
 	# early when the animation was missing, which left the hitbox live forever.
 	await Util.wait(active_time)
-	hitbox.end_attack()
+	if serial == _attack_serial:
+		hitbox.end_attack()
 
-func _spawn_projectile(move_damage: int, attack_height: int) -> void:
+func _spawn_projectile(move_damage: int, attack_height: int, is_special: bool, profile: String) -> void:
 	var scene := projectile_scene
 	if scene == null:
 		if _projectile_scene_cache == null:
@@ -283,20 +455,32 @@ func _spawn_projectile(move_damage: int, attack_height: int) -> void:
 		puppet_visual.global_position.x + projectile_spawn_offset.x * facing,
 		global_position.y + projectile_spawn_offset.y
 	)
-	projectile.launch(self, move_damage, attack_height, facing)
+	projectile.launch(self, move_damage, attack_height, facing, is_special, profile, character_definition["tint"])
 
-func combat_cooldown(move: Dictionary) -> void:
+func combat_cooldown(move: Dictionary, serial: int) -> void:
 	combat_state = CombatState.COOLDOWN
 	var recovery := float(move["recovery"])
 	_tween_attack_offset(Vector2.ZERO, minf(0.3, recovery))
+	var pose_animation := _move_animator(move)
+	if pose_animation:
+		skeleton_animation_player.seek(float(move["startup"]) + float(move["active"]), true)
+		await Util.wait(recovery)
+		if serial != _attack_serial: return
+		pose_animation.restore()
+		set_attack_indicator(true)
+		return
 	await Util.wait(recovery / 2.0)
+	if serial != _attack_serial: return
 	if skeleton_animation_player:
 		skeleton_animation_player.speed_scale = 1.0
 		skeleton_animation_player.play("RESET")
 	await Util.wait(recovery / 2.0)
-	set_attack_indicator(true)
+	if serial == _attack_serial: set_attack_indicator(true)
 
-func got_hit(opponent: Fighter, incoming_damage: int):
+func got_hit(opponent: Fighter, incoming_damage: int, was_special := false):
+	_interrupt_attack()
+	combat_state = CombatState.READY
+	_hitstun_until = Time.get_ticks_msec() / 1000.0 + (0.25 if was_special else 0.40)
 	print(opponent.character_name, " HITS ", character_name, ": health -", incoming_damage)
 	health -= incoming_damage
 	if health_bar:
@@ -310,9 +494,17 @@ func got_hit(opponent: Fighter, incoming_damage: int):
 	Juice.hitstop(0.06, 0.15)
 	Juice.flash(sprites)
 	Juice.shake(_shake_target(), 26.0, 0.28)
+	opponent._register_hit(self)
 
 	if health <= 0:
 		die()
+
+func _register_hit(target: Fighter) -> void:
+	if _current_move.is_empty(): return
+	attack_connected.emit(target, _current_move)
+	if not bool(_current_move.get("special", false)):
+		_cancel_until = Time.get_ticks_msec() / 1000.0 + SPECIAL_CANCEL_WINDOW
+		debug_trace.emit("HIT CONFIRM → cancel window open")
 
 func _shake_target() -> Node2D:
 	if shake_target:
@@ -327,6 +519,7 @@ func die():
 	if life_state == LifeState.DEAD:
 		return
 	life_state = LifeState.DEAD
+	_interrupt_attack()
 	set_attack_indicator(false)
 	_tween_attack_offset(Vector2.ZERO, 0.1)
 	Juice.hitstop(0.16, 0.2)

@@ -175,7 +175,7 @@ func _process(_delta: float) -> void:
 	if _menu_open():
 		_release_wand_actions()
 		return
-	if not SceneManager.is_combat_input_enabled():
+	if not SceneManager.is_combat_input_enabled() and not SceneManager.is_character_select_input_enabled():
 		_release_wand_actions()
 		return
 
@@ -247,7 +247,7 @@ func _on_p1_button_pressed(button_name: StringName) -> void:
 			if _menu_open():
 				if _primary_pointer and is_instance_valid(_primary_pointer):
 					_primary_pointer.call(&"click")
-			elif SceneManager.is_combat_input_enabled():
+			elif SceneManager.is_combat_input_enabled() or SceneManager.is_character_select_input_enabled():
 				Input.action_press(&"p1_attack")
 				_attack_frames = ATTACK_HOLD_FRAMES
 		WAND_BUTTON_1:
@@ -276,7 +276,7 @@ func _on_p2_button_pressed(button_name: StringName) -> void:
 			if _menu_open():
 				if _secondary_pointer and is_instance_valid(_secondary_pointer):
 					_secondary_pointer.call(&"click")
-			elif SceneManager.is_combat_input_enabled():
+			elif SceneManager.is_combat_input_enabled() or SceneManager.is_character_select_input_enabled():
 				Input.action_press(&"p2_attack")
 				_attack2_frames = ATTACK_HOLD_FRAMES
 		WAND_BUTTON_1:

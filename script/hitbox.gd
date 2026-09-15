@@ -7,6 +7,8 @@ var damage := 10
 ## Which vertical band this swing occupies (Combat.Height). The defender's
 ## stance is checked against it in Hurtbox before any damage is applied.
 var height: int = Combat.Height.MID
+var special := false
+var _hit_targets := {}
 
 var is_attacking := false
 
@@ -18,9 +20,11 @@ func _ready():
 	if _shape:
 		_base_shape_scale = _shape.scale
 
-func start_attack(attack_damage: int, attack_height: int, reach_scale: float = 1.0):
+func start_attack(attack_damage: int, attack_height: int, reach_scale: float = 1.0, is_special := false):
 	damage = attack_damage
 	height = attack_height
+	special = is_special
+	_hit_targets.clear()
 	# Reach is per-move, so it must be reset in end_attack() or it drifts
 	# across moves the next time a shorter one is thrown.
 	if _shape:
@@ -36,6 +40,12 @@ func end_attack():
 
 func set_damage(new_damage:int) -> void:
 	damage = new_damage
+
+func claim_target(target: Fighter) -> bool:
+	var key := target.get_instance_id()
+	if _hit_targets.has(key): return false
+	_hit_targets[key] = true
+	return true
 
 # hitbox.tscn wires area_entered and body_entered to these. They were connected
 # but never defined, which throws "method not found" every time a hurtbox

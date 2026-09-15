@@ -19,6 +19,9 @@ extends Hitbox
 var direction := 1.0
 var _travelled := 0.0
 var _expiring := false
+var _profile := "fire"
+var _visual_tint := Color.WHITE
+var _wave_time := 0.0
 
 @onready var _sprite: AnimatedSprite2D = get_node_or_null("AnimatedSprite2D")
 @onready var _trail: CPUParticles2D = get_node_or_null("Trail")
@@ -29,8 +32,11 @@ func _ready() -> void:
 	set_physics_process(false)
 
 ## Called by the attacking Fighter the moment the move's hitbox goes live.
-func launch(source: Fighter, attack_damage: int, attack_height: int, dir: float) -> void:
+func launch(source: Fighter, attack_damage: int, attack_height: int, dir: float, is_special := true,
+		profile := "fire", tint := Color.WHITE) -> void:
 	fighter = source
+	_profile = profile
+	_visual_tint = tint
 	direction = signf(dir)
 	if direction == 0.0:
 		direction = 1.0
@@ -45,9 +51,22 @@ func launch(source: Fighter, attack_damage: int, attack_height: int, dir: float)
 	# right and the other going left, and the two directions look like different
 	# attacks.
 	if _sprite:
-		_sprite.rotation = -PI * 0.5 * direction
+		_sprite.visible = _profile not in ["arrow", "water"]
+		_sprite.rotation = 0.0 if _profile == "arrow" else -PI * 0.5 * direction
 		_sprite.flip_h = direction < 0.0
+		_sprite.modulate = tint
+		_sprite.scale = Vector2(1.8, 0.55) if _profile == "water" else Vector2(0.8, 0.8) if _profile == "arrow" else Vector2(1.1, 0.95)
 		_sprite.play()
+	if _trail:
+		_trail.modulate = tint
+	if _burst:
+		_burst.modulate = tint
+	match _profile:
+		"arrow": speed = 2800.0
+		"water": speed = 1300.0
+		"spray": speed = 2300.0
+		"thunder": speed = 1800.0
+	queue_redraw()
 
 	# local_coords is off, so embers stay where they were born and the wave
 	# leaves a trail behind it instead of dragging a clump along.
@@ -56,15 +75,39 @@ func launch(source: Fighter, attack_damage: int, attack_height: int, dir: float)
 
 	Sfx.play(&"wave_launch")
 
-	start_attack(attack_damage, attack_height, 1.0)
+	start_attack(attack_damage, attack_height, 1.0, is_special)
 	set_physics_process(true)
 
 func _physics_process(delta: float) -> void:
+	_wave_time += delta
 	var step := speed * delta * direction
 	position.x += step
 	_travelled += absf(step)
 	if _travelled >= max_range:
 		_expire(false)
+	if _profile in ["arrow", "water"]:
+		queue_redraw()
+
+func _draw() -> void:
+	if _profile == "arrow":
+		var shaft_end := Vector2(130.0 * direction, -80.0)
+		draw_line(Vector2(0, -80), shaft_end, _visual_tint.lightened(0.35), 10.0)
+		var tip := shaft_end + Vector2(36.0 * direction, 0)
+		draw_colored_polygon(PackedVector2Array([tip, shaft_end + Vector2(0, -22), shaft_end + Vector2(0, 22)]), _visual_tint)
+	elif _profile == "water":
+		var top := PackedVector2Array()
+		var bottom := PackedVector2Array()
+		var crest := PackedVector2Array()
+		for i in 13:
+			var x := -180.0 + i * 30.0
+			var crest_point := Vector2(x, -80.0 + sin(x * 0.045 + _wave_time * 9.0) * 28.0)
+			top.append(crest_point)
+			crest.append(crest_point)
+			bottom.append(Vector2(x, -20.0 + sin(x * 0.045 + _wave_time * 9.0) * 14.0))
+		bottom.reverse()
+		top.append_array(bottom)
+		draw_colored_polygon(top, _visual_tint.darkened(0.15))
+		draw_polyline(crest, _visual_tint.lightened(0.35), 9.0)
 
 func _on_area_entered(area: Area2D) -> void:
 	if _expiring or area is not Hurtbox:

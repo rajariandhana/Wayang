@@ -1,6 +1,6 @@
 extends Node
 
-enum FlowState { MENU, PLAYING, PAUSED, RESULTS, TRANSITIONING }
+enum FlowState { MENU, SELECTING, PLAYING, PAUSED, RESULTS, TRANSITIONING }
 
 signal flow_state_changed(state: FlowState)
 
@@ -20,10 +20,19 @@ func start_match() -> void:
 	_set_state(FlowState.TRANSITIONING)
 	_clear_injected_input()
 	_root.set_menu_spotlight(false)
-	_root.music_controller.crossfade_to_game()
 	await _root.transition_controller.slide_out(_root.main_menu)
+	_root.show_character_select()
+	_set_state(FlowState.SELECTING)
+
+func start_selected_match(p1: StringName, p2: StringName) -> void:
+	if state != FlowState.SELECTING or not is_instance_valid(_root):
+		return
+	_set_state(FlowState.TRANSITIONING)
+	_clear_injected_input()
+	_root.hide_character_select()
+	_root.music_controller.crossfade_to_game()
 	_root.set_stage_lighting(1.0, 0.45)
-	if not _root.arena and not _root.create_match():
+	if not _root.create_match(p1, p2):
 		_recover_menu("Unable to prepare match")
 		return
 	_root.hud.visible = true
@@ -83,6 +92,7 @@ func return_to_menu() -> void:
 	_root.set_stage_lighting(_root.menu_light_level, 0.25)
 	_root.pause_menu.hide_immediately()
 	_root.win_screen.hide_results()
+	_root.hide_character_select()
 	_root.dispose_match()
 	_root.music_controller.crossfade_to_menu()
 	get_tree().paused = false
@@ -108,6 +118,34 @@ func quit_game() -> void:
 func is_combat_input_enabled() -> bool:
 	return state == FlowState.PLAYING and not get_tree().paused
 
+func is_character_select_input_enabled() -> bool:
+	return state == FlowState.SELECTING and not get_tree().paused
+
+func change_characters() -> void:
+	if state != FlowState.RESULTS or not is_instance_valid(_root):
+		return
+	_set_state(FlowState.TRANSITIONING)
+	_clear_injected_input()
+	_root.win_screen.hide_results()
+	_root.dispose_match()
+	_root.music_controller.crossfade_to_menu()
+	_root.set_stage_lighting(_root.menu_light_level, 0.2)
+	_root.transition_controller.set_curtain_closed(true)
+	_root.show_character_select()
+	_set_state(FlowState.SELECTING)
+
+func cancel_character_select() -> void:
+	if state != FlowState.SELECTING or not is_instance_valid(_root):
+		return
+	_set_state(FlowState.TRANSITIONING)
+	_clear_injected_input()
+	_root.hide_character_select()
+	_root.set_stage_lighting(_root.menu_light_level, 0.25)
+	_root.music_controller.crossfade_to_menu()
+	await _root.transition_controller.slide_in(_root.main_menu)
+	_root.set_menu_spotlight(true)
+	_set_state(FlowState.MENU)
+
 func clear_combat_effects() -> void:
 	Juice.reset()
 	Sfx.stop_all()
@@ -119,6 +157,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		pause_match()
 	elif state == FlowState.PAUSED:
 		resume_match()
+	elif state == FlowState.SELECTING:
+		cancel_character_select()
 	else:
 		return
 	get_viewport().set_input_as_handled()

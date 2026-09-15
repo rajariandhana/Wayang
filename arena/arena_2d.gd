@@ -8,6 +8,10 @@ signal game_over(winner_name: String)
 
 var _game_over := false
 
+func configure_fighters(p1: StringName, p2: StringName) -> void:
+	fighter1.configure_character(p1)
+	fighter2.configure_character(p2)
+
 func _ready() -> void:
 	# Single source of truth for which way each puppet is facing, so directional
 	# moves (lunges, forward/back attacks) commit toward the opponent instead of

@@ -258,6 +258,68 @@ Same five inputs, completely different game.
 
 - `ATTACK_COOLDOWN_TIME` is currently doing double duty as both attack recovery **and** the defender's i-frame window in `hurtbox.gd`. Split these. I-frames should be a separate `hitstun` constant, or a fast move will hand the opponent 2s of invulnerability.
 - `_physics_process` does `await combat_attack()` then `await combat_cooldown()`. With per-move timing and cancels this needs a real state machine (`READY / STARTUP / ACTIVE / RECOVERY`) driven by a timer, not chained awaits, otherwise a cancel cannot interrupt an in-flight await.
+
+---
+
+## 7. Approved roster and motion-special plan
+
+The initial roster is seven selectable fighters. Mirror matches are allowed.
+Every fighter has neutral, up, and down normal attacks, plus two exact motion
+specials. One special is always ranged.
+
+| Fighter | Close special | Ranged special | Projectile treatment |
+| - | - | - | - |
+| Anoman | Monkey Rush — F, D, DF + attack | Wind Palm — D, DF, F + attack | Fast HIGH wind effect |
+| Dasamuka | Royal Cleave — F, DF, D, DB, B + attack | Alengka Flame — D, DB, B + attack | Slow LOW flame wave |
+| Bima | Pancanaka — D, DF, F + attack | Earth Breaker — B, DB, D, DF, F + attack | LOW ground effect |
+| Arjuna | Retreating Strike — D, DB, B + attack | Arrow Shot — D, DF, F + attack | Fast HIGH arrow |
+| Gatotkaca | Sky Fist — F, D, DF + attack | Thunder Palm — B, DB, D, DF, F + attack | LOW energy effect |
+| Sura | Tidal Lunge — F, D, DF + attack | Sea Spray — D, DF, F + attack | Fast HIGH water spray |
+| Baya | River Clamp — D, DB, B + attack | Sungai Surge — B, DB, D, DF, F + attack | Slow, wide LOW river wave |
+
+Motion directions are relative to the opponent. Commands have a 0.75-second
+ordered input buffer and a 0.28-second attack window after the final direction.
+Extra directions are tolerated, and beginning a diagonal while forward/back is
+held records the newly added down input. A normal that connects opens a short
+cancel window for one special. The defender is held in hitstun for the
+follow-up, but the attack must still physically reach them. Special-to-special
+chains are not allowed.
+
+## 8. Low-animation production approach
+
+Use **pose + prop + effect**. This makes attacks readable without requiring
+frame-by-frame animation or a bespoke animation for every move.
+
+### Minimum art per fighter
+
+- One puppet body visual.
+- One idle pose.
+- One three-key attack motion: wind-up, release/impact, recovery.
+- A separate weapon or prop only where needed.
+- One ranged-effect treatment and optional impact sprite.
+
+The existing Anoman and Dasamuka scenes already have working arm rigs and an
+`AnimationPlayer` timeline named `attack`. Their current rotations live in
+`fighter/fighter_1.tscn` and `fighter/fighter_2.tscn`; combat plays that timeline
+instead of hardcoding arm angles in code. New attack animations should remain
+short three-key timelines on the same forearm and arm rotation tracks. Godot
+interpolates between the poses.
+
+### Props and effects
+
+- **Arjuna:** attach a static bow to the hand and show a held arrow during the
+  wind-up. At release, hide the held arrow and spawn the moving arrow projectile.
+- **Baya, Sungai Surge:** use a single heavy forward pose, then spawn a wide
+  procedural water wave that travels along the floor. The effect, rather than a
+  complex crocodile animation, sells the move.
+- **Other ranged attacks:** reuse the shared projectile node with profile data
+  for fire, wind, earth, thunder, sea spray, or water. Profiles change the
+  effect tint, speed, scale, hit height, trail, and impact without new fighter
+  logic.
+
+Screen shake, hit flashes, trails, and impact bursts should supply most of the
+perceived force. Finished puppet art can replace the prototype visuals later
+without changing character data or combat code.
 - Forward/back must resolve through a single `facing` value. There is already a "P2 flipped horizontal movements" fix in git history, so do not add a second place that flips signs.
 - `reach_scale` changing the hitbox `CollisionShape2D.scale` at runtime is fine, but reset it in `end_attack()` or reach will drift across moves.
 - Hitbox layer/mask is 2/4, hurtbox is presumably 4. If a projectile (12) is added, give it its own layer so it does not clash-cancel against melee hitboxes unintentionally.

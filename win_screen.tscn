@@ -43,12 +43,17 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.35, 0)
 text = "Play Again"
 hit_size = Vector3(1.7, 0.3, 0.12)
 
+[node name="ChangeCharactersButton" parent="MenuContainer" instance=ExtResource("3_btn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0, 0)
+text = "Change Characters"
+hit_size = Vector3(1.7, 0.3, 0.12)
+
 [node name="MainMenuButton" parent="MenuContainer" instance=ExtResource("3_btn")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.13, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.35, 0)
 text = "Main Menu"
 hit_size = Vector3(1.7, 0.3, 0.12)
 
 [node name="QuitButton" parent="MenuContainer" instance=ExtResource("3_btn")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.61, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.70, 0)
 text = "Quit"
 hit_size = Vector3(1.7, 0.3, 0.12)

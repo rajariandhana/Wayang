@@ -3,6 +3,7 @@ extends Menu3DBase
 @onready var menu_container: Node3D = $MenuContainer
 @onready var title_label: Label3D = $MenuContainer/TitleLabel
 @onready var play_again_button: MenuButton3D = $MenuContainer/PlayAgainButton
+@onready var change_characters_button: MenuButton3D = $MenuContainer/ChangeCharactersButton
 @onready var main_menu_button: MenuButton3D = $MenuContainer/MainMenuButton
 @onready var quit_button: MenuButton3D = $MenuContainer/QuitButton
 @onready var dark_overlay: MeshInstance3D = $DarkOverlay
@@ -39,13 +40,15 @@ func show_win(winner_name: String, duration := 0.35) -> void:
 func _on_button_activated(btn: Node3D) -> void:
 	if btn == play_again_button:
 		SceneManager.restart_match()
+	elif btn == change_characters_button:
+		SceneManager.change_characters()
 	elif btn == main_menu_button:
 		SceneManager.return_to_menu()
 	elif btn == quit_button:
 		SceneManager.quit_game()
 
 func _main_buttons() -> Array[Node3D]:
-	return [play_again_button, main_menu_button, quit_button]
+	return [play_again_button, change_characters_button, main_menu_button, quit_button]
 
 func hide_results() -> void:
 	set_menu_active(false)

@@ -8,6 +8,8 @@ const MATCH_SCENE := preload("res://arena/arena_2d.tscn")
 @onready var main_menu: Node3D = $Menus/MainMenu
 @onready var pause_menu: Node3D = $Menus/PauseMenu
 @onready var win_screen: Node3D = $Menus/WinScreen
+@onready var character_select: CharacterSelect = $CharacterSelect
+@onready var combat_debug: CanvasLayer = $CombatDebug
 @onready var transition_controller: TransitionController = $TransitionController
 @onready var music_controller: MusicController = $MusicController
 @onready var theatre_lights: Node3D = $Theatre/ArenaBackdrop/Lights
@@ -25,26 +27,29 @@ var _lighting_tween: Tween
 
 var arena: Arena2d
 var session_id := 0
+var selected_p1: StringName = &"anoman"
+var selected_p2: StringName = &"dasamuka"
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	combat_viewport.render_target_update_mode = SubViewport.UPDATE_DISABLED
 	hud.visible = false
+	combat_debug.visible = false
 	main_menu.visible = true
 	main_menu.set_menu_active(true)
 	pause_menu.set_menu_active(false)
 	win_screen.set_menu_active(false)
+	character_select.close()
+	character_select.connect(&"selections_ready", SceneManager.start_selected_match)
 	transition_controller.set_curtain_closed(true)
 	lighting_level = menu_light_level
 	menu_spotlight.set_active(true, true)
 	SceneManager.register_root(self)
-	# Prewarm the first combat session behind the launch curtain. It remains
-	# disabled until the reveal finishes, so startup input cannot reach it.
-	if not create_match():
-		push_error("Unable to prepare the first match")
 
-func create_match() -> bool:
+func create_match(p1 := selected_p1, p2 := selected_p2) -> bool:
 	dispose_match()
+	selected_p1 = p1
+	selected_p2 = p2
 	var instance := MATCH_SCENE.instantiate() as Arena2d
 	if instance == null:
 		return false
@@ -53,13 +58,21 @@ func create_match() -> bool:
 	arena.name = "Arena2d"
 	arena.process_mode = Node.PROCESS_MODE_DISABLED
 	combat_viewport.add_child(arena)
+	arena.configure_fighters(selected_p1, selected_p2)
 	var bound_session := session_id
 	arena.game_over.connect(func(winner: String) -> void:
 		if arena == instance and bound_session == session_id:
 			SceneManager.show_results(winner)
 	)
 	hud.bind(arena.fighter1, arena.fighter2)
+	combat_debug.call(&"bind", arena.fighter1, arena.fighter2)
 	return true
+
+func show_character_select() -> void:
+	character_select.open()
+
+func hide_character_select() -> void:
+	character_select.close()
 
 func dispose_match() -> void:
 	SceneManager.clear_combat_effects()
@@ -71,12 +84,14 @@ func dispose_match() -> void:
 			combat_viewport.remove_child(child)
 			child.queue_free()
 	hud.visible = false
+	combat_debug.visible = false
 	combat_viewport.render_target_update_mode = SubViewport.UPDATE_DISABLED
 
 func enable_match() -> void:
 	if arena:
 		arena.process_mode = Node.PROCESS_MODE_PAUSABLE
 	combat_viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
+	combat_debug.visible = true
 
 func set_stage_lighting(level: float, duration := 0.35) -> void:
 	if _lighting_tween and _lighting_tween.is_valid():

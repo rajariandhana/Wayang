@@ -15,6 +15,8 @@
 [ext_resource type="AudioStream" path="res://arena/bgmusic.WAV" id="13_game"]
 [ext_resource type="Shader" path="res://curtain.gdshader" id="14_curtain_shader"]
 [ext_resource type="Script" path="res://menu_spotlight.gd" id="15_spotlight"]
+[ext_resource type="PackedScene" path="res://ui/character_select.tscn" id="16_select"]
+[ext_resource type="PackedScene" path="res://ui/combat_debug.tscn" id="17_debug"]
 
 [sub_resource type="QuadMesh" id="CurtainMesh"]
 size = Vector2(5.1, 10)
@@ -49,6 +51,10 @@ script = ExtResource("15_spotlight")
 [node name="ArenaBackdrop" parent="Theatre" instance=ExtResource("2_theatre")]
 
 [node name="HUD" parent="." instance=ExtResource("6_hud")]
+
+[node name="CharacterSelect" parent="." instance=ExtResource("16_select")]
+
+[node name="CombatDebug" parent="." instance=ExtResource("17_debug")]
 
 [node name="Menus" type="Node3D" parent="."]
 

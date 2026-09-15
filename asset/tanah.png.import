@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://bvfrr4qpqyttq"
 path.s3tc="res://.godot/imported/tanah.png-f635c4ee160db6cd31c0b80d5ea58683.s3tc.ctex"
+path.etc2="res://.godot/imported/tanah.png-f635c4ee160db6cd31c0b80d5ea58683.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://asset/tanah.png"
-dest_files=["res://.godot/imported/tanah.png-f635c4ee160db6cd31c0b80d5ea58683.s3tc.ctex"]
+dest_files=["res://.godot/imported/tanah.png-f635c4ee160db6cd31c0b80d5ea58683.s3tc.ctex", "res://.godot/imported/tanah.png-f635c4ee160db6cd31c0b80d5ea58683.etc2.ctex"]
 
 [params]
 

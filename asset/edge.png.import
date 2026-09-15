@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://bjl6gc24obxn7"
 path.s3tc="res://.godot/imported/edge.png-e78c189972cfca46bf80b65ff2f445ab.s3tc.ctex"
+path.etc2="res://.godot/imported/edge.png-e78c189972cfca46bf80b65ff2f445ab.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://asset/edge.png"
-dest_files=["res://.godot/imported/edge.png-e78c189972cfca46bf80b65ff2f445ab.s3tc.ctex"]
+dest_files=["res://.godot/imported/edge.png-e78c189972cfca46bf80b65ff2f445ab.s3tc.ctex", "res://.godot/imported/edge.png-e78c189972cfca46bf80b65ff2f445ab.etc2.ctex"]
 
 [params]
 

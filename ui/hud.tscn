@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" path="res://ui/hud.gd" id="1_hud"]
 [ext_resource type="PackedScene" path="res://ui/health_bar_3d.tscn" id="2_healthbar3d"]
+[ext_resource type="Font" path="res://ui/font_button_bold.tres" id="3_font"]
 
 [node name="Hud" type="Node3D"]
 script = ExtResource("1_hud")
@@ -11,3 +12,23 @@ transform = Transform3D(1.6, 0, 0, 0, 4, 0, 0, 0, 1, -2.6165, 1.1115, -0.47)
 
 [node name="HealthBar2" parent="." instance=ExtResource("2_healthbar3d")]
 transform = Transform3D(1.6, 0, 0, 0, 4, 0, 0, 0, 1, 0.5835, 1.1115, -0.47)
+
+[node name="Name1" type="Label3D" parent="."]
+position = Vector3(-2.55, 1.55, -0.47)
+pixel_size = 0.0018
+billboard = 1
+no_depth_test = true
+font = ExtResource("3_font")
+font_size = 44
+outline_size = 5
+text = "P1"
+
+[node name="Name2" type="Label3D" parent="."]
+position = Vector3(0.64, 1.55, -0.47)
+pixel_size = 0.0018
+billboard = 1
+no_depth_test = true
+font = ExtResource("3_font")
+font_size = 44
+outline_size = 5
+text = "P2"

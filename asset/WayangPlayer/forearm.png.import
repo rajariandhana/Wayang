@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://cb5xm00lkeolu"
 path.s3tc="res://.godot/imported/forearm.png-9a75b58739f6b3ccf39520668e58bebd.s3tc.ctex"
+path.etc2="res://.godot/imported/forearm.png-9a75b58739f6b3ccf39520668e58bebd.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://asset/WayangPlayer/forearm.png"
-dest_files=["res://.godot/imported/forearm.png-9a75b58739f6b3ccf39520668e58bebd.s3tc.ctex"]
+dest_files=["res://.godot/imported/forearm.png-9a75b58739f6b3ccf39520668e58bebd.s3tc.ctex", "res://.godot/imported/forearm.png-9a75b58739f6b3ccf39520668e58bebd.etc2.ctex"]
 
 [params]
 

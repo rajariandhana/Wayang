@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://8anwl2bwwg1j"
 path.s3tc="res://.godot/imported/dr angka.png-aa6780d8d01c44bf56b498b7996e2f66.s3tc.ctex"
+path.etc2="res://.godot/imported/dr angka.png-aa6780d8d01c44bf56b498b7996e2f66.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://asset/dr angka.png"
-dest_files=["res://.godot/imported/dr angka.png-aa6780d8d01c44bf56b498b7996e2f66.s3tc.ctex"]
+dest_files=["res://.godot/imported/dr angka.png-aa6780d8d01c44bf56b498b7996e2f66.s3tc.ctex", "res://.godot/imported/dr angka.png-aa6780d8d01c44bf56b498b7996e2f66.etc2.ctex"]
 
 [params]
 

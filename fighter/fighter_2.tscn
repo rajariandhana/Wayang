@@ -69,10 +69,70 @@ tracks/1/keys = {
 "values": [0.30445346, 0.84200215, 0.09007788, -0.6731447]
 }
 
+[sub_resource type="Animation" id="Animation_attack_up_p2"]
+resource_name = "attack_up"
+length = 0.22
+tracks/0/type = "value"
+tracks/0/path = NodePath("Skeleton2D/Hip/RForearm:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {"times": PackedFloat32Array(0, 0.06, 0.13, 0.22), "transitions": PackedFloat32Array(1, 1, 1, 1), "update": 0, "values": [2.8026786, 3.18, 1.72, 0.5942812]}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Skeleton2D/Hip/RForearm/RArm:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {"times": PackedFloat32Array(0, 0.06, 0.13, 0.22), "transitions": PackedFloat32Array(1, 1, 1, 1), "update": 0, "values": [0.30445346, 1.35, -0.12, -0.6731447]}
+
+[sub_resource type="Animation" id="Animation_attack_down_p2"]
+resource_name = "attack_down"
+length = 0.22
+tracks/0/type = "value"
+tracks/0/path = NodePath("Skeleton2D/Hip/RForearm:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {"times": PackedFloat32Array(0, 0.06, 0.13, 0.22), "transitions": PackedFloat32Array(1, 1, 1, 1), "update": 0, "values": [2.8026786, 2.15, 0.45, 0.5942812]}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Skeleton2D/Hip/RForearm/RArm:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {"times": PackedFloat32Array(0, 0.06, 0.13, 0.22), "transitions": PackedFloat32Array(1, 1, 1, 1), "update": 0, "values": [0.30445346, 0.92, -0.92, -0.6731447]}
+
+[sub_resource type="Animation" id="Animation_attack_special_p2"]
+resource_name = "attack_special"
+length = 0.24
+tracks/0/type = "value"
+tracks/0/path = NodePath("Skeleton2D/Hip/RForearm:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {"times": PackedFloat32Array(0, 0.07, 0.15, 0.24), "transitions": PackedFloat32Array(1, 1, 1, 1), "update": 0, "values": [2.8026786, 3.05, 0.3, 0.5942812]}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Skeleton2D/Hip/RForearm/RArm:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {"times": PackedFloat32Array(0, 0.07, 0.15, 0.24), "transitions": PackedFloat32Array(1, 1, 1, 1), "update": 0, "values": [0.30445346, 1.1, -0.8, -0.6731447]}
+
+[sub_resource type="Animation" id="Animation_attack_ranged_p2"]
+resource_name = "attack_ranged"
+length = 0.24
+tracks/0/type = "value"
+tracks/0/path = NodePath("Skeleton2D/Hip/RForearm:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {"times": PackedFloat32Array(0, 0.08, 0.16, 0.24), "transitions": PackedFloat32Array(1, 1, 1, 1), "update": 0, "values": [2.8026786, 3.3, 1.05, 0.5942812]}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Skeleton2D/Hip/RForearm/RArm:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {"times": PackedFloat32Array(0, 0.08, 0.16, 0.24), "transitions": PackedFloat32Array(1, 1, 1, 1), "update": 0, "values": [0.30445346, 1.45, -0.1, -0.6731447]}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_x05ow"]
 _data = {
 &"RESET": SubResource("Animation_qce2h"),
-&"attack": SubResource("Animation_yvql6")
+&"attack": SubResource("Animation_yvql6"),
+&"attack_down": SubResource("Animation_attack_down_p2"),
+&"attack_ranged": SubResource("Animation_attack_ranged_p2"),
+&"attack_special": SubResource("Animation_attack_special_p2"),
+&"attack_up": SubResource("Animation_attack_up_p2")
 }
 
 [node name="Fighter2" unique_id=969771174 node_paths=PackedStringArray("skeleton_animation_player", "hitbox") instance=ExtResource("1_tmhyp")]
