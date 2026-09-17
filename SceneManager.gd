@@ -1,6 +1,6 @@
 extends Node
 
-enum FlowState { MENU, SELECTING, PLAYING, PAUSED, RESULTS, TRANSITIONING }
+enum FlowState { MENU, SELECTING, PLAYING, PAUSED, RESULTS, LEADERBOARD, TRANSITIONING }
 
 signal flow_state_changed(state: FlowState)
 
@@ -188,3 +188,24 @@ func _clear_injected_input() -> void:
 func _set_state(next_state: FlowState) -> void:
 	state = next_state
 	flow_state_changed.emit(state)
+
+func show_leaderboard() -> void:
+	push_error("SHOW_LEADERBOARD called, state=" + str(state) + " root_valid=" + str(is_instance_valid(_root)))
+	if state != FlowState.MENU or not is_instance_valid(_root):
+		return
+	_set_state(FlowState.TRANSITIONING)
+	_clear_injected_input()
+	_root.set_menu_spotlight(false)
+	await _root.transition_controller.slide_out(_root.main_menu)
+	await _root.leaderboard.show_board()
+	_set_state(FlowState.LEADERBOARD)
+
+func hide_leaderboard() -> void:
+	if state != FlowState.LEADERBOARD or not is_instance_valid(_root):
+		return
+	_set_state(FlowState.TRANSITIONING)
+	_clear_injected_input()
+	_root.leaderboard.hide_board()
+	await _root.transition_controller.slide_in(_root.main_menu)
+	_root.set_menu_spotlight(true)
+	_set_state(FlowState.MENU)

@@ -7,6 +7,7 @@ extends Menu3DBase
 @onready var quit_btn: MenuButton3D = $MenuContainer/QuitButton
 @onready var how_to_play_panel: HowToPlayPanel = $HowToPlayPanel
 @onready var settings_panel: SettingsPanel = $SettingsPanel
+@onready var leaderboard_btn: MenuButton3D = $MenuContainer/LeaderboardButton
 var max_tilt = deg_to_rad(2)
 
 func _ready() -> void:
@@ -51,3 +52,5 @@ func _on_button_activated(btn: Node3D) -> void:
 		_show_panel(how_to_play_panel)
 	elif btn == settings_btn:
 		_show_panel(settings_panel)
+	elif btn == leaderboard_btn:
+		SceneManager.show_leaderboard()

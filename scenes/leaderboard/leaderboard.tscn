@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://bdhoujee4et8x"]
+
+[ext_resource type="Script" uid="uid://brga3rjctqnk4" path="res://script/leaderboard/leaderboard.gd" id="1_1epml"]
+[ext_resource type="FontVariation" uid="uid://bnwclhvi4ernk" path="res://ui/font_button_bold.tres" id="2_x3ryb"]
+[ext_resource type="PackedScene" path="res://ui/menu_button_3d.tscn" id="3_frobq"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_xufgr"]
+size = Vector2(20, 12)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qk7a2"]
+render_priority = 7
+transparency = 1
+no_depth_test = true
+albedo_color = Color(0, 0, 0, 0.75)
+
+[node name="Leaderboard" type="Node3D" unique_id=583658214]
+script = ExtResource("1_1epml")
+metadata/_custom_type_script = "uid://c0hhw11h7kwqk"
+
+[node name="DarkOverlay" type="MeshInstance3D" parent="." unique_id=1458130614]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
+mesh = SubResource("QuadMesh_xufgr")
+surface_material_override/0 = SubResource("StandardMaterial3D_qk7a2")
+
+[node name="MenuContainer" type="Node3D" parent="." unique_id=252009470]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.15)
+
+[node name="TitleLabel" type="Label3D" parent="MenuContainer" unique_id=1122487685]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05, 0)
+pixel_size = 0.001
+billboard = 1
+no_depth_test = true
+render_priority = 10
+outline_modulate = Color(0.12, 0.05, 0, 1)
+text = "Leaderboard"
+font = ExtResource("2_x3ryb")
+font_size = 200
+outline_size = 18
+
+[node name="BackButton" parent="MenuContainer" unique_id=1588737034 instance=ExtResource("3_frobq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.35, 0)
+text = "Main Menu"
+hit_size = Vector3(1.7, 0.3, 0.12)
+
+[node name="EntriesContainer" type="Node3D" parent="MenuContainer" unique_id=43917465]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.805, 0)

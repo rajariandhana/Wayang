@@ -148,8 +148,10 @@ func _input(event: InputEvent) -> void:
 		return
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		if event.pressed:
-			get_viewport().set_input_as_handled()
-			_handle_press(event.position)
+			var result := _raycast(event.position)
+			if not result.is_empty() and _area_to_control.has(result.collider):
+				get_viewport().set_input_as_handled()
+				_handle_press(event.position)
 		else:
 			_dragging = null
 		return
