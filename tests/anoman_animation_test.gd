@@ -6,7 +6,8 @@ func _ready() -> void:
 	_run.call_deferred()
 
 func _run() -> void:
-	var expected_damage := [7, 10, 12, 17, 12] if character_id == &"dasamuka" else [5, 6, 8, 11, 8]
+	var expected_damage: Array = {&"anoman": [5, 6, 8, 11, 8], &"dasamuka": [7, 10, 12, 17, 12],
+		&"sura": [5, 7, 9, 13, 9], &"baya": [8, 10, 13, 18, 13]}[character_id]
 	var keys := ["neutral", "up", "down", "melee_special", "ranged_special"]
 	for side in [1, 2]:
 		var fighter := load("res://fighter/fighter_%d.tscn" % side).instantiate() as Fighter
@@ -18,15 +19,19 @@ func _run() -> void:
 		fighter.set_physics_process(false)
 		fighter.facing = 1.0 if side == 1 else -1.0
 		fighter.configure_character(character_id)
+		if character_id in [&"sura", &"baya"]:
+			var body := fighter.sprites.get_node("Body")
+			for limb_name in ["LForearm", "LArm", "RForearm", "RArm"]:
+				assert(fighter.sprites.get_node(limb_name).get_index() > body.get_index(), "Both arms must draw over the body")
 		var animator = fighter._move_animator(fighter.character_definition["moves"]["neutral"])
 		for i in keys.size():
 			var move: Dictionary = fighter.character_definition["moves"][keys[i]]
-			assert(move["damage"] == expected_damage[i], "Damage changed")
+			assert(move["damage"] == expected_damage[i], "Damage changed: %s %d" % [keys[i], move["damage"]])
 			fighter._start_attack(move)
 			assert(not fighter.hitbox.is_attacking, "Startup must not deal damage")
 			await get_tree().create_timer(float(move["startup"]) + 0.025).timeout
 			assert(fighter.hitbox.is_attacking, "Active window missing")
-			assert(fighter.skeleton_animation_player.current_animation.begins_with(String(character_id) + "/"))
+			assert(fighter.skeleton_animation_player.current_animation.begins_with(String(character_id) + "/"), "Character must use its own animation library")
 			await get_tree().create_timer(float(move["active"]) + float(move["recovery"]) + 0.08).timeout
 			assert(not fighter.hitbox.is_attacking)
 			assert(fighter.combat_state == Fighter.CombatState.READY)

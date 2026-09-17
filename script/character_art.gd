@@ -19,11 +19,13 @@ const ART_DIR := "res://asset/characters/"
 const PLACEHOLDER_RIG := {
 	&"anoman": "res://fighter/fighter_1.tscn",
 	&"arjuna": "res://fighter/fighter_1.tscn",
+	# Sura and Baya wear their own art on the rig (CharacterSkin), mirrored to
+	# the rig's facing - the right-facing rig makes both face into the screen.
 	&"sura": "res://fighter/fighter_1.tscn",
+	&"baya": "res://fighter/fighter_1.tscn",
 	&"dasamuka": "res://fighter/fighter_2.tscn",
 	&"bima": "res://fighter/fighter_2.tscn",
 	&"gatotkaca": "res://fighter/fighter_2.tscn",
-	&"baya": "res://fighter/fighter_2.tscn",
 }
 const DEFAULT_RIG := "res://fighter/fighter_1.tscn"
 

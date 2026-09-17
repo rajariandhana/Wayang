@@ -131,6 +131,7 @@ func change_characters() -> void:
 	_root.music_controller.crossfade_to_menu()
 	_root.set_stage_lighting(_root.menu_light_level, 0.2)
 	_root.transition_controller.set_curtain_closed(true)
+	get_tree().paused = false
 	_root.show_character_select()
 	_set_state(FlowState.SELECTING)
 

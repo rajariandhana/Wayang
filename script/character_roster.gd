@@ -4,6 +4,16 @@ extends RefCounted
 ## Combat data is deliberately kept separate from the puppet scene.  The same
 ## definition can be used by either player and later by finished character art.
 const IDS := [&"anoman", &"dasamuka", &"bima", &"arjuna", &"gatotkaca", &"sura", &"baya"]
+const COMING_SOON := [&"bima", &"arjuna", &"gatotkaca"]
+
+static func is_playable(id: StringName) -> bool:
+	return IDS.has(id) and not COMING_SOON.has(id)
+
+static func playable_ids() -> Array[StringName]:
+	var ids: Array[StringName] = []
+	for id in IDS:
+		if is_playable(id): ids.append(id)
+	return ids
 
 static func all() -> Array[Dictionary]:
 	var definitions: Array[Dictionary] = []
@@ -45,6 +55,21 @@ static func definition(id: StringName) -> Dictionary:
 		dasamuka_moves[key]["presentation"] = key
 		dasamuka_moves[key]["animation_style"] = "dasamuka"
 		dasamuka_moves[key]["startup"] = heavy_startups[key]
+	var aquatic_startups := {
+		&"sura": {"neutral": 0.12, "up": 0.15, "down": 0.17, "melee_special": 0.19, "ranged_special": 0.23},
+		&"baya": {"neutral": 0.20, "up": 0.24, "down": 0.26, "melee_special": 0.30, "ranged_special": 0.34},
+	}
+	for aquatic_id in aquatic_startups:
+		for key in roster[aquatic_id]["moves"]:
+			roster[aquatic_id]["moves"][key]["presentation"] = key
+			roster[aquatic_id]["moves"][key]["animation_style"] = String(aquatic_id)
+			roster[aquatic_id]["moves"][key]["startup"] = aquatic_startups[aquatic_id][key]
+	roster[&"sura"]["moves"]["neutral"]["name"] = "Fin Slice"
+	roster[&"sura"]["moves"]["up"]["name"] = "Crest Cutter"
+	roster[&"sura"]["moves"]["down"]["name"] = "Undertow Sweep"
+	roster[&"baya"]["moves"]["neutral"]["name"] = "Snapping Strike"
+	roster[&"baya"]["moves"]["up"]["name"] = "Rising Jaw"
+	roster[&"baya"]["moves"]["down"]["name"] = "Riverbed Rake"
 	return roster.get(id, roster[&"anoman"]).duplicate(true)
 
 static func _fighter(display_name: String, style: String, tint: Color, speed: float, power: float,

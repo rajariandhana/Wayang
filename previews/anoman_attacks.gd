@@ -64,7 +64,8 @@ func _ready() -> void:
 			await get_tree().create_timer(0.14).timeout
 			await RenderingServer.frame_post_draw
 			get_viewport().get_texture().get_image().save_png("/tmp/dasamuka-windup.png")
-		await get_tree().create_timer(0.24 if character_id == &"dasamuka" else 0.25).timeout
+		var contact_time := 0.36 if character_id == &"baya" else 0.24 if character_id == &"dasamuka" else 0.25
+		await get_tree().create_timer(contact_time).timeout
 		await RenderingServer.frame_post_draw
 		get_viewport().get_texture().get_image().save_png("/tmp/" + String(character_id) + "-attacks.png")
 		if character_id == &"dasamuka":

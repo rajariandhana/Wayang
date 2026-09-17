@@ -34,7 +34,7 @@ func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	combat_viewport.render_target_update_mode = SubViewport.UPDATE_DISABLED
 	hud.visible = false
-	combat_debug.visible = false
+	combat_debug.set_match_active(false)
 	main_menu.visible = true
 	main_menu.set_menu_active(true)
 	pause_menu.set_menu_active(false)
@@ -47,6 +47,8 @@ func _ready() -> void:
 	SceneManager.register_root(self)
 
 func create_match(p1 := selected_p1, p2 := selected_p2) -> bool:
+	if not CharacterRoster.is_playable(p1) or not CharacterRoster.is_playable(p2):
+		return false
 	dispose_match()
 	selected_p1 = p1
 	selected_p2 = p2
@@ -84,14 +86,14 @@ func dispose_match() -> void:
 			combat_viewport.remove_child(child)
 			child.queue_free()
 	hud.visible = false
-	combat_debug.visible = false
+	combat_debug.set_match_active(false)
 	combat_viewport.render_target_update_mode = SubViewport.UPDATE_DISABLED
 
 func enable_match() -> void:
 	if arena:
 		arena.process_mode = Node.PROCESS_MODE_PAUSABLE
 	combat_viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
-	combat_debug.visible = true
+	combat_debug.set_match_active(true)
 
 func set_stage_lighting(level: float, duration := 0.35) -> void:
 	if _lighting_tween and _lighting_tween.is_valid():

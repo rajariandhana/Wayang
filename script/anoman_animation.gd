@@ -43,13 +43,19 @@ func _init(animation_player: AnimationPlayer, hand: Node2D) -> void:
 	direction = 1.0 if upper.position.x > 0.0 else -1.0
 	for joint in joints:
 		rest.append(joint.rotation)
+	# Rebuilt when a character skin changes the joint rest pose.
+	if player.has_animation_library(_library_name()):
+		player.stop(true)
+		player.remove_animation_library(_library_name())
 	player.add_animation_library(_library_name(), library)
 
 func _library_name() -> StringName:
 	return &"anoman"
 
 func restore() -> void:
-	player.stop()
+	# Keep the current values until the explicit rest pose below is applied.
+	# A skin change may have replaced the library of the previously assigned clip.
+	player.stop(true)
 	player.speed_scale = 1.0
 	for i in joints.size():
 		joints[i].rotation = rest[i]

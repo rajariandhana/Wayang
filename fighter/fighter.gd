@@ -109,26 +109,39 @@ var _last_direction := "N"
 var _weapon_prop: WeaponProp
 const ANOMAN_ANIMATION = preload("res://script/anoman_animation.gd")
 const DASAMUKA_ANIMATION = preload("res://script/dasamuka_animation.gd")
+const SURA_ANIMATION = preload("res://script/sura_animation.gd")
+const BAYA_ANIMATION = preload("res://script/baya_animation.gd")
 var _anoman_animation: RefCounted
 var _dasamuka_animation: RefCounted
+var _sura_animation: RefCounted
+var _baya_animation: RefCounted
+var character_id: StringName = &"anoman"
+var _skin: CharacterSkin
 @onready var _rig_lean_distance := max_lean_distance
 
 func _move_animator(move: Dictionary) -> RefCounted:
 	if not move.has("presentation"):
 		return null
-	return _dasamuka_animation if move.get("animation_style", "anoman") == "dasamuka" else _anoman_animation
+	match move.get("animation_style", "anoman"):
+		"dasamuka": return _dasamuka_animation
+		"sura": return _sura_animation
+		"baya": return _baya_animation
+	return _anoman_animation
 
 func _restore_attack_pose() -> void:
 	if _attack_offset_tween and _attack_offset_tween.is_valid():
 		_attack_offset_tween.kill()
 	if _anoman_animation:
 		_anoman_animation.restore()
-	if skeleton_animation_player:
+	# RESET holds the original rig's joint angles; a skinned rig's rest pose is
+	# restored by the animator above instead.
+	if skeleton_animation_player and not (_skin and _skin.active):
 		skeleton_animation_player.speed_scale = 1.0
 		skeleton_animation_player.play("RESET")
 		skeleton_animation_player.advance(0.0)
 
 func configure_character(id: StringName) -> void:
+	character_id = id
 	character_definition = CharacterRoster.definition(id)
 	character_name = character_definition["name"]
 	damage = int(round(10.0 * float(character_definition["power"])))
@@ -137,9 +150,26 @@ func configure_character(id: StringName) -> void:
 		# The new poses extend fully. The second rig's old 780px lean
 		# compensated for its shorter swing and overshoots with these timelines.
 		max_lean_distance = 550.0 if character_definition["name"] in ["Anoman", "Dasamuka"] else _rig_lean_distance
-		sprites.modulate = character_definition["tint"]
+		_restore_attack_pose()
+		_apply_skin()
 		_configure_weapon_prop()
 		reset()
+
+## Real puppet art for characters that have it (see CharacterSkin), otherwise
+## this rig's own art tinted in the roster colour. Pose animators capture the
+## joint rest angles, so they are rebuilt whenever the skin changes.
+func _apply_skin() -> void:
+	if _skin:
+		_skin.apply(character_id)
+	var skinned := _skin != null and _skin.active
+	if skinned:
+		max_lean_distance = 550.0
+	sprites.modulate = Color.WHITE if skinned else character_definition["tint"]
+	if skeleton_animation_player and hitbox:
+		_anoman_animation = ANOMAN_ANIMATION.new(skeleton_animation_player, hitbox.get_parent())
+		_dasamuka_animation = DASAMUKA_ANIMATION.new(skeleton_animation_player, hitbox.get_parent())
+		_sura_animation = SURA_ANIMATION.new(skeleton_animation_player, hitbox.get_parent())
+		_baya_animation = BAYA_ANIMATION.new(skeleton_animation_player, hitbox.get_parent())
 
 func reset() -> void:
 	_restore_attack_pose()
@@ -164,10 +194,9 @@ func reset() -> void:
 func _ready():
 	if character_definition["name"] in ["Anoman", "Dasamuka"]:
 		max_lean_distance = 550.0
-	if skeleton_animation_player and hitbox:
-		_anoman_animation = ANOMAN_ANIMATION.new(skeleton_animation_player, hitbox.get_parent())
-		_dasamuka_animation = DASAMUKA_ANIMATION.new(skeleton_animation_player, hitbox.get_parent())
-	sprites.modulate = character_definition["tint"]
+	if hitbox:
+		_skin = CharacterSkin.new(self)
+	_apply_skin()
 	_configure_weapon_prop()
 	reset()
 	dodged.connect(_on_dodged)

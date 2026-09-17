@@ -48,6 +48,7 @@ var _cursors: Array[SelectCursor] = []
 var _stage_display: Array[CharacterDisplay] = []
 var _stage_tag: Array[Label] = []
 var _stage_name: Array[Label] = []
+var _availability_labels: Array[Label] = []
 var _stage_speed: Array[StatPips] = []
 var _stage_power: Array[StatPips] = []
 var _move_melee: Array[MoveGlyphs] = []
@@ -194,6 +195,10 @@ func _build_player_panel(p: int) -> void:
 
 	var name_label := _label(DISPLAY_FONT, SelectPalette.TEXT)
 	_stage_name.append(name_label)
+	var availability := _label(ThemeDB.fallback_font, SelectPalette.TEXT_MUTED)
+	availability.text = "COMING SOON"
+	availability.visible = false
+	_availability_labels.append(availability)
 
 	for icon in [StatPips.Icon.SPEED, StatPips.Icon.POWER]:
 		var pips := StatPips.new()
@@ -366,6 +371,11 @@ func _layout() -> void:
 			label.size = Vector2(column.size.x, 0)
 		tag.position.y = top
 		name_label.position.y = top + 22 * u
+		var availability := _availability_labels[p]
+		availability.horizontal_alignment = align
+		availability.position = Vector2(column.position.x, top + 142 * u)
+		availability.size = Vector2(column.size.x, 0)
+		availability.add_theme_font_size_override("font_size", int(28 * u))
 
 		var pips_list := [_stage_speed[p], _stage_power[p]]
 		for i in 2:
@@ -450,7 +460,7 @@ func _process_countdown(delta: float) -> void:
 	if _time_left <= 0.0:
 		for p in 2:
 			if not _locked[p]:
-				_lock_player(p)
+				_lock_player(p, true)
 
 func _process_input(delta: float) -> void:
 	if not SceneManager.is_character_select_input_enabled():
@@ -495,10 +505,18 @@ func _toggle_lock(p: int) -> void:
 		return
 	_lock_player(p)
 
-func _lock_player(p: int) -> void:
+func _lock_player(p: int, from_countdown := false) -> void:
+	if _locked[p] or _phase != Phase.SELECTING:
+		return
 	var idx := _cursor[p]
-	var id: StringName = _ids[randi() % _ids.size()] if idx == RANDOM_INDEX else _ids[idx]
-	if idx == RANDOM_INDEX:
+	var id: StringName = &"" if idx == RANDOM_INDEX else _ids[idx]
+	if idx != RANDOM_INDEX and not CharacterRoster.is_playable(id) and not from_countdown:
+		return
+	if idx == RANDOM_INDEX or not CharacterRoster.is_playable(id):
+		var playable := CharacterRoster.playable_ids()
+		id = playable[randi() % playable.size()]
+		if idx != RANDOM_INDEX:
+			_cursor[p] = _ids.find(id)
 		_show_character(p, id)
 	_resolved[p] = id
 	_locked[p] = true
@@ -511,6 +529,7 @@ func _lock_player(p: int) -> void:
 func _refresh_stage(p: int) -> void:
 	var idx := _cursor[p]
 	if idx == RANDOM_INDEX:
+		_availability_labels[p].visible = false
 		_stage_display[p].clear()
 		_stage_name[p].text = "?"
 		_stage_speed[p].value = 0
@@ -524,6 +543,10 @@ func _refresh_stage(p: int) -> void:
 
 func _show_character(p: int, id: StringName) -> void:
 	_stage_display[p].set_character(id)
+	var playable := CharacterRoster.is_playable(id)
+	_availability_labels[p].visible = not playable
+	for item in [_stage_speed[p], _stage_power[p], _move_melee[p], _move_ranged[p]]:
+		item.visible = playable
 	var data := CharacterRoster.definition(id)
 	_stage_name[p].text = String(data.name).to_upper()
 	_stage_speed[p].value = clampi(roundi(remap(float(data.speed), 0.75, 1.25, 1.0, 5.0)), 1, 5)

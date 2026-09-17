@@ -37,6 +37,7 @@ func _process(delta: float) -> void:
 		_puppet_mount.rotation = sin(_bob_phase * 0.6) * 0.012
 
 func set_character(id: StringName) -> void:
+	modulate = Color.WHITE if CharacterRoster.is_playable(id) else Color.BLACK
 	var art := CharacterArt.select_render(id)
 	if art:
 		_show_art(art)

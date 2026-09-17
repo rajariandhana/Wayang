@@ -1,4 +1,5 @@
 extends Node
+signal combo_guide_changed
 ## Player preferences (Master volume, fullscreen). Registered as an autoload
 ## so a preference applies at boot, not only after visiting Settings, and
 ## persists across launches via user://settings.cfg.
@@ -9,6 +10,13 @@ const SILENT_DB := -80.0
 
 var master_volume_percent: int = DEFAULT_VOLUME
 var fullscreen: bool = false
+var combo_guide_enabled := false
+
+func set_combo_guide(enabled: bool) -> void:
+	if combo_guide_enabled == enabled: return
+	combo_guide_enabled = enabled
+	_save()
+	combo_guide_changed.emit()
 
 func _ready() -> void:
 	_load()
@@ -37,9 +45,11 @@ func _load() -> void:
 		return
 	master_volume_percent = clampi(int(cfg.get_value("audio", "master_volume_percent", DEFAULT_VOLUME)), 0, 100)
 	fullscreen = bool(cfg.get_value("display", "fullscreen", false))
+	combo_guide_enabled = bool(cfg.get_value("gameplay", "combo_guide_enabled", false))
 
 func _save() -> void:
 	var cfg := ConfigFile.new()
 	cfg.set_value("audio", "master_volume_percent", master_volume_percent)
 	cfg.set_value("display", "fullscreen", fullscreen)
+	cfg.set_value("gameplay", "combo_guide_enabled", combo_guide_enabled)
 	cfg.save(SAVE_PATH)

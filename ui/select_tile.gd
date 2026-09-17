@@ -10,6 +10,9 @@ const DISPLAY_FONT := preload("res://asset/Mageelang.otf")
 @export var is_random := false
 
 var _mark: Label
+var _coming_soon: Label
+var _portrait: TextureRect
+var unavailable := false
 
 func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -25,6 +28,8 @@ func _ready() -> void:
 		add_child(_mark)
 	else:
 		var image := TextureRect.new()
+		_portrait = image
+		unavailable = not CharacterRoster.is_playable(character_id)
 		image.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		image.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
 		image.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -37,6 +42,23 @@ func _ready() -> void:
 			image.texture = CharacterArt.placeholder_portrait(character_id)
 			image.modulate = Color.WHITE.lerp(CharacterRoster.definition(character_id).tint, 0.55)
 		add_child(image)
+		if unavailable:
+			image.modulate = Color.BLACK
+			var band := ColorRect.new()
+			band.color = Color(SelectPalette.INK, 0.92)
+			band.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			band.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+			band.anchor_top = 0.65
+			add_child(band)
+			_coming_soon = Label.new()
+			_coming_soon.text = String(CharacterRoster.definition(character_id).name).to_upper() + "\nCOMING SOON"
+			_coming_soon.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+			_coming_soon.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+			_coming_soon.add_theme_color_override("font_color", SelectPalette.TEXT)
+			_coming_soon.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			_coming_soon.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+			_coming_soon.anchor_top = 0.65
+			add_child(_coming_soon)
 	var frame := ReferenceRect.new()
 	frame.editor_only = false
 	frame.border_color = SelectPalette.LINE
@@ -47,8 +69,10 @@ func _ready() -> void:
 	resized.connect(_on_resized)
 
 func _draw() -> void:
-	draw_rect(Rect2(Vector2.ZERO, size), SelectPalette.TILE)
+	draw_rect(Rect2(Vector2.ZERO, size), Color("675c50") if unavailable else SelectPalette.TILE)
 
 func _on_resized() -> void:
+	if _coming_soon:
+		_coming_soon.add_theme_font_size_override("font_size", maxi(10, int(size.y * 0.105)))
 	if _mark:
 		_mark.add_theme_font_size_override("font_size", int(size.y * 0.6))

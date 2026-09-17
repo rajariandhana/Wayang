@@ -37,11 +37,25 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.12, 0)
 track_width = 1.6
 
 [node name="FullscreenButton" parent="." instance=ExtResource("2_btn")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.28, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.22, 0)
 text = "Fullscreen: Off"
 hit_size = Vector3(2.0, 0.32, 0.12)
 
+[node name="ComboGuideButton" parent="." instance=ExtResource("2_btn")]
+position = Vector3(0, -0.62, 0)
+text = "Combo guide: Off"
+hit_size = Vector3(2.5, 0.3, 0.12)
+
+[node name="ComboGuideHint" type="Label3D" parent="."]
+position = Vector3(0, -0.85, 0)
+pixel_size = 0.001
+billboard = 1
+render_priority = 10
+no_depth_test = true
+font_size = 44
+text = "Show inputs and special-move commands during matches"
+
 [node name="BackButton" parent="." instance=ExtResource("2_btn")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.78, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.1, 0)
 text = "Back"
 hit_size = Vector3(1.1, 0.32, 0.12)
