@@ -19,7 +19,7 @@ func _run() -> void:
 		fighter.set_physics_process(false)
 		fighter.facing = 1.0 if side == 1 else -1.0
 		fighter.configure_character(character_id)
-		if character_id in [&"sura", &"baya"]:
+		if CharacterSkin.has_skin(character_id):
 			var body := fighter.sprites.get_node("Body")
 			for limb_name in ["LForearm", "LArm", "RForearm", "RArm"]:
 				assert(fighter.sprites.get_node(limb_name).get_index() > body.get_index(), "Both arms must draw over the body")
@@ -76,18 +76,24 @@ func _run() -> void:
 		await get_tree().create_timer(0.8).timeout
 		assert(fighter.combat_state == Fighter.CombatState.READY)
 		assert(not fighter.hitbox.is_attacking)
-		# Characters with their own art strike with the whole forearm and carry a
-		# hurtbox sized off that art; plain rigs keep the rig's own fist and rect.
+		# A skin only resizes the hit/hurt shapes when it says so. Sura and Baya
+		# do: their arms are long enough that a fist-sized hitbox let a forearm
+		# sweep straight through. Anoman and Dasamuka are transcriptions of the
+		# rigs as authored, so they deliberately keep the rig's own fist and
+		# rect and leave the combat they shipped with untouched.
 		var hit_shape: CollisionShape2D = fighter.hitbox._shape
 		var hurt_shape: CollisionShape2D = fighter.get_node(^"Node2D/Hurtbox/CollisionShape2D")
-		if CharacterSkin.has_skin(character_id):
-			var skin: Dictionary = CharacterSkin.SKINS[character_id]
+		var skin: Dictionary = CharacterSkin.SKINS.get(character_id, {})
+		if skin.has("hit_radius"):
 			assert(hit_shape.shape is CapsuleShape2D, "Skinned fighters strike with the forearm")
 			assert(is_equal_approx((hit_shape.shape as CapsuleShape2D).height,
 				skin["hand"].length() + float(skin["hit_radius"]) * 2.0), "Forearm hitbox length")
+		else:
+			assert(hit_shape.shape is CircleShape2D, "Rigs keep their fist hitbox unless the skin resizes it")
+		if skin.has("hurtbox_size"):
 			assert((hurt_shape.shape as RectangleShape2D).size == skin["hurtbox_size"], "Hurtbox not sized to the art")
 		else:
-			assert(hit_shape.shape is CircleShape2D, "Plain rigs keep their fist hitbox")
+			assert((hurt_shape.shape as RectangleShape2D).size == Vector2(159, 488), "Rig hurtbox should be left alone")
 		fighter.configure_character(&"bima")
 		assert(fighter.hitbox._shape.shape is CircleShape2D, "Switching away must restore the rig hitbox")
 		assert((fighter.get_node(^"Node2D/Hurtbox/CollisionShape2D").shape as RectangleShape2D).size == Vector2(159, 488),

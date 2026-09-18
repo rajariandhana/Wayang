@@ -18,7 +18,18 @@ asset/characters/<id>/select.png
 - **`select.png`** - the big side render shown when that character is
   hovered/locked. Recommended 1024x1600, transparent PNG, full body, feet at
   the bottom of the canvas (the display anchors the puppet by its feet, not
-  its center). Drawn facing right - P2's side mirrors it automatically.
+  its center).
+
+## Facing
+
+**Draw everything facing right.** That goes for these two files and for the
+puppet art in `asset/Wayang<Name>/` as well - there is one facing in the
+project and it is right. Nothing is ever authored facing left.
+
+Player 1 uses the art as drawn. Player 2 is mirrored to face left for you,
+both on the select screen and in the arena, so a character works on either
+side without a second set of files. The grid tiles are shared between the two
+players, so those stay right-facing.
 
 Both files are optional and independent: a character can have a portrait
 without a select render, or vice versa. Whatever is missing falls back to a

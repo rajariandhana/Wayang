@@ -8,7 +8,9 @@ extends Node2D
 ## files in asset/characters/<id>/ - this re-checks on every set_character().
 
 @export var target_height := 900.0
-@export var mirrored := false ## P2 side faces the opposite way.
+## P2's side. Art is authored facing right, so this is the side that gets
+## mirrored to face left - into the screen, at player 1.
+@export var mirrored := false
 
 var _art_sprite: Sprite2D
 var _puppet_mount: Node2D
@@ -72,7 +74,13 @@ func _fit_art() -> void:
 	var s: float = maxf(target_height, 40.0) / maxf(texture.get_height(), 1.0)
 	_art_sprite.offset = Vector2(0, -texture.get_height() * 0.5)
 	_art_sprite.scale = Vector2(s, s)
+	# select.png is drawn facing right, like every other character asset.
 	_art_sprite.flip_h = mirrored
+
+## +1 for the player-1 side, -1 for player 2: the way this display's character
+## has to end up pointing, whatever art or rig is behind it.
+func _side_facing() -> float:
+	return -1.0 if mirrored else 1.0
 
 func _show_puppet(id: StringName) -> void:
 	_art_sprite.visible = false
@@ -100,7 +108,11 @@ func _fit_puppet() -> void:
 	if bounds.size.y <= 1.0:
 		return
 	var s: float = maxf(target_height, 40.0) / bounds.size.y
-	var sx := -s if mirrored else s
+	# The stand-in rig is picked per character, not per side, and the two rigs
+	# do not draw the same way round (fighter_2 faces left). Flip only when the
+	# rig disagrees with the side it is standing on, so P1 always faces right
+	# and P2 always faces left whichever rig is underneath.
+	var sx := s if CharacterArt.rig_facing(_puppet_rig_path) == _side_facing() else -s
 	_puppet_mount.scale = Vector2(sx, s)
 	_mount_base = Vector2(-(bounds.position.x + bounds.size.x * 0.5) * sx, -bounds.end.y * s)
 	_puppet_mount.position = _mount_base

@@ -19,8 +19,9 @@ const ART_DIR := "res://asset/characters/"
 const PLACEHOLDER_RIG := {
 	&"anoman": "res://fighter/fighter_1.tscn",
 	&"arjuna": "res://fighter/fighter_1.tscn",
-	# Sura and Baya wear their own art on the rig (CharacterSkin), mirrored to
-	# the rig's facing - the right-facing rig makes both face into the screen.
+	# Sura and Baya wear their own art on the rig (CharacterSkin), which mirrors
+	# the skin to whichever rig it lands on. See RIG_FACING for how the preview
+	# then turns that rig to face the player side it is standing on.
 	&"sura": "res://fighter/fighter_1.tscn",
 	&"baya": "res://fighter/fighter_1.tscn",
 	&"dasamuka": "res://fighter/fighter_2.tscn",
@@ -29,10 +30,20 @@ const PLACEHOLDER_RIG := {
 }
 const DEFAULT_RIG := "res://fighter/fighter_1.tscn"
 
+## Which way each rig renders before anything mirrors it. All puppet art in
+## asset/ is drawn facing right; fighter_2 is the left-facing rig and mirrors
+## whatever it wears. A preview has to know this, because the stand-in rig is
+## picked per character and is not always the one matching the player's side.
+const RIG_FACING := {
+	"res://fighter/fighter_1.tscn": 1.0,
+	"res://fighter/fighter_2.tscn": -1.0,
+}
+
 ## Head-and-shoulders crop of each rig's body sprite, in texture pixels.
+## Both crops are in the right-facing source art, so grid tiles all face right.
 const PLACEHOLDER_PORTRAIT := {
 	"res://fighter/fighter_1.tscn": ["res://asset/WayangPlayer/body.png", Rect2(250, 50, 380, 380)],
-	"res://fighter/fighter_2.tscn": ["res://asset/WayangDasamuka/body.png", Rect2(50, 130, 370, 370)],
+	"res://fighter/fighter_2.tscn": ["res://asset/WayangDasamuka/body.png", Rect2(270, 130, 370, 370)],
 }
 
 static func portrait(id: StringName) -> Texture2D:
@@ -50,6 +61,10 @@ static func has_select_render(id: StringName) -> bool:
 static func placeholder_rig(id: StringName) -> PackedScene:
 	var path: String = PLACEHOLDER_RIG.get(id, DEFAULT_RIG)
 	return load(path)
+
+## Which way the scene at `rig_path` draws itself, +1 right / -1 left.
+static func rig_facing(rig_path: String) -> float:
+	return RIG_FACING.get(rig_path, 1.0)
 
 static func placeholder_portrait(id: StringName) -> Texture2D:
 	var rig: String = PLACEHOLDER_RIG.get(id, DEFAULT_RIG)
