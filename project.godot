@@ -14,10 +14,11 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 
 [application]
 
-config/name="Wayang"
+config/name="Ashes of Alengka"
 run/main_scene="res://game_root.tscn"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 boot_splash/bg_color=Color(0.0627451, 0, 0.02745098, 1)
+boot_splash/image="uid://dt0l0oneae1ga"
 config/icon="uid://cisx8c31lhnrr"
 config/macos_native_icon="uid://cisx8c31lhnrr"
 config/windows_native_icon="uid://cisx8c31lhnrr"
