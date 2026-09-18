@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://djsr7xpa8orcu"
 path.s3tc="res://.godot/imported/forearm.png-7914a315cd353763123828cf21e66f14.s3tc.ctex"
+path.etc2="res://.godot/imported/forearm.png-7914a315cd353763123828cf21e66f14.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://asset/WayangDasamuka/forearm.png"
-dest_files=["res://.godot/imported/forearm.png-7914a315cd353763123828cf21e66f14.s3tc.ctex"]
+dest_files=["res://.godot/imported/forearm.png-7914a315cd353763123828cf21e66f14.s3tc.ctex", "res://.godot/imported/forearm.png-7914a315cd353763123828cf21e66f14.etc2.ctex"]
 
 [params]
 

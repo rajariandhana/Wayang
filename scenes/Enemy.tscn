@@ -66,7 +66,6 @@ position = Vector2(2, 0)
 rotation = -3.1415925
 scale = Vector2(1, -1)
 texture = ExtResource("3_1vja8")
-flip_h = true
 
 [node name="LForearm" parent="Sprites" parent_id_path=PackedInt32Array(1314545203) index="1" unique_id=1532845350]
 position = Vector2(175.00002, -144.99997)
@@ -74,7 +73,6 @@ rotation = 2.8548408
 scale = Vector2(0.99999994, -0.99999994)
 texture = ExtResource("4_5wwv6")
 offset = Vector2(-13.559784, 92.41727)
-flip_h = true
 
 [node name="LArm" parent="Sprites" parent_id_path=PackedInt32Array(1314545203) index="2" unique_id=1067402680]
 position = Vector2(233.25092, 51.61345)
@@ -82,7 +80,6 @@ rotation = -3.0138195
 scale = Vector2(0.99999905, -0.99999905)
 texture = ExtResource("5_1vja8")
 offset = Vector2(33.34838, 134.36836)
-flip_h = true
 
 [node name="RForearm" parent="Sprites" parent_id_path=PackedInt32Array(1314545203) index="3" unique_id=1112488534]
 position = Vector2(-148.99997, -185.00002)
@@ -90,6 +87,7 @@ rotation = -2.7252584
 scale = Vector2(0.9999999, -0.9999999)
 texture = ExtResource("4_5wwv6")
 offset = Vector2(14.334473, 92.0957)
+flip_h = true
 
 [node name="RArm" parent="Sprites" parent_id_path=PackedInt32Array(1314545203) index="4" unique_id=1031928253]
 position = Vector2(-227.20313, -0.0019989014)
@@ -97,7 +95,6 @@ rotation = -3.116641
 scale = Vector2(0.9999989, -0.9999989)
 texture = ExtResource("5_1vja8")
 offset = Vector2(33.298782, 135.14066)
-flip_h = true
 
 [node name="CollisionShape2D" parent="Area2D" parent_id_path=PackedInt32Array(553513446) index="0" unique_id=504424180]
 position = Vector2(6, 54)

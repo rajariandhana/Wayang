@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://previews/anoman_attacks.gd" id="1"]
+
+[node name="SuraAttacks" type="Node2D"]
+script = ExtResource("1")
+character_id = &"sura"
+subtitle = "Carving fin arcs • counter-moving arms • fast, elastic recoil"

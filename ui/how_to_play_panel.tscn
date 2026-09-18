@@ -1,0 +1,51 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://ui/how_to_play_panel.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://ui/menu_button_3d.tscn" id="2_btn"]
+[ext_resource type="Font" path="res://ui/font_button_bold.tres" id="3_bold_font"]
+
+[node name="HowToPlayPanel" type="Node3D"]
+script = ExtResource("1_script")
+visible = false
+
+[node name="Title" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.85, 0)
+pixel_size = 0.001
+billboard = 1
+render_priority = 10
+no_depth_test = true
+font = ExtResource("3_bold_font")
+font_size = 160
+outline_size = 14
+outline_modulate = Color(0.12, 0.05, 0, 1)
+text = "How to Play"
+
+[node name="ControlsLabel" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
+pixel_size = 0.0009
+billboard = 1
+render_priority = 10
+no_depth_test = true
+font_size = 107
+outline_size = 6
+outline_modulate = Color(0.12, 0.05, 0, 1)
+text = "P1:  WASD to move  ·  C to attack
+
+P2:  IJKL to move  ·  N to attack"
+
+[node name="WandLine" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0)
+pixel_size = 0.0009
+billboard = 1
+render_priority = 10
+no_depth_test = true
+visible = false
+font_size = 107
+outline_size = 6
+outline_modulate = Color(0.12, 0.05, 0, 1)
+text = "Wand:  tilt stick to move  ·  trigger to attack"
+
+[node name="BackButton" parent="." instance=ExtResource("2_btn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.85, 0)
+text = "Back"
+hit_size = Vector3(1.1, 0.32, 0.12)

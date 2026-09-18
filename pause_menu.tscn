@@ -1,146 +1,59 @@
 [gd_scene format=3 uid="uid://cn81flegsb8nj"]
 
-[ext_resource type="Script" uid="uid://c2vw0rbhwoc6j" path="res://pause_menu.gd" id="1_pause"]
-[ext_resource type="FontFile" uid="uid://bw4q8g1j6qnyq" path="res://asset/InstrumentSerif-Regular.ttf" id="2_pause"]
+[ext_resource type="Script" path="res://pause_menu.gd" id="1_pause"]
+[ext_resource type="PackedScene" path="res://ui/menu_button_3d.tscn" id="2_btn"]
+[ext_resource type="PackedScene" path="res://ui/how_to_play_panel.tscn" id="3_htp"]
+[ext_resource type="PackedScene" path="res://settings/settings_panel.tscn" id="4_settings"]
 
 [sub_resource type="QuadMesh" id="Mesh_overlay"]
 size = Vector2(20, 12)
 
 [sub_resource type="StandardMaterial3D" id="Mat_overlay"]
-render_priority = 1
+render_priority = 7
 transparency = 1
 no_depth_test = true
 albedo_color = Color(0, 0, 0, 0.75)
 
-[sub_resource type="BoxShape3D" id="Box_btn"]
-size = Vector3(1.3, 0.3, 0.15)
-
-[sub_resource type="BoxShape3D" id="Box_back"]
-size = Vector3(0.8, 0.3, 0.15)
-
-[node name="PauseMenu" type="Node3D" unique_id=1362954571]
+[node name="PauseMenu" type="Node3D"]
 process_mode = 3
 visible = false
 script = ExtResource("1_pause")
 
-[node name="DarkOverlay" type="MeshInstance3D" parent="." unique_id=1194300130]
+[node name="DarkOverlay" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
 mesh = SubResource("Mesh_overlay")
 surface_material_override/0 = SubResource("Mat_overlay")
 
-[node name="MenuContainer" type="Node3D" parent="." unique_id=1071995360]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.1)
+[node name="MenuContainer" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.15)
 
-[node name="ResumeButton" type="Node3D" parent="MenuContainer" unique_id=802062207]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.54, 0)
-
-[node name="Label3D" type="Label3D" parent="MenuContainer/ResumeButton" unique_id=1248580591]
-pixel_size = 0.001
-render_priority = 2
-outline_modulate = Color(0.12, 0.05, 0, 1)
+[node name="ResumeButton" parent="MenuContainer" instance=ExtResource("2_btn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.96, 0)
 text = "Resume"
-font = ExtResource("2_pause")
-font_size = 180
+hit_size = Vector3(1.7, 0.3, 0.12)
 
-[node name="Area3D" type="Area3D" parent="MenuContainer/ResumeButton" unique_id=1650202261]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.01, 0)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="MenuContainer/ResumeButton/Area3D" unique_id=1443889518]
-shape = SubResource("Box_btn")
-
-[node name="HowToPlayButton" type="Node3D" parent="MenuContainer" unique_id=660112935]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.18, 0)
-
-[node name="Label3D" type="Label3D" parent="MenuContainer/HowToPlayButton" unique_id=1540770406]
-pixel_size = 0.001
-render_priority = 2
-outline_modulate = Color(0.12, 0.05, 0, 1)
+[node name="HowToPlayButton" parent="MenuContainer" instance=ExtResource("2_btn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.48, 0)
 text = "How to Play"
-font = ExtResource("2_pause")
-font_size = 180
+hit_size = Vector3(1.7, 0.3, 0.12)
 
-[node name="Area3D" type="Area3D" parent="MenuContainer/HowToPlayButton" unique_id=1269328379]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.01, 0)
+[node name="SettingsButton" parent="MenuContainer" instance=ExtResource("2_btn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+text = "Settings"
+hit_size = Vector3(1.7, 0.3, 0.12)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="MenuContainer/HowToPlayButton/Area3D" unique_id=614207955]
-shape = SubResource("Box_btn")
-
-[node name="MainMenuButton" type="Node3D" parent="MenuContainer" unique_id=369982579]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.18, 0)
-
-[node name="Label3D" type="Label3D" parent="MenuContainer/MainMenuButton" unique_id=1444034010]
-pixel_size = 0.001
-render_priority = 2
-outline_modulate = Color(0.12, 0.05, 0, 1)
+[node name="MainMenuButton" parent="MenuContainer" instance=ExtResource("2_btn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.48, 0)
 text = "Main Menu"
-font = ExtResource("2_pause")
-font_size = 180
+hit_size = Vector3(1.7, 0.3, 0.12)
 
-[node name="Area3D" type="Area3D" parent="MenuContainer/MainMenuButton" unique_id=1930811100]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.01, 0)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="MenuContainer/MainMenuButton/Area3D" unique_id=87103026]
-shape = SubResource("Box_btn")
-
-[node name="QuitButton" type="Node3D" parent="MenuContainer" unique_id=1004906953]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.54, 0)
-
-[node name="Label3D" type="Label3D" parent="MenuContainer/QuitButton" unique_id=1985550611]
-pixel_size = 0.001
-render_priority = 2
-outline_modulate = Color(0.12, 0.05, 0, 1)
+[node name="QuitButton" parent="MenuContainer" instance=ExtResource("2_btn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.96, 0)
 text = "Quit"
-font = ExtResource("2_pause")
-font_size = 180
+hit_size = Vector3(1.7, 0.3, 0.12)
 
-[node name="Area3D" type="Area3D" parent="MenuContainer/QuitButton" unique_id=838179084]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.01, 0)
+[node name="HowToPlayPanel" parent="." instance=ExtResource("3_htp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.15)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="MenuContainer/QuitButton/Area3D" unique_id=1509870211]
-shape = SubResource("Box_btn")
-
-[node name="HowToPlayPanel" type="Node3D" parent="." unique_id=1634973557]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.1)
-visible = false
-
-[node name="Title" type="Label3D" parent="HowToPlayPanel" unique_id=1265148241]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.54, 0)
-pixel_size = 0.001
-billboard = 1
-render_priority = 2
-outline_modulate = Color(0.12, 0.05, 0, 1)
-text = "How to Play"
-font = ExtResource("2_pause")
-font_size = 180
-
-[node name="ControlsLabel" type="Label3D" parent="HowToPlayPanel" unique_id=1736281677]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0)
-pixel_size = 0.0008
-billboard = 1
-render_priority = 2
-outline_modulate = Color(0.12, 0.05, 0, 1)
-text = "P1:  A / D to move  ·  W to attack
-
-P2:  ← / → to move  ·  ↑ to attack"
-font = ExtResource("2_pause")
-font_size = 140
-outline_size = 8
-
-[node name="BackButton" type="Node3D" parent="HowToPlayPanel" unique_id=111350530]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.54, 0)
-
-[node name="Label3D" type="Label3D" parent="HowToPlayPanel/BackButton" unique_id=2097747973]
-pixel_size = 0.001
-render_priority = 2
-outline_modulate = Color(0.12, 0.05, 0, 1)
-text = "Back"
-font = ExtResource("2_pause")
-font_size = 180
-
-[node name="Area3D" type="Area3D" parent="HowToPlayPanel/BackButton" unique_id=1583041098]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.01, 0)
-collision_layer = 2
-collision_mask = 0
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="HowToPlayPanel/BackButton/Area3D" unique_id=242542582]
-shape = SubResource("Box_back")
+[node name="SettingsPanel" parent="." instance=ExtResource("4_settings")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.15)

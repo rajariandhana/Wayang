@@ -1,0 +1,9 @@
+[gd_resource type="LabelSettings" format=3 uid="uid://du8ta385kl7qk"]
+
+[ext_resource type="FontVariation" path="res://ui/font_button_bold.tres" id="1_font"]
+
+[resource]
+font = ExtResource("1_font")
+font_size = 600
+outline_size = 56
+outline_color = Color(0.12, 0.05, 0, 1)

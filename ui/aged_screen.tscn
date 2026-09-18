@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Shader" path="res://ui/aged_screen.gdshader" id="1_cloth"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cloth"]
+shader = ExtResource("1_cloth")
+
+[node name="AgedScreen" type="CanvasLayer"]
+process_mode = 3
+layer = 100
+
+[node name="Cloth" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_cloth")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2

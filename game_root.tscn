@@ -1,0 +1,98 @@
+[gd_scene format=3 uid="uid://d2yyy413fqhnq"]
+
+[ext_resource type="Script" uid="uid://de58o1noohnhm" path="res://game_root.gd" id="1_root"]
+[ext_resource type="PackedScene" uid="uid://b3t680nd1wbjx" path="res://arena/arena_backdrop.tscn" id="2_theatre"]
+[ext_resource type="PackedScene" uid="uid://cpms5hhjnxbhj" path="res://main_menu/main_menu.tscn" id="3_main"]
+[ext_resource type="PackedScene" uid="uid://cn81flegsb8nj" path="res://pause_menu.tscn" id="4_pause"]
+[ext_resource type="PackedScene" uid="uid://cqmjbft2j24j8" path="res://win_screen.tscn" id="5_win"]
+[ext_resource type="PackedScene" path="res://ui/hud.tscn" id="6_hud"]
+[ext_resource type="Script" uid="uid://dy2b6rds5lmvr" path="res://transition_controller.gd" id="7_transition"]
+[ext_resource type="Script" uid="uid://dnnkq20m7a8u5" path="res://curtain.gd" id="8_curtain"]
+[ext_resource type="Texture2D" uid="uid://crnsiqddx3qik" path="res://asset/cloth_texture.jpg" id="9_cloth"]
+[ext_resource type="PackedScene" uid="uid://bdhoujee4et8x" path="res://scenes/leaderboard/leaderboard.tscn" id="10_1uov0"]
+[ext_resource type="Script" uid="uid://bk7vd08qsjgxx" path="res://music_controller.gd" id="10_music"]
+[ext_resource type="AudioStream" uid="uid://c7c7dayak41b1" path="res://main_menu/intro_start.WAV" id="11_intro"]
+[ext_resource type="AudioStream" uid="uid://fee2p4gi27pv" path="res://main_menu/intro_loop.WAV" id="12_loop"]
+[ext_resource type="AudioStream" uid="uid://bud184lsb4d1e" path="res://arena/bgmusic.WAV" id="13_game"]
+[ext_resource type="Shader" uid="uid://b6bes1jdxtdmm" path="res://curtain.gdshader" id="14_curtain_shader"]
+[ext_resource type="Script" uid="uid://15pakhd5yy8n" path="res://menu_spotlight.gd" id="15_spotlight"]
+[ext_resource type="PackedScene" path="res://ui/character_select.tscn" id="16_select"]
+[ext_resource type="PackedScene" path="res://ui/combat_debug.tscn" id="17_debug"]
+
+[sub_resource type="QuadMesh" id="CurtainMesh"]
+size = Vector2(5.1, 10)
+
+[sub_resource type="ShaderMaterial" id="CurtainMaterial"]
+render_priority = 5
+shader = ExtResource("14_curtain_shader")
+shader_parameter/cloth_texture = ExtResource("9_cloth")
+shader_parameter/curtain_tint = Color(0.16, 0.032, 0.022, 1)
+shader_parameter/open_amount = 0.0
+
+[node name="GameRoot" type="Node3D" unique_id=1693522449]
+process_mode = 3
+script = ExtResource("1_root")
+
+[node name="MenuSpotlight" type="SpotLight3D" parent="." unique_id=140730578]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.95, 1.65)
+light_color = Color(1, 0.63, 0.3, 1)
+light_energy = 3.4
+light_indirect_energy = 0.0
+shadow_enabled = true
+distance_fade_enabled = true
+distance_fade_begin = 3.0
+distance_fade_shadow = 4.0
+spot_range = 4.0
+spot_angle = 54.0
+spot_angle_attenuation = 2.2
+script = ExtResource("15_spotlight")
+
+[node name="Theatre" type="Node3D" parent="." unique_id=2101676734]
+
+[node name="ArenaBackdrop" parent="Theatre" unique_id=2069276865 instance=ExtResource("2_theatre")]
+
+[node name="HUD" parent="." unique_id=1841191561 instance=ExtResource("6_hud")]
+
+[node name="CharacterSelect" parent="." unique_id=316993636 instance=ExtResource("16_select")]
+
+[node name="CombatDebug" parent="." unique_id=895663742 instance=ExtResource("17_debug")]
+
+[node name="Menus" type="Node3D" parent="." unique_id=722963077]
+
+[node name="MainMenu" parent="Menus" unique_id=2024732101 instance=ExtResource("3_main")]
+
+[node name="PauseMenu" parent="Menus" unique_id=1466539403 instance=ExtResource("4_pause")]
+
+[node name="WinScreen" parent="Menus" unique_id=1133647269 instance=ExtResource("5_win")]
+
+[node name="Leaderboard" parent="Menus" unique_id=583658214 instance=ExtResource("10_1uov0")]
+visible = false
+
+[node name="TransitionController" type="Node" parent="." unique_id=910963438]
+script = ExtResource("7_transition")
+
+[node name="Curtain" type="Node3D" parent="TransitionController" unique_id=779343421]
+script = ExtResource("8_curtain")
+
+[node name="Left" type="MeshInstance3D" parent="TransitionController/Curtain" unique_id=1255004453]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0, 0.45)
+mesh = SubResource("CurtainMesh")
+surface_material_override/0 = SubResource("CurtainMaterial")
+
+[node name="Right" type="MeshInstance3D" parent="TransitionController/Curtain" unique_id=1932618142]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0, 0.45)
+mesh = SubResource("CurtainMesh")
+surface_material_override/0 = SubResource("CurtainMaterial")
+
+[node name="MusicController" type="Node" parent="." unique_id=1958855625]
+script = ExtResource("10_music")
+
+[node name="MenuIntro" type="AudioStreamPlayer" parent="MusicController" unique_id=554945375]
+stream = ExtResource("11_intro")
+
+[node name="MenuLoop" type="AudioStreamPlayer" parent="MusicController" unique_id=1935240906]
+stream = ExtResource("12_loop")
+
+[node name="GameMusic" type="AudioStreamPlayer" parent="MusicController" unique_id=401831600]
+stream = ExtResource("13_game")
+volume_db = -80.0

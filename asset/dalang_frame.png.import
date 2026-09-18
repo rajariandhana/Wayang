@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://dpw5l3ayhalns"
 path.s3tc="res://.godot/imported/dalang_frame.png-e332517349639824d5be2cc717ed5ec0.s3tc.ctex"
+path.etc2="res://.godot/imported/dalang_frame.png-e332517349639824d5be2cc717ed5ec0.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://asset/dalang_frame.png"
-dest_files=["res://.godot/imported/dalang_frame.png-e332517349639824d5be2cc717ed5ec0.s3tc.ctex"]
+dest_files=["res://.godot/imported/dalang_frame.png-e332517349639824d5be2cc717ed5ec0.s3tc.ctex", "res://.godot/imported/dalang_frame.png-e332517349639824d5be2cc717ed5ec0.etc2.ctex"]
 
 [params]
 
