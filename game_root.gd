@@ -14,6 +14,7 @@ const MATCH_SCENE := preload("res://arena/arena_2d.tscn")
 @onready var music_controller: MusicController = $MusicController
 @onready var theatre_lights: Node3D = $Theatre/ArenaBackdrop/Lights
 @onready var menu_spotlight: MenuSpotlight = $MenuSpotlight
+@onready var leaderboard: Node3D = $Menus/Leaderboard
 
 @export_range(0.0, 1.0) var menu_light_level := 0.06
 @export_range(0.0, 1.0) var pause_light_level := 0.48
@@ -39,6 +40,7 @@ func _ready() -> void:
 	main_menu.set_menu_active(true)
 	pause_menu.set_menu_active(false)
 	win_screen.set_menu_active(false)
+	leaderboard.set_menu_active(false)
 	character_select.close()
 	character_select.connect(&"selections_ready", SceneManager.start_selected_match)
 	transition_controller.set_curtain_closed(true)

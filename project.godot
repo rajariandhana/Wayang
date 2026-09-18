@@ -16,7 +16,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 
 config/name="Wayang"
 run/main_scene="res://game_root.tscn"
-config/features=PackedStringArray("4.6", "GL Compatibility")
+config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [autoload]
@@ -28,6 +28,7 @@ Settings="*res://settings/settings.gd"
 Sfx="*res://script/sfx.gd"
 Juice="*res://script/juice.gd"
 TheatreLook="*res://ui/aged_screen.tscn"
+LeaderboardApi="*uid://d4kv82rpkcgab"
 
 [display]
 

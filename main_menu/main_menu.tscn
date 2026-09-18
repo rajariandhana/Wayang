@@ -15,7 +15,6 @@ transform = Transform3D(0.88, 0, 0, 0, 0.88, 0, 0, 0, 0.88, 0, 0, 0)
 [node name="Title" type="Sprite3D" parent="MenuContainer" unique_id=1306883690]
 transform = Transform3D(0.19, 0, 0, 0, 0.19, 0, 0, 0, 0.19, 0, 0.85, 0)
 no_depth_test = true
-alpha_cut = 0
 render_priority = 10
 texture = ExtResource("4_mvfl2")
 
@@ -34,6 +33,10 @@ text = "Settings"
 [node name="QuitButton" parent="MenuContainer" unique_id=1394125529 instance=ExtResource("9_btn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.05, 0)
 text = "Quit"
+
+[node name="LeaderboardButton" parent="MenuContainer" unique_id=515236285 instance=ExtResource("9_btn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.45, 0)
+text = "Leaderboard"
 
 [node name="HowToPlayPanel" parent="." unique_id=2007210976 instance=ExtResource("10_htp")]
 

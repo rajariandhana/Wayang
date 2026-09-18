@@ -1,4 +1,4 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://b3t680nd1wbjx"]
 
 [ext_resource type="Script" uid="uid://c1tsdllibt16e" path="res://arena/omni_light_3d.gd" id="1_27ga2"]
 [ext_resource type="Texture2D" uid="uid://crnsiqddx3qik" path="res://asset/cloth_texture.jpg" id="2_h0wof"]
@@ -16,8 +16,8 @@
 [ext_resource type="Texture2D" uid="uid://bvfrr4qpqyttq" path="res://asset/tanah.png" id="14_3vubs"]
 [ext_resource type="Script" uid="uid://dlibi3b4aga7n" path="res://arena/player_3d.gd" id="16_1s3fb"]
 [ext_resource type="Texture2D" uid="uid://dxbsksk36llhe" path="res://asset/fire/FireFrames.png" id="17_ffcej"]
-[ext_resource type="Script" path="res://arena/burning_fx.gd" id="18_burnfx"]
-[ext_resource type="Script" path="res://arena/arena_sway.gd" id="19_sway"]
+[ext_resource type="Script" uid="uid://b6ug52qw6xoub" path="res://arena/burning_fx.gd" id="18_burnfx"]
+[ext_resource type="Script" uid="uid://cf2i2bhapvq8a" path="res://arena/arena_sway.gd" id="19_sway"]
 
 [sub_resource type="Environment" id="Environment_u834y"]
 fog_enabled = true
@@ -159,181 +159,181 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_k6stb")
 }],
-"loop": true,
+"loop": 1,
 "name": &"default",
 "speed": 12.0
 }]
 
-[node name="ArenaBackdrop" type="Node3D"]
+[node name="ArenaBackdrop" type="Node3D" unique_id=483514727]
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=920373697]
 environment = SubResource("Environment_u834y")
 
-[node name="Camera3D" type="Camera3D" parent="."]
+[node name="Camera3D" type="Camera3D" parent="." unique_id=3390427]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.0480173)
 current = true
 
-[node name="Lights" type="Node3D" parent="."]
+[node name="Lights" type="Node3D" parent="." unique_id=890603764]
 
-[node name="OmniLight3D" type="OmniLight3D" parent="Lights"]
+[node name="OmniLight3D" type="OmniLight3D" parent="Lights" unique_id=604454912]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9281226, 1.3919939)
 light_color = Color(0.9313727, 0.6572922, 0.2066547, 1)
 shadow_enabled = true
 script = ExtResource("1_27ga2")
 
-[node name="OmniLight3D2" type="OmniLight3D" parent="Lights"]
+[node name="OmniLight3D2" type="OmniLight3D" parent="Lights" unique_id=2117720318]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.36172718, 3.1067548)
 light_color = Color(0.9313727, 0.6572922, 0.2066547, 1)
 shadow_enabled = true
 script = ExtResource("1_27ga2")
 min_energy = 3.0
 
-[node name="FrameDalang" type="Sprite3D" parent="."]
+[node name="FrameDalang" type="Sprite3D" parent="." unique_id=516965786]
 transform = Transform3D(0.3, 0, 0, 0, 0.43, 0, 0, 0, 0.35, 0, 0.24, -0.4764886)
 shaded = true
 alpha_cut = 1
 texture = ExtResource("3_fu4bq")
 
-[node name="edge" type="Sprite3D" parent="."]
+[node name="edge" type="Sprite3D" parent="." unique_id=891490369]
 transform = Transform3D(0.3, 0, 0, 0, 0.43, 0, 0, 0, 0.34, 0.058662653, 0.33411932, -0.5682157)
 shaded = true
 alpha_cut = 1
 texture = ExtResource("3_sbb53")
 
-[node name="DrAngka" type="Sprite3D" parent="."]
+[node name="DrAngka" type="Sprite3D" parent="." unique_id=304603645]
 transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, 0.0067361593, -0.4861004, 0.54833835)
 shaded = true
 alpha_cut = 1
 texture = ExtResource("3_h0wof")
 script = ExtResource("5_yokb4")
 
-[node name="CastleAwanSprites" type="Node3D" parent="."]
+[node name="CastleAwanSprites" type="Node3D" parent="." unique_id=674890545]
 
-[node name="castle_1" type="Sprite3D" parent="CastleAwanSprites"]
+[node name="castle_1" type="Sprite3D" parent="CastleAwanSprites" unique_id=2003427021]
 transform = Transform3D(0.28, 0, 0, 0, 0.257, 0, 0, 0, 0.35, -1.0661025, -0.44203806, -0.7790605)
 shaded = true
 alpha_cut = 1
 texture = ExtResource("5_sbb53")
 script = ExtResource("7_nb1nt")
 
-[node name="castle_3" type="Sprite3D" parent="CastleAwanSprites"]
+[node name="castle_3" type="Sprite3D" parent="CastleAwanSprites" unique_id=1898606928]
 transform = Transform3D(-0.28, 0, 3.059797e-08, 0, 0.257, 0, -2.4478377e-08, 0, -0.35, 0.68041015, -0.2786581, -1.0885291)
 shaded = true
 alpha_cut = 1
 texture = ExtResource("5_sbb53")
 script = ExtResource("7_nb1nt")
 
-[node name="castle_4" type="Sprite3D" parent="CastleAwanSprites"]
+[node name="castle_4" type="Sprite3D" parent="CastleAwanSprites" unique_id=2024149621]
 transform = Transform3D(-0.28, 0, 3.059797e-08, 0, 0.257, 0, -2.4478377e-08, 0, -0.35, -0.2691567, -0.26244634, -1.6527703)
 shaded = true
 alpha_cut = 1
 texture = ExtResource("5_sbb53")
 script = ExtResource("7_nb1nt")
 
-[node name="castle_7" type="Sprite3D" parent="CastleAwanSprites"]
+[node name="castle_7" type="Sprite3D" parent="CastleAwanSprites" unique_id=70001085]
 transform = Transform3D(0.28, 0, 0, 0, 0.257, 0, 0, 0, 0.35, 4.226358, -0.159, -2.702291)
 shaded = true
 alpha_cut = 1
 texture = ExtResource("5_sbb53")
 script = ExtResource("7_nb1nt")
 
-[node name="castle_5" type="Sprite3D" parent="CastleAwanSprites"]
+[node name="castle_5" type="Sprite3D" parent="CastleAwanSprites" unique_id=914827141]
 transform = Transform3D(0.28, 0, 0, 0, 0.257, 0, 0, 0, 0.35, -0.8465025, -0.159, -2.0893009)
 shaded = true
 alpha_cut = 1
 texture = ExtResource("5_sbb53")
 script = ExtResource("7_nb1nt")
 
-[node name="castle_6" type="Sprite3D" parent="CastleAwanSprites"]
+[node name="castle_6" type="Sprite3D" parent="CastleAwanSprites" unique_id=978895993]
 transform = Transform3D(-0.28, 0, 3.059797e-08, 0, 0.257, 0, -2.4478377e-08, 0, -0.35, -5.5255, -0.159, -2.7756584)
 shaded = true
 alpha_cut = 1
 texture = ExtResource("5_sbb53")
 script = ExtResource("7_nb1nt")
 
-[node name="awan_1" type="Sprite3D" parent="CastleAwanSprites"]
+[node name="awan_1" type="Sprite3D" parent="CastleAwanSprites" unique_id=1357545569]
 transform = Transform3D(0.41, 0, 0, 0, 0.376, 0, 0, 0, 0.513, 12.941667, 0.43651932, -0.917164)
 shaded = true
 alpha_cut = 1
 texture = ExtResource("7_35c7g")
 script = ExtResource("9_u834y")
 
-[node name="awan_2" type="Sprite3D" parent="CastleAwanSprites"]
+[node name="awan_2" type="Sprite3D" parent="CastleAwanSprites" unique_id=1376852878]
 transform = Transform3D(0.39877003, -0.08739893, 7.533918e-08, -0.09530204, -0.36570132, -1.800531e-08, 6.190828e-08, 0, -0.513, 5.21432, 0.5171926, -0.917164)
 shaded = true
 alpha_cut = 1
 texture = ExtResource("8_g8a64")
 script = ExtResource("9_u834y")
 
-[node name="awan_3" type="Sprite3D" parent="CastleAwanSprites"]
+[node name="awan_3" type="Sprite3D" parent="CastleAwanSprites" unique_id=1071199463]
 transform = Transform3D(-0.17284533, 0.34095454, 0, -0.37178558, -0.15851183, 0, 0, 0, 0.5130001, -5.45156, 0.40010047, -0.9675884)
 shaded = true
 alpha_cut = 1
 texture = ExtResource("9_uvldv")
 script = ExtResource("9_u834y")
 
-[node name="awan_4" type="Sprite3D" parent="CastleAwanSprites"]
+[node name="awan_4" type="Sprite3D" parent="CastleAwanSprites" unique_id=330386860]
 transform = Transform3D(0.41, 0, 0, 0, 0.376, 0, 0, 0, 0.513, -10.887028, 1.2419605, -0.973092)
 shaded = true
 alpha_cut = 1
 texture = ExtResource("10_nb1nt")
 script = ExtResource("9_u834y")
 
-[node name="castle2" type="Sprite3D" parent="CastleAwanSprites"]
+[node name="castle2" type="Sprite3D" parent="CastleAwanSprites" unique_id=915473114]
 transform = Transform3D(-0.28, 0, 5.284853e-08, 0, 0.257, 0, -4.2278824e-08, 0, -0.35, 2.05253, -0.21918729, -0.638)
 shaded = true
 alpha_cut = 1
 texture = ExtResource("5_sbb53")
 script = ExtResource("7_nb1nt")
 
-[node name="ground" type="Sprite3D" parent="."]
+[node name="ground" type="Sprite3D" parent="." unique_id=2098205700]
 transform = Transform3D(-0.28, 0, 5.284853e-08, 0, 0.477, 0, -4.2278824e-08, 0, -0.35, 0.4879713, -0.8545188, -2.9359956)
 shaded = true
 alpha_cut = 1
 texture = ExtResource("14_3vubs")
 script = SubResource("GDScript_788rj")
 
-[node name="BackgroundScreen" type="MeshInstance3D" parent="."]
+[node name="BackgroundScreen" type="MeshInstance3D" parent="." unique_id=415234557]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3.0229087)
 mesh = SubResource("QuadMesh_sbb53")
 surface_material_override/0 = SubResource("StandardMaterial3D_pbtuc")
 
-[node name="SubViewport" type="SubViewport" parent="."]
+[node name="SubViewport" type="SubViewport" parent="." unique_id=1232796717]
 transparent_bg = true
 size = Vector2i(2739, 1797)
 render_target_update_mode = 4
 
-[node name="Player3D" type="MeshInstance3D" parent="."]
+[node name="Player3D" type="MeshInstance3D" parent="." unique_id=1157665959]
 transform = Transform3D(1.49, 0, 0, 0, 1.77, 0, 0, 0, 1.18, 0.033833325, -1.3595247, -0.5738861)
 mesh = SubResource("QuadMesh_1s3fb")
 surface_material_override/0 = SubResource("StandardMaterial3D_ffcej")
 script = ExtResource("16_1s3fb")
 
-[node name="Fires" type="Node3D" parent="."]
+[node name="Fires" type="Node3D" parent="." unique_id=1225776554]
 
-[node name="Fires" type="AnimatedSprite3D" parent="Fires"]
+[node name="Fires" type="AnimatedSprite3D" parent="Fires" unique_id=141250241]
 transform = Transform3D(0.38, 0, 0, 0, 0.38, 0, 0, 0, 0.38, -1.425, -0.48680794, -1.801)
 sprite_frames = SubResource("SpriteFrames_1pekq")
 autoplay = "default"
 frame_progress = 0.62156594
 speed_scale = 0.5
 
-[node name="Fires2" type="AnimatedSprite3D" parent="Fires"]
+[node name="Fires2" type="AnimatedSprite3D" parent="Fires" unique_id=321813071]
 transform = Transform3D(-0.2, 0, 3.019916e-08, 0, 0.2, 0, -3.019916e-08, 0, -0.2, 2.1195023, -0.64294773, -0.7021473)
 sprite_frames = SubResource("SpriteFrames_1pekq")
 autoplay = "default"
 frame_progress = 0.62156594
 speed_scale = 0.5
 
-[node name="Fires3" type="AnimatedSprite3D" parent="Fires"]
+[node name="Fires3" type="AnimatedSprite3D" parent="Fires" unique_id=1507364057]
 transform = Transform3D(-0.42180198, 0.083564945, 6.369032e-08, 0.083564945, 0.42180198, -1.26179565e-08, -6.4928194e-08, 0, -0.43, 2.2228587, -0.12371236, -2.2490723)
 sprite_frames = SubResource("SpriteFrames_1pekq")
 autoplay = "default"
 frame_progress = 0.62156594
 speed_scale = 0.5
 
-[node name="BurningFX" type="Node3D" parent="."]
+[node name="BurningFX" type="Node3D" parent="." unique_id=629219404]
 script = ExtResource("18_burnfx")
 
-[node name="ArenaSway" type="Node3D" parent="."]
+[node name="ArenaSway" type="Node3D" parent="." unique_id=1168302777]
 script = ExtResource("19_sway")
