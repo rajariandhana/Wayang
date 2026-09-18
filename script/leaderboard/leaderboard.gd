@@ -53,7 +53,7 @@ func hide_board() -> void:
 
 func _on_button_activated(btn: Node3D) -> void:
 	if btn == back_button:
-		SceneManager.return_to_menu()
+		SceneManager.hide_leaderboard()
 
 func _main_buttons() -> Array[Node3D]:
 	return [back_button]

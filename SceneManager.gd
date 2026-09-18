@@ -160,6 +160,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		resume_match()
 	elif state == FlowState.SELECTING:
 		cancel_character_select()
+	elif state == FlowState.LEADERBOARD:
+		hide_leaderboard()
 	else:
 		return
 	get_viewport().set_input_as_handled()
