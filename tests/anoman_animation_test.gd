@@ -76,7 +76,22 @@ func _run() -> void:
 		await get_tree().create_timer(0.8).timeout
 		assert(fighter.combat_state == Fighter.CombatState.READY)
 		assert(not fighter.hitbox.is_attacking)
+		# Characters with their own art strike with the whole forearm and carry a
+		# hurtbox sized off that art; plain rigs keep the rig's own fist and rect.
+		var hit_shape: CollisionShape2D = fighter.hitbox._shape
+		var hurt_shape: CollisionShape2D = fighter.get_node(^"Node2D/Hurtbox/CollisionShape2D")
+		if CharacterSkin.has_skin(character_id):
+			var skin: Dictionary = CharacterSkin.SKINS[character_id]
+			assert(hit_shape.shape is CapsuleShape2D, "Skinned fighters strike with the forearm")
+			assert(is_equal_approx((hit_shape.shape as CapsuleShape2D).height,
+				skin["hand"].length() + float(skin["hit_radius"]) * 2.0), "Forearm hitbox length")
+			assert((hurt_shape.shape as RectangleShape2D).size == skin["hurtbox_size"], "Hurtbox not sized to the art")
+		else:
+			assert(hit_shape.shape is CircleShape2D, "Plain rigs keep their fist hitbox")
 		fighter.configure_character(&"bima")
+		assert(fighter.hitbox._shape.shape is CircleShape2D, "Switching away must restore the rig hitbox")
+		assert((fighter.get_node(^"Node2D/Hurtbox/CollisionShape2D").shape as RectangleShape2D).size == Vector2(159, 488),
+			"Switching away must restore the rig hurtbox")
 		assert(fighter.max_lean_distance == (550.0 if side == 1 else 780.0))
 		assert(not fighter.character_definition["moves"]["neutral"].has("presentation"))
 		fighter._start_attack(fighter.character_definition["moves"]["neutral"])

@@ -24,6 +24,9 @@ const SKINS := {
 		"elbow": Vector2(24.0, 157.2),
 		"lower_offset": Vector2(41.8, 100.6),
 		"hand": Vector2(48.8, 174.8),
+		"hit_radius": 34.0,
+		"hurtbox_size": Vector2(193.0, 502.0),
+		"hurtbox_position": Vector2(0.0, 59.0),
 	},
 	&"baya": {
 		"dir": "res://asset/WayangBaya/",
@@ -35,13 +38,19 @@ const SKINS := {
 		"elbow": Vector2(15.0, 235.0),
 		"lower_offset": Vector2(-42.0, 146.2),
 		"hand": Vector2(-51.5, 294.0),
+		"hit_radius": 36.0,
+		"hurtbox_size": Vector2(178.0, 519.0),
+		"hurtbox_position": Vector2(0.0, 47.0),
 	},
 }
-const HURTBOX_POSITION := Vector2(0, 68)
 
 var _sprites: Node2D
 var _hip: Node2D
-var _hurtbox_shape: Node2D
+var _hurtbox_shape: CollisionShape2D
+var _original_hurt := {}
+var _hitbox: Hitbox
+var _hit_shape: CollisionShape2D
+var _original_hit := {}
 ## Front/back chains: [upper bone, lower bone, hand bone, upper sprite, lower sprite].
 var _front: Array[Node2D] = []
 var _back: Array[Node2D] = []
@@ -59,6 +68,12 @@ func _init(fighter: Fighter) -> void:
 	_hip = fighter.get_node(^"Node2D/Skeleton2D/Hip")
 	_body = _sprites.get_node(^"Body")
 	_hurtbox_shape = fighter.get_node_or_null(^"Node2D/Hurtbox/CollisionShape2D")
+	if _hurtbox_shape:
+		_original_hurt = {"shape": _hurtbox_shape.shape, "position": _hurtbox_shape.position}
+	_hitbox = fighter.hitbox
+	_hit_shape = _hitbox.get_node(^"CollisionShape2D")
+	_original_hit = {"shape": _hit_shape.shape, "position": _hit_shape.position,
+		"rotation": _hit_shape.rotation, "scale": _hit_shape.scale}
 	var hand := fighter.hitbox.get_parent() as Node2D
 	var front_side := String(hand.get_parent().get_parent().name).left(1)
 	var back_side := "R" if front_side == "L" else "L"
@@ -109,17 +124,48 @@ func apply(id: StringName) -> void:
 		chain[3].global_transform = chain[0].global_transform
 		chain[4].global_transform = chain[1].global_transform
 	_body.global_transform = _hip.global_transform
+	_shape_striking_arm(mx.call(skin["hand"]), float(skin["hit_radius"]))
+	# The target a swing has to land on, sized off this puppet's own art in the
+	# proportions the Anoman rig uses, so a taller character is not fought
+	# against an invisible Anoman-sized torso.
 	if _hurtbox_shape:
-		_hurtbox_shape.position = HURTBOX_POSITION
+		var rect := RectangleShape2D.new()
+		rect.size = skin["hurtbox_size"]
+		_hurtbox_shape.shape = rect
+		_hurtbox_shape.position = skin["hurtbox_position"]
 	# Both complete arm chains are in front of the body. The striking chain
 	# draws last where the arms cross; restore() restores the original rig order.
 	for limb in [_back[3], _back[4], _front[3], _front[4]]:
 		_sprites.move_child(limb, _sprites.get_child_count() - 1)
 	active = true
 
+## These arms are long, and a hit only counted where the fist itself landed, so
+## a swing whose forearm swept straight through the opponent could whiff. The
+## hand keeps the hitbox, but its shape now covers the whole striking forearm,
+## elbow to fist. Reach still scales per move: the capsule carries the rig's
+## real dimensions, so the node scale is the move's reach multiplier alone.
+func _shape_striking_arm(hand_offset: Vector2, radius: float) -> void:
+	var capsule := CapsuleShape2D.new()
+	capsule.radius = radius
+	capsule.height = hand_offset.length() + radius * 2.0
+	_hit_shape.shape = capsule
+	# The elbow sits at -hand_offset in the hand bone's own space.
+	_hit_shape.position = -hand_offset * 0.5
+	_hit_shape.rotation = atan2(hand_offset.x, -hand_offset.y)
+	_hit_shape.scale = Vector2.ONE
+	_hitbox._base_shape_scale = Vector2.ONE
+
 func restore() -> void:
 	if not active:
 		return
+	_hit_shape.shape = _original_hit["shape"]
+	_hit_shape.position = _original_hit["position"]
+	_hit_shape.rotation = _original_hit["rotation"]
+	_hit_shape.scale = _original_hit["scale"]
+	_hitbox._base_shape_scale = _original_hit["scale"]
+	if _hurtbox_shape:
+		_hurtbox_shape.shape = _original_hurt["shape"]
+		_hurtbox_shape.position = _original_hurt["position"]
 	for node in _original:
 		var state: Dictionary = _original[node]
 		node.position = state["position"]
